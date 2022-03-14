@@ -1,9 +1,13 @@
 import React from "react";
+import './App.css';
+
+import Header from "../components/Header"
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Main from "../pages/Main";
-import './App.css';
+import Typing from '../pages/Typing';
 
+import styled from 'styled-components';
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from '../redux/configureStore';
@@ -30,15 +34,24 @@ function App() {
 
   return (
     <>
-      {/* <Header></Header> */}
         <ConnectedRouter history={history}>
-          <Route path="/" exact component={Main} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/api/kakao/callback" component={KakaoRedirect}></Route>
+            <AppWrapper>
+              <Header/>
+              <Route path="/" exact component={Main} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/signup" exact component={Signup} />
+              <Route path="/api/kakao/callback" component={KakaoRedirect}></Route>
+              <Route exact path='/typing/:script_id'  component={Typing}/> 
+            </AppWrapper>
         </ConnectedRouter>
     </>
   );
 }
+
+const AppWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: #f9f9f9;
+`
 
 export default App;
