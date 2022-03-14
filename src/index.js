@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from "react-redux";
+import store from "./redux/configureStore";
+// import ScrollToTop from "./components/ScrollToTop";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
+    {/* <ScrollToTop /> */}
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
