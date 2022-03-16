@@ -1,9 +1,9 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as typingActions } from '../redux/modules/typing';
 
-const Preview = forwardRef((props,ref) => {
+const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,setText,removeEvent},ref,) => {
 
     useImperativeHandle(ref, ()=>({
         next
@@ -12,7 +12,7 @@ const Preview = forwardRef((props,ref) => {
     const dispatch = useDispatch()
     
     const script_splitted_sentence = useMemo(()=>{  // 문장수준까지 나눈 배열
-        return props.script.map(a=>{
+        return script.map(a=>{
             return a.match( /[^\.!\?]+[(\.\s|\.)(!\s|!)(\?\s|\?)]+/g);
         })    
     },[])
@@ -25,12 +25,6 @@ const Preview = forwardRef((props,ref) => {
 
     const script_splitted = useMemo(() => script_splitted_word.map(a=>a.map(b=>b.map(c=>c.split('')))),[])  // 글자수준으로 나눈 배열
 
-
-    const text_num = props.text_num; 
-
-    const userInput = useMemo(() => props.userInput?.split(''));
-    const focus = props.focus;
-
     const scrollRef = useRef();
     const paragraphRef = useRef([]);
     const paragraphWrapRef = useRef([]);
@@ -38,7 +32,7 @@ const Preview = forwardRef((props,ref) => {
     
     useEffect(()=>{
         let paragraph_height = [];
-        for(let i = 0; i < props.script.length; i++){
+        for(let i = 0; i < script.length; i++){
             paragraph_height[i] = paragraphRef.current[i].clientHeight;
         }
         dispatch(typingActions.divideParagraph(paragraph_height));
@@ -72,9 +66,9 @@ const Preview = forwardRef((props,ref) => {
                 top: paragraphRef.current[text_num-1].offsetTop - 123.5
             });
             dispatch(typingActions.setCurrentDivided(paragraph_divided[text_num-1]-1));
-            props.removeEvent();
-            props.setTextNum(text_num => text_num-1);
-            props.setText(props.script[text_num-1]);
+            removeEvent();
+            setTextNum(text_num => text_num-1);
+            setText(script[text_num-1]);
         }
     }
 
@@ -94,9 +88,9 @@ const Preview = forwardRef((props,ref) => {
                 left: 0,
                 top: paragraphRef.current[text_num+1].offsetTop - 123.5
             });
-            props.removeEvent();
-            props.setTextNum(text_num => text_num+1);
-            props.setText(props.script[text_num+1]);
+            removeEvent();
+            setTextNum(text_num => text_num+1);
+            setText(script[text_num+1]);
             dispatch(typingActions.setCurrentDivided(0));
         }
     }
@@ -112,7 +106,7 @@ const Preview = forwardRef((props,ref) => {
                                 w.map((a,i)=>{
                                     let n = 0;
                                     for(let j=0; j<pi; j++){
-                                        n += props.script[j].length;
+                                        n += script[j].length;
                                     }
 
                                     for(let j=0; j<si; j++){
@@ -178,7 +172,7 @@ const Preview = forwardRef((props,ref) => {
                             <path d="M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z" fill="#D2D2D2"/>
                         </svg>
                     </button>
-                    <div className='paragraph-now'>{`${text_num+1}/${props.script.length}`}</div>
+                    <div className='paragraph-now'>{`${text_num+1}/${script.length}`}</div>
                 </UpDownButtonBox>
                 <div className='bookmark-button'>
                     <div className='bookmark-innershadow'></div>
@@ -192,7 +186,7 @@ const Preview = forwardRef((props,ref) => {
             </Wrapper>
         </>
     );
-});
+}));
 
 const Wrapper = styled.div`
     position: relative;

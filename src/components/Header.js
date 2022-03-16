@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { history } from './../redux/configureStore';
 
-const Header = () => {
+const Header = (props) => {
+
+
     return (
         <>
             <HeaderWrapper>
                 <div className='header-inner'>
                     <div className='tying-logo'>
-                        <svg width="113" height="42" viewBox="0 0 113 42" fill="none">
+                        <svg width="113" height="42" viewBox="0 0 113 42" fill="none" onClick={()=>{history.push('/')}}>
                             <path d="M6.2327 10.5598H0.512695V4.47985H21.2727V10.5598H15.5527V31.9998H6.2327V10.5598Z" fill="black"/>
                             <path d="M32.4864 41.1598C31.0198 41.1598 29.6198 41.0132 28.2864 40.7198L28.9264 34.7998C29.9664 34.9598 30.9264 35.0398 31.8064 35.0398C33.3798 35.0398 34.5798 34.5598 35.4064 33.5998C36.2331 32.6665 36.6598 30.8932 36.6864 28.2798C35.2998 30.9465 33.0731 32.2798 30.0064 32.2798C27.4198 32.2798 25.3931 31.3732 23.9264 29.5598C22.4864 27.7198 21.7664 25.1865 21.7664 21.9598V11.9598H30.1664V23.1998C30.1664 24.1065 30.4198 24.8665 30.9264 25.4798C31.4331 26.0665 32.1264 26.3598 33.0064 26.3598C33.9131 26.3598 34.6464 25.9732 35.2064 25.1998C35.7931 24.4265 36.0864 23.4132 36.0864 22.1598V11.9598H44.5264V26.9198C44.5264 31.5598 43.4864 35.0932 41.4064 37.5198C39.3264 39.9465 36.3531 41.1598 32.4864 41.1598Z" fill="black"/>
                             <path d="M55.0052 32.3198C52.7652 32.3198 51.0185 31.5998 49.7652 30.1598C48.5119 28.7198 47.8852 26.7598 47.8852 24.2798V11.9598H56.3652V23.9198C56.3652 24.5332 56.5252 25.0132 56.8452 25.3598C57.1919 25.6798 57.6319 25.8398 58.1652 25.8398C58.6985 25.8398 59.2452 25.6798 59.8052 25.3598L60.2452 30.9198C59.6585 31.3732 58.8852 31.7198 57.9252 31.9598C56.9919 32.1998 56.0185 32.3198 55.0052 32.3198ZM52.1252 8.95984C50.8719 8.95984 49.8052 8.57318 48.9252 7.79984C48.0719 6.99984 47.6452 6.02651 47.6452 4.87984C47.6452 3.73318 48.0985 2.77318 49.0052 1.99984C49.9119 1.22651 50.9519 0.839844 52.1252 0.839844C53.3519 0.839844 54.4052 1.23984 55.2852 2.03984C56.1919 2.83984 56.6452 3.78651 56.6452 4.87984C56.6452 6.05318 56.1919 7.02651 55.2852 7.79984C54.3785 8.57318 53.3252 8.95984 52.1252 8.95984Z" fill="black"/>
@@ -38,7 +41,7 @@ const Header = () => {
 
 const HeaderWrapper = styled.div`
     width: 100%;
-    height: 105px; 
+    height: 5.47vw; 
     background-color: #f9f9f9;
     display: flex;
     justify-content: center;
@@ -51,21 +54,21 @@ const HeaderWrapper = styled.div`
         align-items: center;
         
         .tying-logo svg{
-            width: 112px;
+            width: 5.83vw;
             margin-left: 1.41vw;
             cursor: pointer;
         }
 
         .header-nav{
             display: flex;
-            margin-right: 26px;
+            margin-right: 1.35vw;
             .header-nav-icon{
-                width: 51px;
-                height: 51px;
+                width: 2.66vw;
+                height: 2.66vw;
                 border-radius: 50%;
                 background: #FEFEFE;
                 box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
-                margin-left: 19px;
+                margin-left: 0.99vw;
 
                 display: flex;
                 justify-content: center;
@@ -84,8 +87,8 @@ const HeaderWrapper = styled.div`
 
                 span{
                     font-weight: 700;
-                    font-size: 12px;
-                    line-height: 16px;
+                    font-size: 0.63vw;
+                    line-height: 0.83vw;
                     letter-spacing: -0.015em;
                 }
             }
