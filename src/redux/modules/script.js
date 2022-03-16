@@ -10,11 +10,26 @@ const initialState = {
     typing_script:{},
 }
 
+const randomCategoryScriptDB = (category, small_category) => {
+    return async function(dispatch, getState, {history}){
+        try{
+            const random = await axios.get(`http://13.209.69.234/api/script/${category}/${small_category}`);
+
+            dispatch(setOneScript(random.data.script[0]));
+            
+            history.push(`/typing/${random.data.script[0].scriptId}`)
+
+
+        }catch(err){
+            console.log(err);
+        }
+    }
+}
+
 const setOneScriptDB = (script_id) => {
     console.log('테스트')
     return async function(dispatch, getState, {history}){
         try{
-            console.log('테스트')
             const get_one = await axios.get(`http://13.209.69.234/api/detail/${script_id}`);
 
             console.log(get_one.data);
@@ -35,6 +50,7 @@ export default handleActions({
 
 const actionCreators = {
     setOneScript,
+    randomCategoryScriptDB,
     setOneScriptDB,
 }
 

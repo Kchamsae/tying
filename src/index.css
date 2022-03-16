@@ -7,15 +7,11 @@
 /* 'Roboto' */
 
 @font-face {
-  font-family: 'Digital-Numbers';
-  src:url('../public/fonts/Digital-Numbers.ttf.woff') format('woff'),
-      url('../public/fonts/Digital-Numbers.ttf.svg#Digital-Numbers') format('svg'),
-      url('../public/fonts/Digital-Numbers.ttf.eot'),
-      url('../public/fonts/Digital-Numbers.ttf.eot?#iefix') format('embedded-opentype'); 
-      font-weight: normal;
-      font-style: normal;
-}
-
+    font-family: 'Digital Numbers';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../public/fonts/DigitalNumbers-Regular.woff') format('woff');
+    }
 
 
 body {
