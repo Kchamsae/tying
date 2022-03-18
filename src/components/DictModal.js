@@ -15,6 +15,9 @@ const DictModal = (props) => {
     const script_id = useSelector(state => state.script.typing_script.scriptId)
 
     useEffect(()=>{
+        if(is_login){
+            dispatch(wordActions.setDictUserDB(script_id,props.word))            
+        }
         dispatch(wordActions.setDictDB(script_id,props.word))
     },[])
 
@@ -104,6 +107,7 @@ const DictItem = (props) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
+    const is_login = useSelector(state => state.user.is_login);
     const script_id = useSelector(state => state.script.typing_script.scriptId)
     const [edit, setEdit] = useState(false);
     const editMeaningRef = useRef(); 
@@ -121,6 +125,28 @@ const DictItem = (props) => {
         const confirm = window.confirm('단어의 뜻을 삭제하시겠습니까?');
         if(confirm){
             dispatch(wordActions.deleteDictDB(script_id,props.wordId))
+        }
+    }
+    const pushLike = (is_like) => {
+        if(!is_login){
+            alert('로그인 후 이용할 수 있습니다!');
+            return;
+        }
+        if(!is_like){
+            dispatch(wordActions.upLikeDB(script_id,props.wordId));
+        } else{
+            dispatch(wordActions.downLikeDB(script_id,props.wordId))
+        }
+    }
+    const pushDislike = (is_dislike) => {
+        if(!is_login){
+            alert('로그인 후 이용할 수 있습니다!');
+            return;
+        }
+        if(!is_dislike){
+            dispatch(wordActions.upDislikeDB(script_id,props.wordId));
+        } else{
+            dispatch(wordActions.downDislikeDB(script_id,props.wordId))
         }
     }
 
@@ -144,13 +170,13 @@ const DictItem = (props) => {
                 <div>{props.meaning}</div>
                 <div>by. {props.nickname}</div>
                 <div className='dict-like'>
-                    <div>
+                    <div className={props.isLike ? 'dict-is-like' : ''} onClick={()=>pushLike(props.isLike)}>
                         <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 16.6667H3.33333V6.66667H0V16.6667ZM18.3333 7.5C18.3333 6.58333 17.5833 5.83333 16.6667 5.83333H11.4083L12.2 2.025L12.225 1.75833C12.225 1.41667 12.0833 1.1 11.8583 0.875L10.975 0L5.49167 5.49167C5.18333 5.79167 5 6.20833 5 6.66667V15C5 15.9167 5.75 16.6667 6.66667 16.6667H14.1667C14.8583 16.6667 15.45 16.25 15.7 15.65L18.2167 9.775C18.2917 9.58333 18.3333 9.38333 18.3333 9.16667V7.5Z" fill="white"/>
                         </svg>
                         <span>{props.likeCount}</span>
                     </div>
-                    <div>
+                    <div className={props.isDisLike ? 'dict-is-dislike' : ''} onClick={()=>pushDislike(props.isDisLike)}>
                         <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 16.6667H3.33333V6.66667H0V16.6667ZM18.3333 7.5C18.3333 6.58333 17.5833 5.83333 16.6667 5.83333H11.4083L12.2 2.025L12.225 1.75833C12.225 1.41667 12.0833 1.1 11.8583 0.875L10.975 0L5.49167 5.49167C5.18333 5.79167 5 6.20833 5 6.66667V15C5 15.9167 5.75 16.6667 6.66667 16.6667H14.1667C14.8583 16.6667 15.45 16.25 15.7 15.65L18.2167 9.775C18.2917 9.58333 18.3333 9.38333 18.3333 9.16667V7.5Z" fill="white"/>
                         </svg>
@@ -301,9 +327,16 @@ const DictModalWrapper = styled.div`
                         }
 
                         .dict-like{
+                            >div.dict-is-like svg path{
+                                fill: #FF6442;
+                            }
+                            >div.dict-is-dislike svg path{
+                                fill: #FF6442;
+                            }
                             >div{
                                 display: flex;
                                 align-items: center;
+                                transition: 0.3s;
                                 svg{
                                     width: 19px;
                                     height: 17px;
@@ -357,6 +390,8 @@ const DictModalWrapper = styled.div`
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
+                                cursor:pointer;
+                                transition: 0.3s;
 
                                 &:hover{
                                     background-color: rgba(0,0,0,0.15);
