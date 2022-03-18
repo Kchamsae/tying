@@ -72,9 +72,18 @@ const Main = (props) => {
     }
 
     const randomStart = () =>{
+        if(category === 'random' && small_category === 'random'){
+            dispatch(scriptActions.randomCategoryScriptDB(1,1));
+            return;
+        }
         if(category !== 'random' && small_category !== 'random'){
             const _small_category = small_category.split('').map(a => a ==='/' ? a = '%2F' : a).join('');
             dispatch(scriptActions.randomCategoryScriptDB(category,_small_category));
+            return;
+        }
+        if(category !== 'random' && (small_category === 'random' || small_category === 'ALL')){
+            dispatch(scriptActions.randomCategoryScriptDB(category,1));
+            return;
         }
     }
 
@@ -125,7 +134,7 @@ const Main = (props) => {
                 </div>
                 {category === 'random' && (
                     <div className="main-test-typing">
-                        <input type='text' placeholder="Try Typing!"/>
+                        <input type='text' placeholder="Try Typing Anything!"/>
                     </div>
                 )}
                 {category === 'TOEFL' && (
@@ -135,11 +144,18 @@ const Main = (props) => {
                         <div className="main-small-category-list">
                             {toefl_category.map((a,i)=>{
                                  return <div key={i} ref={el => smallRef.current[i] = el} onClick={(e)=>{
-                                    setSmallCategory(e.target.innerText);
-                                    for(const item of smallRef.current){
-                                        if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                    if(small_category !== e.target.innerText){
+                                        setSmallCategory(e.target.innerText);
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
+                                        smallRef.current[i]?.classList.add('small-category-on');
+                                    }else{
+                                        setSmallCategory('random');
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
                                     }
-                                    smallRef.current[i]?.classList.add('small-category-on');
                                  }} >{a}</div>   
                             })}
                         </div>
@@ -153,11 +169,18 @@ const Main = (props) => {
                         <div className="main-small-category-list">
                             {ielts_category.map((a,i)=>{
                                  return <div key={i} ref={el => smallRef.current[i] = el} onClick={(e)=>{
-                                    setSmallCategory(e.target.innerText);
-                                    for(const item of smallRef.current){
-                                        if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                    if(small_category !== e.target.innerText){
+                                        setSmallCategory(e.target.innerText);
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
+                                        smallRef.current[i]?.classList.add('small-category-on');
+                                    }else{
+                                        setSmallCategory('random');
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
                                     }
-                                    smallRef.current[i]?.classList.add('small-category-on');
                                  }} >{a}</div>   
                             })}
                         </div>
@@ -171,11 +194,18 @@ const Main = (props) => {
                         <div className="main-small-category-list">
                             {article_category.map((a,i)=>{
                                  return <div key={i} ref={el => smallRef.current[i] = el} onClick={(e)=>{
-                                    setSmallCategory(e.target.innerText);
-                                    for(const item of smallRef.current){
-                                        if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                    if(small_category !== e.target.innerText){
+                                        setSmallCategory(e.target.innerText);
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
+                                        smallRef.current[i]?.classList.add('small-category-on');
+                                    }else{
+                                        setSmallCategory('random');
+                                        for(const item of smallRef.current){
+                                            if(item?.classList.contains('small-category-on')) item?.classList.remove('small-category-on')
+                                        }
                                     }
-                                    smallRef.current[i]?.classList.add('small-category-on');
                                  }} >{a}</div>   
                             })}
                         </div>
@@ -183,7 +213,7 @@ const Main = (props) => {
                     </>
                 )}
                 <div className="main-start-button" onClick={randomStart}>
-                     랜덤타이핑
+                    {category === 'random' ? '랜덤 타이핑' : '시작하기'}
                 </div>
                 <div className="main-introduce">
                     <div className="main-introduce-logo"></div>
@@ -255,7 +285,7 @@ const MainWrapper = styled.div`
         }
     }
     .main-category-box{
-        width: 85.1vw;
+        width: 82.53vw;
         margin: 1.46vw auto 0;
         display: flex;
         justify-content: space-between;
@@ -329,7 +359,7 @@ const MainWrapper = styled.div`
     }
 
     .main-small-category{
-        margin-top: 6.56vw;
+        margin-top: 6.15vw;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -345,7 +375,7 @@ const MainWrapper = styled.div`
         }
 
         .main-small-category-list{
-            margin: 1.04vw 0 1.51vw;
+            margin-top: 1.04vw;
             display: flex;
             >div{
                 width: max-content;
@@ -380,7 +410,7 @@ const MainWrapper = styled.div`
     }
 
     .main-start-button{
-        margin: 3.07vw auto 0;
+        margin: 2.29vw auto 0;
         width: 14.95vw;
         height: 3.59vw;
         border-radius: 3.28vw;
@@ -411,7 +441,7 @@ const MainWrapper = styled.div`
         width: 10.26vw;
         height: 10.26vw;
         position: absolute;
-        bottom: 5.36vw;
+        bottom: 4.22vw;
         left: 4.17vw;
         cursor: pointer;
 

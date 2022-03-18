@@ -17,6 +17,7 @@ import { getCookie } from './Cookie';
 import KakaoRedirect from "../pages/Kakaoredirect";
 import FeedbackButton from "../components/FeedbackButton";
 import ScriptFiltering from "../pages/ScriptFiltering";
+import Search from "../pages/Search";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
               <Route exact path="/api/kakao/callback" component={KakaoRedirect}/>
               <Route exact path='/typing/:script_id'  component={Typing}/>
               <Route exact path="/filtering" component={ScriptFiltering}/>
+              <Route exact path="/search" component={Search}/>
               <FeedbackButton/> 
             </AppWrapper>
         </ConnectedRouter>
