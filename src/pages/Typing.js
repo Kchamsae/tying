@@ -200,7 +200,7 @@ function Typing() {
       setListOn(!list_on);
     },300)
   }
-
+  
   const stateOn = () => {
     setStateOn(!state_on);
     setStateButtonOn(!state_button_on);
@@ -337,7 +337,7 @@ const TypingWrap = styled.div`
     .typing-select-small-category{
       margin-top: 63px;
       width: 13.96vw;
-      height: 23.8vw;
+      height: 16.3vw;
       position: relative;
 
       .typing-select-small-category-header{
@@ -373,12 +373,12 @@ const TypingWrap = styled.div`
         position: absolute;
         left: 0;
         z-index: 2;
-        bottom: 3px;
+        bottom: 0;
         padding: 0;
         margin: 0;
         list-style: none;
         width: 13.91vw;
-        height: 21.51vw;
+        height: 14.17vw;
         background: #fff;
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
         border-radius: 4px;

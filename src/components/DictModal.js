@@ -132,6 +132,10 @@ const DictItem = (props) => {
             alert('로그인 후 이용할 수 있습니다!');
             return;
         }
+        if(props.nickname === user.nickname){
+            alert('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
+            return;
+        }
         if(!is_like){
             dispatch(wordActions.upLikeDB(script_id,props.wordId));
         } else{
@@ -141,6 +145,10 @@ const DictItem = (props) => {
     const pushDislike = (is_dislike) => {
         if(!is_login){
             alert('로그인 후 이용할 수 있습니다!');
+            return;
+        }
+        if(props.nickname === user.nickname){
+            alert('본인이 추가한 뜻에는 싫어요를 누를 수 없습니다!');
             return;
         }
         if(!is_dislike){
@@ -209,18 +217,18 @@ const DictModalWrapper = styled.div`
     position: fixed;
     background: rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(8px);
-    left: calc(50% - 955px/2 + 0.5px);
-    top: calc(50% - 571px/2 + 12px);
-    width: 955px;
-    height: 571px;
-    border-radius: 20px;
+    left: calc(50% - 49.74vw/2 + 0.03vw);
+    top: calc(50% - 29.74vw/2 + 0.63vw);
+    width: 49.74vw;
+    height: 29.74vw;
+    border-radius: 1.04vw;
     z-index: 10000;
     display: flex;
     justify-content: center;
 
     .dict-modal-inner{
         box-sizing: border-box;
-        padding-top: 37px;
+        padding-top: 1.93vw;
         flex: 79.48% 0 0;
         position: relative;
 
@@ -232,44 +240,44 @@ const DictModalWrapper = styled.div`
             .dict-word{
                 font-family: 'Paytone One';
                 font-weight: 400;
-                font-size: 60px;
+                font-size: 3.13vw;
                 letter-spacing: -0.015em;
                 box-sizing: border-box;
-                padding-left: 40px;
+                padding-left: 2.08vw;
                 position: relative;
 
                 &::before{
                     content: '';
                     display: block;
                     position: absolute;
-                    width: 20px;
-                    height: 40px;
+                    width: 1.04vw;
+                    height: 2.08vw;
                     left: 0px;
-                    top: calc(50% - 15px);
+                    top: calc(50% - 0.78vw);
                     background: #FF2E00;
-                    border-radius: 3px;
+                    border-radius: 0.16vw;
                 }
             }
 
             .dict-sentense{
                 font-family: 'Noto Sans KR';
                 font-weight: 700;
-                font-size: 18px;
+                font-size: 0.94vw;
                 letter-spacing: -0.015em;
             }
         }
 
         .dict-body{
             margin-top: 3px;
-            width: 759px;
-            height: 375px;
+            width: 39.53vw;
+            height: 19.53vw;
             background: #4B4B4B;
-            border-radius: 15px;
+            border-radius: 0.78vw;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-sizing: border-box;
-            padding: 34px 0 27px;
+            padding: 1.77vw 0 1.41vw;
 
             .dict-mean-box{
                 width: 100%;
@@ -279,11 +287,11 @@ const DictModalWrapper = styled.div`
                     justify-content: flex-start;
                     font-family: 'Noto Sans KR';
                     font-weight: 500;
-                    font-size: 18px;
-                    line-height: 25px;
+                    font-size: 0.94vw;
+                    line-height: 1.3vw;
                     letter-spacing: -0.015em;
                     color: #BDBDBD;
-                    height: 54px;
+                    height: 2.81vw;
 
                     >div{
                         display: flex;
@@ -302,9 +310,9 @@ const DictModalWrapper = styled.div`
 
                     .dict-mean-item{
                         display: flex;
-                        height: 45px;
+                        height: 2.34vw;
                         background: #3A3A3C;
-                        margin-bottom: 2px;
+                        margin-bottom: 0.1vw;
                         
     
                         >div{
@@ -316,13 +324,13 @@ const DictModalWrapper = styled.div`
                             &::before{
                                 content: '';
                                 display: block;
-                                width: 2px;
-                                height: 20px;
+                                width: 0.1vw;
+                                height: 1.04vw;
                                 background: rgba(84, 84, 88, 0.65);
-                                border-radius: 0.5px;
+                                border-radius: 0.03vw;
                                 position: absolute;
                                 right: 0;
-                                top: 12.5px;
+                                top: 0.65vw;
                             }
                         }
 
@@ -338,30 +346,30 @@ const DictModalWrapper = styled.div`
                                 align-items: center;
                                 transition: 0.3s;
                                 svg{
-                                    width: 19px;
-                                    height: 17px;
+                                    width: 0.99vw;
+                                    height: 0.89vw;
                                     cursor: pointer;
                                 }
                                 span{
-                                    margin-left: 5px;
+                                    margin-left: 0.26vw;
                                     font-weight: 500;
-                                    font-size: 18px;
+                                    font-size: 0.94vw;
                                     letter-spacing: -0.015em;
                                     color: #BDBDBD;
                                 }
                             }
                             >div:last-of-type{
-                                margin-left: 14px;
+                                margin-left: 0.73vw;
                                 svg{
                                     transform: rotate(180deg);
-                                    padding-bottom: 6px;
+                                    padding-bottom: 0.31vw;
                                 }
                             }
                         }
     
                         >div:first-of-type{
                             flex: 34.65% 0 0;
-                            font-size: 18px;
+                            font-size: 0.94vw;
                             letter-spacing: -0.015em;
                             color: #FFFFFF;
                             font-family: 'Noto Sans KR';
@@ -369,7 +377,7 @@ const DictModalWrapper = styled.div`
     
                         >div:nth-of-type(2){
                             flex: 26.61% 0 0;
-                            font-size: 16px;
+                            font-size: 0.83vw;
                             letter-spacing: -0.08px;
                             color: #BDBDBD;
                         }
@@ -384,8 +392,8 @@ const DictModalWrapper = styled.div`
                             }
 
                             >div{
-                                width: 38px;
-                                height: 38px;
+                                width: 1.98vw;
+                                height: 1.98vw;
                                 border-radius: 50%;
                                 display: flex;
                                 justify-content: center;
@@ -398,17 +406,17 @@ const DictModalWrapper = styled.div`
                                 }
 
                                 svg{
-                                    width: 24px;
-                                    height: 24px;
+                                    width: 1.25vw;
+                                    height: 1.25vw;
                                 }
                             }
 
                             
                             .dict-edit{
-                                margin-right: 10px;
+                                margin-right: 0.52vw;
                                 svg{
-                                    width: 19px;
-                                    height: 18px;
+                                    width: 0.99vw;
+                                    height: 0.94vw;
                                 }
                             }
                         }
@@ -419,7 +427,7 @@ const DictModalWrapper = styled.div`
                         >div>input{
                             background-color: transparent;
                             text-align: center;
-                            font-size: 18px;
+                            font-size: 0.94vw;
                             font-weight: 500;
                             letter-spacing: -0.015em;
                             color: #BDBDBD; 
@@ -435,16 +443,16 @@ const DictModalWrapper = styled.div`
                         >div:last-of-type{
                             >div{
                                 font-weight: 700;
-                                font-size: 18px;
-                                line-height: 25px;
+                                font-size: 0.94vw;
+                                line-height: 1.3vw;
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
                                 letter-spacing: -0.015em;
                                 color: #FFFFFF;
-                                width: 100px;
-                                height: 34px;
-                                border-radius: 17px;
+                                width: 5.21vw;
+                                height: 1.77vw;
+                                border-radius: 0.89vw;
                                 transition: 0.3s;
                                 cursor: pointer;
 
@@ -461,15 +469,15 @@ const DictModalWrapper = styled.div`
                 display: flex;
                 justify-content: center;
                 >div{
-                    width: 195px;
-                    height: 42px;
+                    width: 10.16vw;
+                    height: 2.19vw;
                     background: #000000;
                     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
-                    border-radius: 10px;
+                    border-radius: 0.52vw;
 
                     font-family: 'Noto Sans KR';
                     font-weight: 700;
-                    font-size: 18px;
+                    font-size: 0.94vw;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -478,7 +486,7 @@ const DictModalWrapper = styled.div`
                     cursor: pointer;
 
                     &:first-of-type{
-                        margin-right: 44px;
+                        margin-right: 2.29vw;
                     }
                 }
             }
@@ -487,8 +495,8 @@ const DictModalWrapper = styled.div`
         >p{
             font-family: 'Noto Sans KR';
             font-weight: 500;
-            font-size: 12px;
-            line-height: 16px;
+            font-size: 0.63vw;
+            line-height: 0.83vw;
             text-align: center;
             letter-spacing: -0.015em;
         }

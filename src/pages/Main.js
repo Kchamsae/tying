@@ -73,16 +73,16 @@ const Main = (props) => {
 
     const randomStart = () =>{
         if(category === 'random' && small_category === 'random'){
-            dispatch(scriptActions.randomCategoryScriptDB(1,1));
+            dispatch(scriptActions.randomCategoryScriptDB("all","all"));
             return;
         }
-        if(category !== 'random' && small_category !== 'random'){
+        if(category !== 'random' && small_category !== 'random' && small_category !== 'ALL'){
             const _small_category = small_category.split('').map(a => a ==='/' ? a = '%2F' : a).join('');
             dispatch(scriptActions.randomCategoryScriptDB(category,_small_category));
             return;
         }
         if(category !== 'random' && (small_category === 'random' || small_category === 'ALL')){
-            dispatch(scriptActions.randomCategoryScriptDB(category,1));
+            dispatch(scriptActions.randomCategoryScriptDB(category,"all"));
             return;
         }
     }
