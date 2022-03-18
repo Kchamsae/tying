@@ -16,7 +16,7 @@ const setCookie = (name, value, exp = 5) => {
     date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
 
     document.cookie = `${name}=${value}; expires=${date.toUTCString()};path=/`;
-    //메인으로 이동 혹은 새로고침 해도 토큰 날아가지 않게 path 추가
+    //페이지 이동 혹은 새로고침 시 토큰 날아가지 않게 path 추가
 };
 
 const deleteCookie = (name) => {
