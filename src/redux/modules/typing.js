@@ -14,10 +14,11 @@ const initialState = {
 
 export default handleActions({
     [DIVIDE_PARAGRAPH]:(state, action) => produce(state, (draft) => {
+        console.log(action.payload.paragraph_height);
         draft.divided_num = action.payload.paragraph_height.map(a=>{
-            if(a % 210 === 0){
-                return a / 210
-            } else return Math.ceil(a / 210);
+            if(a % 120 === 0){
+                return a / 120
+            } else return Math.ceil(a / 120);
         })
     }),
     [SET_CURRENT_DIVIDED]:(state, action) => produce(state, (draft) => {

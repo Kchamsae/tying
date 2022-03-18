@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {actionCreators as userActions} from '../redux/modules/user'
 import { getCookie } from './Cookie';
 import KakaoRedirect from "../pages/Kakaoredirect";
+import FeedbackButton from "../components/FeedbackButton";
+import ScriptFiltering from "../pages/ScriptFiltering";
+import Search from "../pages/Search";
 
 
 function App() {
@@ -35,9 +38,12 @@ function App() {
         <ConnectedRouter history={history}>
             <AppWrapper>
               <Header/>
-              <Route path="/" exact component={Main}/>
-              <Route path="/api/kakao/callback" component={KakaoRedirect}></Route>
-              <Route exact path='/typing/:script_id'  component={Typing}/> 
+              <Route exact path="/" component={Main} />
+              <Route exact path="/api/kakao/callback" component={KakaoRedirect}/>
+              <Route exact path='/typing/:script_id'  component={Typing}/>
+              <Route exact path="/filtering" component={ScriptFiltering}/>
+              <Route exact path="/search" component={Search}/>
+              <FeedbackButton/>
             </AppWrapper>
         </ConnectedRouter>
     </>
