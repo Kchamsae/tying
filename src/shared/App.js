@@ -2,8 +2,6 @@ import React from "react";
 import './App.css';
 
 import Header from "../components/Header"
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
 import Main from "../pages/Main";
 import Typing from '../pages/Typing';
 
@@ -37,9 +35,7 @@ function App() {
         <ConnectedRouter history={history}>
             <AppWrapper>
               <Header/>
-              <Route path="/" exact component={Main} />
-              <Route path="/login" exact component={Login} />
-              <Route path="/signup" exact component={Signup} />
+              <Route path="/" exact component={Main}/>
               <Route path="/api/kakao/callback" component={KakaoRedirect}></Route>
               <Route exact path='/typing/:script_id'  component={Typing}/> 
             </AppWrapper>

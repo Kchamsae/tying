@@ -3,8 +3,7 @@ import { produce } from "immer";
 import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import { apis } from "../../shared/apis";
-import { CompareRounded } from "@material-ui/icons";
-// import { history } from "../configureStore";
+// import { history } from "../redux/configureStore";
 
 // actions
 const SET_USER = "SET_USER";
@@ -37,12 +36,8 @@ const signupDB = (id, nickname, pwd) => {
         console.log(res);
         if (res.data.ok === true) {
           window.alert("성공적으로 회원가입하셨습니다!");
-          window.location.replace("/login");
-          //회원가입 완료 시 login 페이지로 이동
         } else if (res.data.ok === false) {
           window.alert(res.data.errorMessage);
-          window.location.replace("/signup");
-          //회원가입 실패 시 다시 signup 페이지로 이동
         }
       })
       .catch((err) => {
@@ -71,9 +66,9 @@ const loginDB = (id, pwd) => {
               userId: res.data.userId,
             })
           );
-          window.alert("로그인 되었습니다!");
-          history.push("/");
-          // 로그인 성공 시 메인으로 이동
+          return "ok";
+        } else if (res.data.ok === false) {
+          window.alert("아이디와 비밀번호를 다시 확인해주세요.");
         }
       })
       .catch((err) => {
@@ -89,13 +84,18 @@ const loginCheckDB = (token) => {
     apis
       .getLoginUserInfo()
       .then((res) => {
-        dispatch(
-          setUser({
-            id: res.data.id,
-            nickname: res.data.nickname,
-            userId: res.data.userId,
-          })
-        );
+        if (res.data.ok === true) {
+          dispatch(
+            setUser({
+              id: res.data.id,
+              nickname: res.data.nickname,
+              userId: res.data.userId,
+            })
+          );
+        } else {
+          dispatch(outUser());
+          //토큰 유효시간 만료 후 자동 로그아웃 처리
+        }
       })
       .catch((err) => {
         console.log("에러발생", err);
@@ -109,25 +109,22 @@ const kakaoLoginDB = (code) => {
     apis
       .kakaoLogin(code)
       .then(async (res) => {
-        // if (res.status === 200) {
-          console.log("카카오확인", res);
-          await setCookie("token", res.data.user.token, 1); // 토큰 쿠키에 저장
-          dispatch(
-            setUser({
-              nickname: res.data.user.nickname,
-            })
-          );
-          // window.alert("카카오 로그인이 완료 되었습니다!");
-          // window.location.replace("/");
-        // }
-      }).then(()=>{
-        window.alert("카카오 로그인이 완료 되었습니다!")
+        console.log("카카오확인", res);
+        await setCookie("token", res.data.user.token, 1); // 토큰 쿠키에 저장
+        dispatch(
+          setUser({
+            nickname: res.data.user.nickname,
+          })
+        );
+      })
+      .then(() => {
+        window.alert("카카오 로그인이 완료 되었습니다!");
         history.push("/");
         // 로그인 성공 시 메인으로 이동
       })
       .catch((err) => {
         console.log("카카오 로그인실패", err);
-      })
+      });
   };
 };
 
@@ -136,15 +133,14 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // setCookie("is_login", "success");
         draft.user = action.payload.user;
         draft.is_login = true;
         //원본값을 복사한 값을 draft로 받아옴
       }),
     [OUT_USER]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("is_login");
-        //로그아웃 시 쿠키 삭제
+        deleteCookie("token");
+        //로그아웃 시 쿠키에서 토큰 삭제
         draft.user = null;
         draft.is_login = false;
       }),
