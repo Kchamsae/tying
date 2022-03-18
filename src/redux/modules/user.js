@@ -114,6 +114,7 @@ const kakaoLoginDB = (code) => {
           await setCookie("token", res.data.user.token, 1); // 토큰 쿠키에 저장
           dispatch(
             setUser({
+              id: res.data.user.id,
               nickname: res.data.user.nickname,
             })
           );

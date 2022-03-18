@@ -15,8 +15,8 @@ const FeedbackBtn = styled.div`
     position: fixed;
     width: 2.92vw;
     height: 2.92vw;
-    right: 85px;
-    bottom: 103px;
+    right: 4.43vw;
+    bottom: 4.22vw;
     z-index: 5;
     display: flex;
     justify-content: center;
