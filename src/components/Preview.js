@@ -3,17 +3,21 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as typingActions } from '../redux/modules/typing';
 import { actionCreators as wordActions } from '../redux/modules/word';
+import { actionCreators as scriptActions } from '../redux/modules/script';
 import DictModal from './DictModal';
 
-const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,setText,giveFocus},ref) => {
+const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,giveFocus,script_id,setEnterState},ref) => {
 
     useImperativeHandle(ref, ()=>({
         next
     }))
-
+    const script_data = useSelector(state => state.script.typing_script);
+    const script = script_data?.scriptParagraph
     const [word_modal, setWordModal] = useState(false);
     const [word, setWord] = useState('');
     const [sentence, setSentence] = useState('');
+
+    const charRef = useRef();
 
     // const [focus, setFocus] = useState('out');
 
@@ -27,7 +31,7 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
 
     const script_splitted_word = useMemo(()=>{  // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map(a=>a.map(b=>{
-            return b.match( /[0-9a-z.,’'"\$\%\&\#]+[$(\.|\s)+]/gi);
+            return b.match( /[0-9a-z.,’'"\-\$\%\&\#]+[$(\.|\s)+]/gi);
         }))
     },[script])
 
@@ -39,17 +43,36 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
 
     const paragraph_divided = useSelector(state => state.typing.divided_num);
     const current_divided = useSelector(state => state.typing.current_divided);
+
+    useEffect(()=>{
+        console.log(charRef.current?.offsetTop)
+        const p = 57+(current_divided+1)*120
+        if(p < charRef.current?.offsetTop && charRef.current?.offsetTop <= p+40){
+            setEnterState(true);
+        }else{
+            setEnterState(false);
+        }
+    },[userInput])
     
     useEffect(()=>{
-        console.log(script)
-        if(script !== []){
-            console.log(giveFocus)
-            let paragraph_height = [];
-            for(let i = 0; i < script?.length; i++){
-                paragraph_height[i] = paragraphRef.current[i].clientHeight;
-            }
+        let paragraph_height = [];
+        for(let i = 0; i < script?.length; i++){
+            console.log(paragraphRef.current[i].clientHeight)
+            paragraph_height[i] = paragraphRef.current[i].clientHeight;
+        }
+
+        if(script_data === {} || script_data.scriptId !== script_id){
+            dispatch(scriptActions.setOneScriptDB(script_id)).then((res)=>{
+                for(let i = 0; i < res.length; i++){
+                    console.log(paragraphRef.current[i].clientHeight)
+                    paragraph_height[i] = paragraphRef.current[i].clientHeight;
+                }
+                dispatch(typingActions.divideParagraph(paragraph_height));
+            })
+        }else{
             dispatch(typingActions.divideParagraph(paragraph_height));
         }
+
     },[])
     
 
@@ -108,6 +131,14 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
         }
     }
 
+    const openDict = (w,si) => {
+        // if(focus){
+            setWord(w.join('').trim().match(/[a-zA-z]+/).toString().toLowerCase());
+            setSentence(script_splitted_sentence[text_num][si].trim());
+            setWordModal(true);
+        // }
+    }
+
     const sentences = useMemo(()=>{
         return script_splitted?.map((p,pi)=>{
             return <div className='paragraph-wrap' key={pi} ref={e=>paragraphWrapRef.current[pi] = e}>
@@ -115,18 +146,9 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
                 p?.map((s,si) => {
                     return <ul className='sentence' key={si}>{
                         s?.map((w,wi)=>{
-                            return <li className={focus === 'in' ? 'word word-click' : 'word'} 
+                            return <li className={focus ? 'word word-click' : 'word'} 
                                         key={wi} 
-                                        onClick={async(e)=>{
-                                            // if(focus === 'in'){
-                                                e.stopPropagation(); 
-                                                setWord(w.join('').trim().match(/[a-zA-z]+/).toString().toLowerCase())
-                                                setSentence(script_splitted_sentence[text_num][si].trim());
-                                                setWordModal(true); 
-                                            // }else{
-                                            //     return;
-                                            // }
-                                            }}
+                                        onClick={()=>{openDict(w,si)}}
                                         >{
                                 w?.map((a,i)=>{
                                     let n = 0;
@@ -161,9 +183,16 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
                                     }
                                     if(text_num === pi && n === userInput?.length){
                                         if(a === ' '){
-                                            return <span key={i} className={focus === 'in' ? 'is-next-space space' : 'space'}>{a}</span>                            
+                                            return <span key={i} className={focus ? 'is-next-space space' : 'space'}>{a}</span>                            
                                         } else{
-                                            return <span key={i} className={focus === 'in' ? 'is-next' : ''}>{a}</span>
+                                            return <span key={i} className={focus ? 'is-next' : ''}>{a}</span>
+                                        }
+                                    }
+                                    if(text_num === pi && n === userInput?.length+1){
+                                        if(a === ' '){
+                                            return <span key={i} className='space' ref={charRef}>{a}</span>
+                                        } else{
+                                            return <span key={i} ref={charRef}>{a}</span>
                                         }
                                     }
                                     if(a === ' '){
@@ -223,7 +252,7 @@ const Preview = memo(forwardRef(({userInput,focus,script,text_num,setTextNum,set
             )}
         </>
     );
-}),(a,b)=>a.script===b.script);
+}));
 
 const DictModalBg = styled.div`
     position: fixed;

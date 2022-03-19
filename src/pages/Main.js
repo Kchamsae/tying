@@ -16,7 +16,7 @@ const Main = (props) => {
 
     const toefl_category = ['Agree/Disagree', 'Paired choice', 'Multiple Choice', 'Good Idea', 'ALL']
     const ielts_category = ['Agree/Disagree', 'Both views', 'Advantage/Disadvantage', 'Problem&Solution', 'ALL']
-    const article_category = ['The Wall Street jounal', 'BBC', 'The New York Times', 'TIME','The Economist', 'National Geographic', 'The Korea Times', 'ALL']
+    const article_category = ['The New York Times', 'National Geographic', 'The Korea Times', 'ALL']
 
 
     const categoryOver = (n) => {
@@ -73,16 +73,16 @@ const Main = (props) => {
 
     const randomStart = () =>{
         if(category === 'random' && small_category === 'random'){
-            dispatch(scriptActions.randomCategoryScriptDB(1,1));
+            dispatch(scriptActions.randomCategoryScriptDB("all","all"));
             return;
         }
-        if(category !== 'random' && small_category !== 'random'){
+        if(category !== 'random' && small_category !== 'random' && small_category !== 'ALL'){
             const _small_category = small_category.split('').map(a => a ==='/' ? a = '%2F' : a).join('');
             dispatch(scriptActions.randomCategoryScriptDB(category,_small_category));
             return;
         }
         if(category !== 'random' && (small_category === 'random' || small_category === 'ALL')){
-            dispatch(scriptActions.randomCategoryScriptDB(category,1));
+            dispatch(scriptActions.randomCategoryScriptDB(category,"all"));
             return;
         }
     }
@@ -90,14 +90,14 @@ const Main = (props) => {
     return (
         <>
             <MainWrapper ref={wrapperRef}>
-                <div className="main-filtering" onClick={()=>{history.push('/filtering')}}>
+                {/* <div className="main-filtering" onClick={()=>{history.push('/filtering')}}>
                     스크립트 필터링 
                     <div>
                         <svg viewBox="0 0 16 16" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 8.99875H12.17L7.29 13.8787C6.9 14.2687 6.9 14.9087 7.29 15.2987C7.68 15.6887 8.31 15.6887 8.7 15.2987L15.29 8.70875C15.68 8.31875 15.68 7.68875 15.29 7.29875L8.71 0.69875C8.32 0.30875 7.69 0.30875 7.3 0.69875C6.91 1.08875 6.91 1.71875 7.3 2.10875L12.17 6.99875H1C0.45 6.99875 0 7.44875 0 7.99875C0 8.54875 0.45 8.99875 1 8.99875Z"/>
                         </svg>
                     </div>
-                </div>
+                </div> */}
                 <div className="main-category-box">
                     <div className="main-category-item main-toefl" ref={e=>categoryRef.current[0]=e} onClick={()=>{categoryClick(0)}}>
                         TOEFL
@@ -286,7 +286,7 @@ const MainWrapper = styled.div`
     }
     .main-category-box{
         width: 82.53vw;
-        margin: 1.46vw auto 0;
+        margin: 5.1vw auto 0;
         display: flex;
         justify-content: space-between;
         .main-category-item{
