@@ -1,5 +1,5 @@
 import { KAKAO_AUTH_URL } from "./Kakao";
-import kakaoBtn from "../static/kakaoBtn.png"
+import kakaoBtn from "/static/kakaoBtn.png"
 
 
 function OAuth() {
