@@ -24,7 +24,7 @@ const deleteCookie = (name) => {
 
     console.log(date);
 
-    document.cookie = name+"=; expires="+date;
+    document.cookie = name+"=; expires="+date + "; path=/";
 
     console.log("쿠키삭제",document.cookie)
 
