@@ -5,19 +5,20 @@ import { textList } from '../shared/getText';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
 import { useParams } from 'react-router-dom';
+import { history } from '../redux/configureStore';
 
 
 function Typing() {
   const script_id = +(useParams().script_id)
   const script_data = useSelector(state => state.script.typing_script);
   
-  useEffect(()=>{
-    if(script_data === {} || script_data.scriptId !== script_id){
-      dispatch(scriptActions.setOneScriptDB(script_id));
-    }
+  // useEffect(()=>{
+  //   if(script_data === {} || script_data.scriptId !== script_id){
+  //     dispatch(scriptActions.setOneScriptDB(script_id));
+  //   }
   
-    console.log(script_data);
-  },[])
+  //   console.log(script_data);
+  // },[])
   
   const _script = useSelector(state => state.script.typing_script?.scriptParagraph)
   const script = _script?.join('\n').split('\n');
@@ -30,13 +31,15 @@ function Typing() {
   const [sec, setSec] = useState(0); // 문단 별 타이핑을 시작하고 흐른 시간 (cpm계산에 사용)
   const [cpm, setCpm] = useState(0); // 문단 별 cpm(타수)
   const [started, setStarted] = useState(false); // 시작 여부 (false일 경우 타이핑 시작 시 setInterval 작동)
-  const [accuracy, setAccuracy] = useState(0); // 문단 별 정확도
-  const [focusin, setFocusin] = useState('out'); // 현재 텍스트 입력 창에 포커스 여부
+  const [accuracy, setAccuracy] = useState(100); // 문단 별 정확도
+  const [focusin, setFocusin] = useState(false); // 현재 텍스트 입력 창에 포커스 여부
   
   const [list_on, setListOn] = useState(false); // 카테고리 리스트 열기
   const [list_arrow_on, setListArrowOn] = useState(false); // 카테고리 리스트 아이콘
   const [state_on, setStateOn] = useState(false); // 상태박스 리스트 열기
   const [state_button_on, setStateButtonOn] = useState(false); // 상태박스 버튼
+
+  const [enter_state, setEnterState] = useState(false);
   
   const textbox = React.useRef(); // textarea
   
@@ -44,7 +47,7 @@ function Typing() {
   const intervalRef = React.useRef(null); // setInterval 담기
   const secRef = React.useRef(0); // 시작시간으로부터 지난 시간
 
-  // const upDownRef = React.useRef(); // preview에서 가져올 함수
+  const upDownRef = React.useRef(); // preview에서 가져올 함수
 
   const listRef = React.useRef(); // 카테고리 리스트
   const stateRef = React.useRef(); // 카테고리 리스트
@@ -68,11 +71,11 @@ function Typing() {
     // textarea에 포커스되었을 때 state값 세팅 (preview박스에서 커서 보이도록 작동시키는 데에 사용)
     textbox.current.addEventListener('focusin', ()=>{
       console.log('포커스 세팅');
-      setFocusin('in');
+      setFocusin(true);
     })
     textbox.current.addEventListener('focusout', ()=>{
       console.log('포커스 아웃');
-      setFocusin('out');
+      setFocusin(false);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       setStarted(false);
@@ -92,7 +95,7 @@ function Typing() {
     nowRef.current = null;
     setUserInput('');
     setSec(sec => 0);
-    setAccuracy(0);
+    setAccuracy(100);
     setSymbols(0);
     setStarted(false);
   }
@@ -106,17 +109,29 @@ function Typing() {
           total_length += script[i].length;
         }
         return total_length;
-      } 
-      if(e.key !== 'Backspace' && e.target.value.length >= text_length(text_num)){
-        console.log('넘기기')
+      }
+      if(e.key === 'Shift') return;
+      if(userInput.length >= text_length(script.length-1)){
         e.preventDefault();
-  
-        // upDownRef.current.next();
-  
-        onNextstart();
-        
-        // textbox.current.removeEventListener('keydown', nextStart);
-        
+        alert('스크립트 타이핑을 완료하셨습니다!');
+        history.push('/');
+        return;
+      } 
+      if(userInput.length >= text_length(text_num)){
+        const a = text_num;
+        e.preventDefault();
+        upDownRef.current.next();
+        setTextNum(text_num=>a+1);
+        setText(script[a+1]);
+        giveFocus();
+        return;
+      } else if(enter_state){
+        e.preventDefault();
+        upDownRef.current.next();
+        // onNextstart();
+        userInput.concat(' ');
+        setEnterState(false);
+        giveFocus();
         return;
       } else if(userInput.length <= 1 && e.key === 'Backspace'){ // 텍스트를 모두 지웠을 때 초기화
         e.preventDefault();
@@ -126,6 +141,7 @@ function Typing() {
         return;
       }
       setTimer();
+      setAccuracy(checkAccuracy(userInput));
       setUserInput((userInput)=>{
         e.preventDefault();
         if(e.key === 'Backspace'){
@@ -141,11 +157,11 @@ function Typing() {
 
         return userInput.concat(e.key);
       })
-    },[userInput, text_num, setSec])
+    },[userInput, text_num, setSec, script])
 
     useEffect(()=>{
       // 한 문단의 작성이 끝났을 때 다음 문단으로 넘어가는 이벤트
-      console.log('다음문단이벤트')
+      console.log(enter_state);
       textbox.current.addEventListener('keydown', nextStart)
       return(()=>textbox.current.removeEventListener('keydown', nextStart))
     },[nextStart])
@@ -166,8 +182,11 @@ function Typing() {
   }
 
   const checkAccuracy = (userInput) => {
-    const correct_num = userInput.split('').filter((a,i) => a === text[i]).length;
-    return Number.isNaN(accuracy) ? 0 : Math.floor((correct_num/userInput.length)*100)
+    if(userInput.length === 0) {
+      return 100;
+    }
+    const correct_num = userInput.split('').filter((a,i) => a === script.join('')[i]).length;
+    return Number.isNaN(accuracy) ? 100 : Math.floor((correct_num/userInput.length)*100)
   }
   
   // const countCorrectSymbols = (userInput) => {
@@ -219,6 +238,17 @@ function Typing() {
     textbox.current.selectionStart = textbox.current.selectionEnd = textbox.current.value.length;
   }
 
+  const toefl_small = ['Agree/Disagree', 'Paired choice', 'Multiple Choice', 'Good Idea'];
+  const ielts_small = ['Agree/Disagree', 'Both views', 'Advantage/Disadvantage', 'Problem&Solution'];
+  const article_small = ['The New York Times', 'National Geographic', 'The Korea Times'];
+
+  const moveScript = (e) => {
+      const _small_category = e.target.innerText.split('').map(a => a ==='/' ? a = '%2F' : a).join('');
+      dispatch(scriptActions.randomCategoryScriptDB(script_data?.scriptType,_small_category)).then((res)=>{
+        history.push(`/typing/${res.script_id}`);
+      })
+  }
+
   return (
     <>
       <TypingWrap>
@@ -236,11 +266,34 @@ function Typing() {
                 </svg>
               </i>
             </div>
-            {list_on && (
-              <ul className='typing-select-small-category-list' ref={listRef} >
-                <li className='typing-select-isnow'>Agree/Disagree</li>
+            {(list_on && script_data?.scriptType === 'TOEFL') && (
+              <ul className='typing-select-small-category-list' ref={listRef}>
+                {toefl_small.map((a,i)=>{
+                  return <li key={i} onClick={moveScript}>{a}</li>
+                })}
+                {/* <li className='typing-select-isnow'>Agree/Disagree</li>
                 <li>Both views</li>
-                <li>Advantage/Disadvatage</li>
+                <li>Advantage/Disadvatage</li> */}
+              </ul>
+            )}
+            {(list_on && script_data?.scriptType === 'IELTS') && (
+              <ul className='typing-select-small-category-list' ref={listRef}>
+                {ielts_small.map((a,i)=>{
+                  return <li key={i} onClick={moveScript}>{a}</li>
+                })}
+                {/* <li className='typing-select-isnow'>Agree/Disagree</li>
+                <li>Both views</li>
+                <li>Advantage/Disadvatage</li> */}
+              </ul>
+            )}
+            {(list_on && script_data?.scriptType === 'Article') && (
+              <ul className='typing-select-small-category-list' ref={listRef}>
+                {article_small.map((a,i)=>{
+                  return <li key={i} onClick={moveScript}>{a}</li>
+                })}
+                {/* <li className='typing-select-isnow'>Agree/Disagree</li>
+                <li>Both views</li>
+                <li>Advantage/Disadvatage</li> */}
               </ul>
             )}
           </div>
@@ -266,11 +319,13 @@ function Typing() {
             <Preview 
               userInput={userInput} 
               focus={focusin} 
-              script={script??[]} 
               text_num={text_num}
               giveFocus={giveFocus} 
               setTextNum={(n)=>{setTextNum(n)}} 
               setText={(n)=>{setText(n)}}
+              script_id={script_id}
+              setEnterState={setEnterState}
+              ref={upDownRef}
               />
             <textarea ref={textbox}/>  
           </div>
@@ -281,7 +336,9 @@ function Typing() {
               <div className='state-box' ref={stateRef}>
                 <div className='state-box-item'>
                   <div>TIMER</div>
-                  {sec}
+                  {/* {sec} */}
+                  {(Math.floor(Math.round(sec)/60)).toString().length < 2 ? '0' + (Math.floor(Math.round(sec)/60)) : (Math.floor(Math.round(sec)/60))}:{
+                  (Math.round(sec)%60).toString().length < 2 ? '0' + (Math.round(sec)%60) : (Math.round(sec)%60)}
                   {/* 00:00 */}
                 </div>
                 <div className='state-box-item'>
@@ -331,6 +388,7 @@ const TypingWrap = styled.div`
       .typing-small-category{
         font-size: 25px;
         margin: -0.94vw 0 0 0.42vw;
+        letter-spacing: -0.03em;
       }
     }
 
@@ -422,6 +480,13 @@ const TypingWrap = styled.div`
           display: flex;
           align-items: center;
 
+          cursor: pointer;
+          transition: 0.3s;
+
+          &:hover{
+            color: #FF2E00;
+          }
+
           &.typing-select-isnow{
             color: #FF2E00;
           }
@@ -442,6 +507,11 @@ const TypingWrap = styled.div`
         width: 100%;
         height: 3.54vw;
         margin-bottom: 0.94vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         h3{
           font-weight: 500;
           font-size: 1.3vw;

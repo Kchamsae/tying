@@ -76,10 +76,10 @@ const Header = (props) => {
             </div>
 
             <div className="header-nav-script-menu">
-              <span onClick={openModal}>스크립트 선택</span>
+              <span onClick={()=>{history.push('/filtering')}}>스크립트 선택</span>
             </div>
 
-            <div className="header-nav-icon">
+            <div className="header-nav-icon" onClick={()=>{history.push('/search')}}>
               <svg
                 width="18"
                 height="18"
@@ -137,59 +137,51 @@ const HeaderWrapper = styled.div`
 
     .header-nav {
       display: flex;
+      align-items: center;
       margin-right: 26px;
 
       .header-nav-login-menu {
         width: max-content;
-        height: 29px;
-        left: 1617px;
-        top: 37px;
-        margin-right: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 15px;
+        height: 30px;
+        border-radius: 15px;
 
-        font-family: "Noto Sans";
-        font-style: normal;
+        font-family: 'Noto Sans KR';
         font-weight: 600;
         font-size: 14px;
-        line-height: 19px;
-        display: flex;
-        align-items: center;
-        text-align: center;
         letter-spacing: -0.015em;
-
-        color: #000000;
 
         cursor: pointer;
         transition: 0.3s;
 
         &:hover {
-          color: #c2c3c4;
+          background-color: rgba(0,0,0,0.15);
         }
       }
 
       .header-nav-script-menu {
         width: max-content;
-        height: 29px;
-        left: 1686px;
-        top: 37px;
-        margin-left: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 15px;
+        height: 30px;
+        border-radius: 15px;
+        margin-left: 3px;
 
-        font-family: "Noto Sans";
-        font-style: normal;
+        font-family: 'Noto Sans KR';
         font-weight: 600;
         font-size: 14px;
-        line-height: 19px;
-        display: flex;
-        align-items: center;
-        text-align: center;
         letter-spacing: -0.015em;
-
-        color: #000000;
 
         cursor: pointer;
         transition: 0.3s;
 
         &:hover {
-          color: #c2c3c4;
+            background-color: rgba(0,0,0,0.15);
         }
       }
 
@@ -199,7 +191,7 @@ const HeaderWrapper = styled.div`
         border-radius: 50%;
         background: #fefefe;
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
-        margin-left: 38px;
+        margin-left: 17px;
 
         display: flex;
         justify-content: center;

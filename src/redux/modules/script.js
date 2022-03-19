@@ -25,7 +25,7 @@ const randomCategoryScriptDB = (category, small_category) => {
             const random = await axios.get(`http://13.209.69.234/api/script/${category}/${small_category}`);
 
             dispatch(setOneScript(random.data.script[0]));
-            
+            console.log(random.data);
             history.push(`/typing/${random.data.script[0].scriptId}`)
 
 
@@ -44,6 +44,8 @@ const setOneScriptDB = (script_id) => {
             console.log(get_one.data);
 
             dispatch(setOneScript(get_one.data.script));
+
+            return {length: get_one.data.script.scriptParagraph.length, script_id: get_one.data.script.scriptId};
         }catch(err){
             console.log(err);
             alert('스크립트를 불러오지 못했습니다!')

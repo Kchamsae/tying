@@ -43,7 +43,7 @@ const Search = () => {
                 </div>
                 <div className='search-result'>
                     {(search_list !== 'no' && !done) && (
-                        search_list.map((a,i)=>{
+                        search_list?.map((a,i)=>{
                             return <ScriptItem key={i} {...a}/>
                         })
                     )}

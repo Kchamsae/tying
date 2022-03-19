@@ -41,7 +41,7 @@ const ScriptItemWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     margin-bottom: 37px;
-
+    cursor: pointer;
     .bookmark-button{
         position: absolute;
         top: -17px;
