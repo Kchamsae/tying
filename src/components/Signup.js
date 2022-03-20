@@ -160,6 +160,7 @@ const Signup = (props) => {
                       아이디 형식이 올바르지 않습니다.
                     </p>
                   )}
+                  
                   {id !== "" && idCheck(id) && (
                     <p className="correct-id">
                       사용할 수 있는 아이디 형식입니다.
