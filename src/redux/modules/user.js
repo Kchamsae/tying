@@ -66,7 +66,7 @@ const loginDB = (id, pwd) => {
               userId: res.data.userId,
             })
           );
-          return "ok";
+          return ("ok", window.alert("로그인이 완료 되었습니다!"));
         } else if (res.data.ok === false) {
           window.alert("아이디와 비밀번호를 다시 확인해주세요.");
         }
