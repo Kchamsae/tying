@@ -18,9 +18,13 @@ const Signup = (props) => {
   const [pwd, setPwd] = React.useState("");
   const [pwd_Check, setPwdCheck] = React.useState("");
 
-  //아이디, 이메일 중복검사
+  //아이디, 닉네임 중복검사
   const [id_check, setIdCheck] = React.useState(false);
   const [nickname_check, setNicknameCheck] = React.useState(false);
+
+  //아이디, 닉네임 중복검사 아이콘 조건
+  const [id_checker, setIdChecker] = React.useState(3);
+  const [nickname_checker, setNicknameChecker] = React.useState(6);
 
   //아이디 중복체크
   const idCheckF = () => {
@@ -38,8 +42,12 @@ const Signup = (props) => {
         console.log(res.data);
         if (res.data.ok === true) {
           setIdCheck(res.data.ok);
+          //사용 가능한 아이디인 경우 체크 아이콘으로 변경
+          setIdChecker(1);
           window.alert("사용 가능한 아이디입니다!");
         } else if (res.data.ok === false) {
+          //사용 불가능한 아이디인 경우 엑스 아이콘으로 변경
+          setIdChecker(2);
           window.alert("이미 사용 중인 아이디입니다!");
         }
       })
@@ -65,8 +73,12 @@ const Signup = (props) => {
         console.log(res.data);
         if (res.data.ok === true) {
           setNicknameCheck(res.data.ok);
+          //사용 가능한 닉네임인 경우 체크 아이콘으로 변경
+          setNicknameChecker(4);
           window.alert("사용 가능한 닉네임입니다!");
         } else if (res.data.ok === false) {
+          //사용 불가능한 닉네임인 경우 엑스 아이콘으로 변경
+          setNicknameChecker(5);
           window.alert("이미 사용 중인 닉네임입니다!");
         }
       })
@@ -111,7 +123,7 @@ const Signup = (props) => {
     }
 
     //signupDB에 회원가입 시 입력한 내역들을 보내주기
-    dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check))
+    dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check));
     props.setModalState("login");
   };
 
@@ -160,7 +172,7 @@ const Signup = (props) => {
                       아이디 형식이 올바르지 않습니다.
                     </p>
                   )}
-                  
+
                   {id !== "" && idCheck(id) && (
                     <p className="correct-id">
                       사용할 수 있는 아이디 형식입니다.
@@ -168,11 +180,74 @@ const Signup = (props) => {
                   )}
                 </div>
 
-                <button 
-                disabled={id_check ? true : false} 
-                onClick={idCheckF}>
-                  중복확인
-                </button>
+                <div className="id-checkers">
+                  {id_checker === 1 && (
+                    //사용 가능한 아이디인 경우 체크 아이콘으로 변경
+                    <svg
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12.5"
+                        cy="12.5"
+                        r="11.5"
+                        stroke="#2190FE"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812"
+                        stroke="#2190FE"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  )}
+
+                  {id_checker === 2 && (
+                    //사용 불가능한 아이디인 경우 엑스 아이콘으로 변경
+                    <svg
+                      className="id-no-icon"
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12.5"
+                        cy="12.5"
+                        r="11.5"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M8 17L17 8"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 8L17 17"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  )}
+
+                  {id_checker === 3 && (
+                    //중복확인 버튼
+                    <button
+                      disabled={id_check ? true : false}
+                      onClick={idCheckF}
+                    >
+                      중복확인
+                    </button>
+                  )}
+                </div>
               </div>
 
               <div className="nickname-form-wrapper">
@@ -201,12 +276,73 @@ const Signup = (props) => {
                   )}
                 </div>
 
-                <button
-                  disabled={nickname_check ? true : false}
-                  onClick={nicknameCheckF}
-                >
-                  중복확인
-                </button>
+                <div className="nickname-checkers">
+                  {nickname_checker === 4 && (
+                    //사용 가능한 닉네임인 경우 체크 아이콘으로 변경
+                    <svg
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12.5"
+                        cy="12.5"
+                        r="11.5"
+                        stroke="#2190FE"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812"
+                        stroke="#2190FE"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  )}
+
+                  {nickname_checker === 5 && (
+                    //사용 불가능한 닉네임인 경우 엑스 아이콘으로 변경
+                    <svg
+                      width="25"
+                      height="25"
+                      viewBox="0 0 25 25"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="12.5"
+                        cy="12.5"
+                        r="11.5"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M8 17L17 8"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 8L17 17"
+                        stroke="#FF2E00"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  )}
+
+                  {nickname_checker === 6 && (
+                    //중복확인 버튼
+                    <button
+                      disabled={nickname_check ? true : false}
+                      onClick={nicknameCheckF}
+                    >
+                      중복확인
+                    </button>
+                  )}
+                </div>
               </div>
 
               <div className="pwd-form">
@@ -220,7 +356,7 @@ const Signup = (props) => {
 
                 {pwd !== "" && !pwdCheck(pwd) && (
                   <p className="incorrect-pwd">
-                  최소 하나의 숫자, 특수문자를 포함한 10자 이상의 비밀번호.
+                    최소 하나의 숫자, 특수문자를 포함한 10자 이상의 비밀번호.
                   </p>
                 )}
                 {pwd !== "" && pwdCheck(pwd) && (
@@ -239,7 +375,7 @@ const Signup = (props) => {
 
                 {pwd !== "" && !pwdCheck(pwd_Check) && (
                   <p className="incorrect-pwd-check">
-                  비밀번호가 일치하지 않습니다.
+                    비밀번호가 일치하지 않습니다.
                   </p>
                 )}
                 {pwd !== "" && pwdCheck(pwd_Check) && (
@@ -347,32 +483,34 @@ const ModalsBox = styled.div`
         }
       }
     }
-    button {
+    .id-checkers {
       position: absolute;
-      display: block;
-      width: 60px;
-      height: 32px;
-      right: -68px;
-      top: 8px;
+      top: 20%;
+      right: -24.5%;
+      button {
+        width: 60px;
+        height: 32px;
+        left: 30px;
 
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 12px;
-      text-align: center;
-      letter-spacing: -0.015em;
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: -0.015em;
 
-      color: #ffffff;
+        color: #ffffff;
 
-      background: #bdbdbd;
-      border: none #bdbdbd;
-      box-sizing: border-box;
-      border-radius: 5px;
-      outline: none;
+        background: #bdbdbd;
+        border: none #bdbdbd;
+        box-sizing: border-box;
+        border-radius: 5px;
+        outline: none;
 
-      &:hover {
-        background-color: #e6e7e8;
-        border: none;
+        &:hover {
+          background-color: #e6e7e8;
+          border: none;
+        }
       }
     }
   }
@@ -427,32 +565,34 @@ const ModalsBox = styled.div`
         }
       }
     }
-    button {
+    .nickname-checkers {
       position: absolute;
-      display: block;
-      width: 60px;
-      height: 32px;
-      right: -68px;
-      top: 8px;
+      top: 20%;
+      right: -24.5%;
+      button {
+        width: 60px;
+        height: 32px;
+        left: 30px;
 
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 12px;
-      text-align: center;
-      letter-spacing: -0.015em;
+        font-family: "Noto Sans KR";
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        text-align: center;
+        letter-spacing: -0.015em;
 
-      color: #ffffff;
+        color: #ffffff;
 
-      background: #bdbdbd;
-      border: none #bdbdbd;
-      box-sizing: border-box;
-      border-radius: 5px;
-      outline: none;
+        background: #bdbdbd;
+        border: none #bdbdbd;
+        box-sizing: border-box;
+        border-radius: 5px;
+        outline: none;
 
-      &:hover {
-        background-color: #e6e7e8;
-        border: none;
+        &:hover {
+          background-color: #e6e7e8;
+          border: none;
+        }
       }
     }
   }
