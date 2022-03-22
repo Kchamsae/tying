@@ -14,8 +14,8 @@ const Main = (props) => {
     const wrapperRef = React.useRef([]);
     const smallRef = React.useRef([]);
 
-    const toefl_category = ['Agree/Disagree', 'Paired choice', 'Multiple Choice', 'Good Idea', 'ALL']
-    const ielts_category = ['Agree/Disagree', 'Both views', 'Advantage/Disadvantage', 'Problem&Solution', 'ALL']
+    const toefl_category = ['Agree / Disagree', 'Paired choice', 'Multiple Choice', 'Good Idea', 'ALL']
+    const ielts_category = ['Agree / Disagree', 'Both views', 'Advantage / Disadvantage', 'Problem & Solution', 'ALL']
     const article_category = ['The New York Times', 'National Geographic', 'The Korea Times', 'ALL']
 
 

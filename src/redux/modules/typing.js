@@ -2,14 +2,18 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from 'immer';
 
 const DIVIDE_PARAGRAPH = 'DIVIDE_PARAGRAPH';
-const SET_CURRENT_DIVIDED = 'SET_CURRENT_DIVIDED'
+const SET_CURRENT_DIVIDED = 'SET_CURRENT_DIVIDED';
+const SET_CURRENT_STATE = 'SET_CURRENT_PLACE';
 
 const divideParagraph = createAction(DIVIDE_PARAGRAPH, (paragraph_height)=>({paragraph_height}));
 const setCurrentDivided = createAction(SET_CURRENT_DIVIDED, (current_divided)=>({current_divided}));
+const setCurrentState = createAction(SET_CURRENT_STATE, (current_state)=>({current_state}));
+
 
 const initialState = {
     divided_num: [],
     current_divided: 0,
+    current_state: false,
 }
 
 export default handleActions({

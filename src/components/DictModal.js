@@ -476,7 +476,7 @@ const DictModalWrapper = styled.div`
                     border-radius: 0.52vw;
 
                     font-family: 'Noto Sans KR';
-                    font-weight: 700;
+                    font-weight: 500;
                     font-size: 0.94vw;
                     display: flex;
                     align-items: center;
@@ -494,7 +494,7 @@ const DictModalWrapper = styled.div`
 
         >p{
             font-family: 'Noto Sans KR';
-            font-weight: 500;
+            font-weight: 300;
             font-size: 0.63vw;
             line-height: 0.83vw;
             text-align: center;

@@ -73,6 +73,8 @@ const addDictDB = (script_id,word,meaning) => {
                 }
 
                 dispatch(addDict(doc))
+            }else{
+                alert(word_data.data.errorMessage)
             }
         }catch(err){
             console.log(err);

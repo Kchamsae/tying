@@ -3,7 +3,7 @@ import './App.css';
 
 import Header from "../components/Header"
 import Main from "../pages/Main";
-import Typing from '../pages/Typing';
+import Typing from './../pages/Typing/Typing';
 
 import styled from 'styled-components';
 import { Route } from 'react-router-dom'
