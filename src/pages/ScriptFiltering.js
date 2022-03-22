@@ -66,7 +66,7 @@ const ScriptFiltering = () => {
 
         dispatch(scriptActions.setFilterListDB(_category,_topic));
         setDone(false);
-        scrollRef.current.toScroll(0);
+        scrollRef.current.scrollTo(0,0);
     }
 
     const selectReset = () => {

@@ -19,7 +19,12 @@ const ScriptItem = (props) => {
                     </div>
                     <div className='item-hashtag'>
                         <div>#{props.scriptCategory}</div>
-                        <div>#{props.scriptTopic}</div>
+                        {
+                            props.scriptTopic.map((a,i)=>{
+                                return <div>#{a}</div>
+                            })
+                        }
+                        {/* <div>#{props.scriptTopic}</div> */}
                     </div>
                 </div>
                 <div className='item-title'>{props.scriptTitle}</div>
@@ -40,7 +45,7 @@ const ScriptItemWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 37px;
+    margin: 37px 0;
     cursor: pointer;
     .bookmark-button{
         position: absolute;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import axios from "axios";
-import { idCheck, nicknameCheck, pwdCheck } from "../shared/common";
+import { idCheck, nicknameCheck, pwdCheck } from "../shared/signupRegex";
 
 const Signup = (props) => {
   const dispatch = useDispatch();

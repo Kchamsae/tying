@@ -31,7 +31,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
 
     const script_splitted_word = useMemo(()=>{  // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map(a=>a.map(b=>{
-            return b.match( /[0-9a-z.,’'"\-\$\%\&\#]+[$(\.|\s)+]/gi);
+            return b.match( /[0-9a-z.,’'?":\-—\$\%\&\#]+[$(\.|\s)+]/gi);
         }))
     },[script])
 
@@ -133,7 +133,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
 
     const openDict = (w,si) => {
         // if(focus){
-            setWord(w.join('').trim().match(/[a-zA-z]+/).toString().toLowerCase());
+            setWord(w.join('').trim().match(/[a-zA-z-]+/).toString().toLowerCase());
             setSentence(script_splitted_sentence[text_num][si].trim());
             setWordModal(true);
         // }
@@ -210,7 +210,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
             }</div>
             </div>                
         })
-    },[userInput,focus,word_modal,script])
+    },[userInput,focus,word_modal,script, text_num])
 
     return (
         <>  
@@ -307,7 +307,7 @@ const Wrapper = styled.div`
 const UpDownButtonBox = styled.div`
     position: absolute;
     bottom: 0;
-    right: -50px;
+    right: -63px;
     height: 97px;
     display: flex;
     flex-direction: column;
@@ -319,6 +319,13 @@ const UpDownButtonBox = styled.div`
         border-radius: 0;
         border: 0;
         cursor: pointer;
+        outline: none;
+        > svg > path {
+            transition: 0.3s;
+        }
+        >svg:hover > path{
+            fill: #878889;
+        }
     }
     button:last-of-type{
         transform: rotate(180deg);
@@ -326,9 +333,10 @@ const UpDownButtonBox = styled.div`
     .paragraph-now{
         margin-top: -1px;
         font-weight: 500;
-        font-size: 20px;
+        font-size: 16px;
         letter-spacing: -0.015em;
         color: #878889;
+        text-align: center;
     }
     `;
 
@@ -407,7 +415,7 @@ const PreviewBox = styled.div`
             border-left: 3px solid #FF6442;
             animation: 1000ms ease 0ms 1 normal forwards running blinking;
             animation-iteration-count: infinite;
-            z-index: 1000000;
+            z-index: 0;
 
             @keyframes blinking {
                 0%{
