@@ -33,7 +33,7 @@ const Login = (props) => {
     }
       dispatch(userActions.loginDB(id, pwd))
       // redux의 loginDB에 id, pwd를 보내줌
-      alert("로그인이 완료 되었습니다!");
+      // alert("로그인이 완료 되었습니다!");
       props.setLoginModal(false);
   };
 
