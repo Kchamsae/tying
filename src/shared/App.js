@@ -16,6 +16,7 @@ import KakaoRedirect from "../pages/Kakaoredirect";
 import FeedbackButton from "../components/FeedbackButton";
 import ScriptFiltering from "../pages/ScriptFiltering";
 import Search from "../pages/Search";
+import ScrollToTop from "../components/ScrollToTop";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <ConnectedRouter history={history}>
             <AppWrapper>
               <Header/>
+              <ScrollToTop/>
               <Route exact path="/" component={Main} />
               <Route exact path="/api/kakao/callback" component={KakaoRedirect}/>
               <Route exact path='/typing/:script_id'  component={Typing}/>
