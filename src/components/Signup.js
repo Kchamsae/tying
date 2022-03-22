@@ -160,6 +160,10 @@ const Signup = (props) => {
                     placeholder="아이디를 입력하세요."
                     onChange={(e) => {
                       setId(e.target.value)
+                      // 중복검사 시 성공(1) 혹은 실패(2)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
+                      if (id_checker === 1 || id_checker === 2) {
+                        setIdChecker(3)
+                      }
                       // id_check가 true(중복검사가 true라면) id수정하지 못하게
                       if (id_check) {
                         setIdCheck(false);
@@ -257,6 +261,10 @@ const Signup = (props) => {
                     placeholder="닉네임을 입력하세요."
                     onChange={(e) => {
                       setNickName(e.target.value);
+                      // 중복검사 시 성공(4) 혹은 실패(5)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
+                      if (nickname_checker === 4 || nickname_checker === 5) {
+                        setNicknameChecker(6)
+                      }
                       // nickname_check true(중복검사가 true라면) nickname수정하지 못하게
                       if (nickname_check) {
                         setNicknameCheck(false);
@@ -487,6 +495,9 @@ const ModalsBox = styled.div`
       position: absolute;
       top: 20%;
       right: -24.5%;
+      text-align: left;
+      width: 60px;
+      height: 32px;
       button {
         width: 60px;
         height: 32px;
@@ -569,6 +580,9 @@ const ModalsBox = styled.div`
       position: absolute;
       top: 20%;
       right: -24.5%;
+      text-align: left;
+      width: 60px;
+      height: 32px;
       button {
         width: 60px;
         height: 32px;
