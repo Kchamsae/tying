@@ -160,7 +160,7 @@ const Signup = (props) => {
                     placeholder="아이디를 입력하세요."
                     onChange={(e) => {
                       setId(e.target.value)
-                      // 중복검사 시 성공(1) 혹은 실패(2)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
+                      // 중복검사 결과가 성공(1) 혹은 실패(2)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
                       if (id_checker === 1 || id_checker === 2) {
                         setIdChecker(3)
                       }
@@ -199,12 +199,12 @@ const Signup = (props) => {
                         cy="12.5"
                         r="11.5"
                         stroke="#2190FE"
-                        stroke-width="2"
+                        strokeWidth="2"
                       />
                       <path
                         d="M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812"
                         stroke="#2190FE"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                     </svg>
@@ -225,18 +225,18 @@ const Signup = (props) => {
                         cy="12.5"
                         r="11.5"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                       />
                       <path
                         d="M8 17L17 8"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                       <path
                         d="M8 8L17 17"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                     </svg>
@@ -261,7 +261,7 @@ const Signup = (props) => {
                     placeholder="닉네임을 입력하세요."
                     onChange={(e) => {
                       setNickName(e.target.value);
-                      // 중복검사 시 성공(4) 혹은 실패(5)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
+                      // 중복검사 결과가 성공(4) 혹은 실패(5)여도 다시 수정 가능하도록 중복검사 버튼으로 보여주기
                       if (nickname_checker === 4 || nickname_checker === 5) {
                         setNicknameChecker(6)
                       }
@@ -299,12 +299,12 @@ const Signup = (props) => {
                         cy="12.5"
                         r="11.5"
                         stroke="#2190FE"
-                        stroke-width="2"
+                        strokeWidth="2"
                       />
                       <path
                         d="M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812"
                         stroke="#2190FE"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                     </svg>
@@ -324,18 +324,18 @@ const Signup = (props) => {
                         cy="12.5"
                         r="11.5"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                       />
                       <path
                         d="M8 17L17 8"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                       <path
                         d="M8 8L17 17"
                         stroke="#FF2E00"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke-linecap="round"
                       />
                     </svg>
