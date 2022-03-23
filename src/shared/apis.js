@@ -30,6 +30,6 @@ export const apis = {
   upDislike: (script_id,word_id)=> api.put(`/likeDislike/dislikeUp/${script_id}/${word_id}`),
   downDislike: (script_id,word_id)=> api.put(`/likeDislike/dislikeDown/${script_id}/${word_id}`),
   // script
-  filterScript: (category, topic) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}`),
+  filterScript: (category, topic, number) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}&page=${number}`),
   searchScript: (word) => api.get(`/api/search/${word}`),
 };
