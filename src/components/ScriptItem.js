@@ -21,14 +21,14 @@ const ScriptItem = (props) => {
                         <div>#{props.scriptCategory}</div>
                         {
                             props.scriptTopic.map((a,i)=>{
-                                return <div>#{a}</div>
+                                return <div key={i}>#{a}</div>
                             })
                         }
                         {/* <div>#{props.scriptTopic}</div> */}
                     </div>
                 </div>
                 <div className='item-title'>{props.scriptTitle}</div>
-                <div className='item-preview'>{props.scriptParagraph[0]}</div>
+                <div className='item-preview' ref={props._ref}>{props.scriptParagraph[0]}</div>
             </ScriptItemWrapper>
         </>
     );

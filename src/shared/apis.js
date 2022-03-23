@@ -30,7 +30,8 @@ export const apis = {
   upDislike: (script_id,word_id)=> api.put(`/likeDislike/dislikeUp/${script_id}/${word_id}`),
   downDislike: (script_id,word_id)=> api.put(`/likeDislike/dislikeDown/${script_id}/${word_id}`),
   // script
-  filterScript: (category, topic) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}`),
-  searchScript: (word) => api.get(`/api/search/${word}`),
+  filterScript: (category, topic, number) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}&page=${number}`),
+  searchScript: (number, word) => api.get(`/api/script/search?page=${number}&targetWord=${word}`),
+  // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
 };
