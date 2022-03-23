@@ -68,7 +68,7 @@ const setFilterListDB = (category, topic, number, scroll) => {
         if (list.data.scripts?.length === 0) {
           dispatch(setFilterList("no"));
         } else {
-          if (scroll) {
+          if (scroll) { // 무한스크롤 관련
             dispatch(addFilterList(list.data.scripts));
           } else {
             dispatch(setFilterList(list.data.scripts));
@@ -121,6 +121,7 @@ export default handleActions(
     [ADD_FILTER_LIST]: (state, action) =>
       produce(state, (draft) => {
         draft.filter_list = [...draft.filter_list, ...action.payload.list];
+        // 배열 안에 있는 리스트 꺼내준다
       }),
   },
   initialState

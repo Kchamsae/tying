@@ -26,6 +26,7 @@ const ScriptFiltering = () => {
     useEffect(() => {
         if (inView && pageNumber !== 0) {
             setPageNumber (pageNumber => pageNumber+ 1);
+            // 스크롤 다운 시 페이지넘버 1씩 증가
             const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map(a => {
                 if(a === '&') return '%26';
                 if(a === '/') return '%2F';
@@ -33,12 +34,12 @@ const ScriptFiltering = () => {
             }).join('');
             const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map(a=>a==='&'?'%26':a).join('');
             dispatch(scriptActions.setFilterListDB(_category,_topic,pageNumber+1,true)).then((res) => {
+                // 무한스크롤 불러오는 경우에 true
                 if (res === 'no') {
                     setPageNumber(0)
+                    // 더 이상 불러올 스크립트 없을 때 'no'로 response 받아옴
                 }
-            }
-            )
-            // 무한스크롤 불러오는 경우에 true
+            })
         }
     }, [inView]);
 
@@ -87,7 +88,7 @@ const ScriptFiltering = () => {
     const FilterList = () => {
         setDone(true);
         setReset(true);
-        setPageNumber(1);
+        setPageNumber(1); // 첫페이지 넘버값 1로 설정한것 넣어줌
         const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map(a => {
             if(a === '&') return '%26';
             if(a === '/') return '%2F';
@@ -221,7 +222,7 @@ const ScriptFiltering = () => {
                     {(filter_list !== 'no' && !done) && (
                         filter_list.map((a,i)=>{
                             if (filter_list.length -1 === i) {
-                                return <ScriptItem key={i} {...a} _ref={ref}/>
+                                return <ScriptItem key={i} {...a} _ref={ref}/> // inView ref 넣어줌
                             } 
                             return <ScriptItem key={i} {...a} />
                         })
