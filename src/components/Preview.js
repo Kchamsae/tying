@@ -31,7 +31,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
 
     const script_splitted_word = useMemo(()=>{  // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map(a=>a.map(b=>{
-            return b.match( /[0-9a-z.,’'?":\-—\$\%\&\#]+[$(\.|\s)+]/gi);
+            return b.match( /[0-9a-z.,’'?\(\)":\-—\$\%\&\#]+[$(\.|\s)+]/gi);
         }))
     },[script])
 
@@ -133,7 +133,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
 
     const openDict = (w,si) => {
         // if(focus){
-            setWord(w.join('').trim().match(/[a-zA-z-]+/).toString().toLowerCase());
+            setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+$[a-zA-Z]/).toString().toLowerCase());
             setSentence(script_splitted_sentence[text_num][si].trim());
             setWordModal(true);
         // }
@@ -197,7 +197,7 @@ const Preview = memo(forwardRef(({userInput,focus,text_num,setTextNum,setText,gi
                                     }
                                     if(a === ' '){
                                         return <span key={i} className='space'>{a}</span>                            
-                                    } else if(a.match(/[0-9.,!"';:%$&\(\)]/)){
+                                    } else if(a.match(/[0-9.,!"'-;:%$&\(\)]/)){
                                         return <span key={i} className='not-char'>{a}</span>
                                     } else{
                                         return <span key={i} >{a}</span>
