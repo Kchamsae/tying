@@ -63,9 +63,9 @@ const setFilterListDB = (category, topic, number, scroll) => {
     try {
       const list = await apis.filterScript(category, topic, number);
 
-      console.log("list.data.scripts :", list.data.scripts);
-      if (list.data.ok) {
-        if (list.data.scripts.length === 0) {
+      console.log("list.data :", list.data);
+      if (list.data.ok && list.data.ok !== 'no') {
+        if (list.data.scripts?.length === 0) {
           dispatch(setFilterList("no"));
         } else {
           if (scroll) {
