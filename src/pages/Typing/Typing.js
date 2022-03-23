@@ -29,6 +29,7 @@ import{
   State, 
   StateItem
 } from './style'
+import styled from "styled-components";
 
 function Typing() {
   const script_id = +useParams().script_id;
@@ -51,8 +52,8 @@ function Typing() {
   const [text_num, setTextNum] = useState(0); // 현재 위치한 문단 번호
   const [text, setText] = useState(script ? script[0] : ""); // 현재 위치한 문단의 텍스트 내용
   const [userInput, setUserInput] = useState(""); // 문단 별 유저가 입력한 텍스트 값
-  const [symbols, setSymbols] = useState(""); // 문단 별 유저가 입력한 텍스트에서 띄워쓰기를 제외하고 틀리지 않게 쓴 글자 수 (wpm계산에 사용)
   const [sec, setSec] = useState(0); // 문단 별 타이핑을 시작하고 흐른 시간 (cpm계산에 사용)
+  const [sec_added, setSecAdded] = useState(0); // 시간 멈추기 전에 흘렀던 시간
   const [cpm, setCpm] = useState(0); // 문단 별 cpm(타수)
   const [started, setStarted] = useState(false); // 시작 여부 (false일 경우 타이핑 시작 시 setInterval 작동)
   const [accuracy, setAccuracy] = useState(100); // 문단 별 정확도
@@ -72,7 +73,7 @@ function Typing() {
 
   const nowRef = React.useRef(null); // 시작한 시각
   const intervalRef = React.useRef(null); // setInterval 담기
-  const secRef = React.useRef(0); // 시작시간으로부터 지난 시간
+  // const secRef = React.useRef(0); // 시작시간으로부터 지난 시간
 
   const upDownRef = React.useRef(); // preview에서 가져올 함수
 
@@ -101,19 +102,31 @@ function Typing() {
       console.log("포커스 세팅");
       setFocusin(true);
     });
-    textbox.current.addEventListener("focusout", () => {
-      console.log("포커스 아웃");
-      setFocusin(false);
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-      setStarted(false);
-    });
   }, []);
 
-  // 다음 문단으로 넘어갈 때 세팅해야하는 것들
-  const onNextstart = () => {
+  useEffect(()=>{
+    textbox.current.addEventListener("focusout", () => {
+    console.log("포커스 아웃");
+    setFocusin(false);
+    const _sec = sec
+    console.log(sec);
+    console.log(sec_added);
+    console.log(sec+sec_added);
+    setSecAdded(sec_added+_sec);
     clearInterval(intervalRef.current);
     intervalRef.current = null;
+    nowRef.current = null;
+    setStarted(false);
+    console.log(sec_added)
+    setSec(0);
+  });
+  },[sec,sec_added])
+
+  // 다음 문단으로 넘어갈 때 세팅해야하는 것들
+  const onStop = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+    nowRef.current = null;
     setStarted(false);
   };
   // 문단을 초기화 할 때 세팅해야하는 것들
@@ -124,7 +137,6 @@ function Typing() {
     setUserInput("");
     setSec((sec) => 0);
     setAccuracy(100);
-    setSymbols(0);
     setStarted(false);
   };
   // 다음문단으로 넘어가거나 내용을 모두 지웠을 때 이벤트리스너로 전달될 함수
@@ -208,9 +220,7 @@ function Typing() {
 
   const calCpm = (userInput) => {
     const cpm =
-      sec === 0
-        ? userInput.length * (50 / 0.01)
-        : userInput.length / (sec / 60);
+      sec+sec_added === 0 ? userInput.length * (50 / 0.01) : userInput.length / ((sec+sec_added) / 60);
     return Math.round(cpm);
   };
 
@@ -221,10 +231,7 @@ function Typing() {
     const correct_num = userInput
       .split("")
       .filter((a, i) => a === script.join("")[i]).length;
-    return Number.isNaN(accuracy)
-      ? 100
-      : Math.floor((correct_num / userInput.length) * 100);
-  };
+    return Number.isNaN(accuracy) ? 100 : Math.floor((correct_num / userInput.length) * 100)};
 
   // const countCorrectSymbols = (userInput) => {
   //   const _text = text.replace(' ','');
@@ -239,7 +246,7 @@ function Typing() {
       setStarted(true);
       intervalRef.current = setInterval(() => {
         const elapsedTime = Date.now() - nowRef.current;
-        setSec(elapsedTime / 1000);
+        setSec((elapsedTime / 1000));
       }, 100);
     }
   };
@@ -309,6 +316,11 @@ function Typing() {
 
   return (
     <>
+      {/* <ModalBg/> */}
+      {/* <ModalCertificate>
+        <Modal>
+        </Modal>
+      </ModalCertificate> */}
       <TypingWrap>
         <SectionSide side={'left'} on={left_open ? true : false}>
           <i onClick={()=>{setLeftOpen(!left_open)}}>
@@ -435,13 +447,13 @@ function Typing() {
               <State on={state_button_on ? true : false}>
                 <StateItem timer>
                   <div>TIMER</div>
-                  {Math.floor(Math.round(sec) / 60).toString().length < 2
-                    ? "0" + Math.floor(Math.round(sec) / 60)
-                    : Math.floor(Math.round(sec) / 60)}
+                  {Math.floor(Math.round(sec+sec_added) / 60).toString().length < 2
+                    ? "0" + Math.floor(Math.round(sec+sec_added) / 60)
+                    : Math.floor(Math.round(sec+sec_added) / 60)}
                   :
-                  {(Math.round(sec) % 60).toString().length < 2
-                    ? "0" + (Math.round(sec) % 60)
-                    : Math.round(sec) % 60}
+                  {(Math.round(sec+sec_added) % 60).toString().length < 2
+                    ? "0" + (Math.round(sec+sec_added) % 60)
+                    : Math.round(sec+sec_added) % 60}
                 </StateItem>
                 <StateItem>
                   <div>SPEED</div>
@@ -460,5 +472,32 @@ function Typing() {
   );
 }
 
+const ModalBg = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background: rgba(0, 0, 0, 0.53);
+  z-index: 100;
+`;
 
+const ModalCertificate = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Modal = styled.div`
+  width: 435px;
+  height: 778px;
+  border-radius: 20px;
+  background-color: #eee;
+`
 export default Typing;
