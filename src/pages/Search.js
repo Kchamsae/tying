@@ -19,24 +19,38 @@ const Search = () => {
   const search_list = useSelector((state) => state.script.search_list);
 
   useEffect(() => {
-    if (inView && search_list !== []) {
+    if (search_list !== []) {
       dispatch(scriptActions.setSearchList([]));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (inView && pageNumber !== 0) {
+      setPageNumber((pageNumber) => pageNumber + 1);
+      // 스크롤 다운 시 페이지넘버 1씩 증가
+      dispatch(scriptActions.setSearchListDB(pageNumber + 1, searchRef.current.value, true)).then(
+        (res) => {
+          // 무한스크롤 불러오는 경우에 true (검색 시 검색결과 기존 리스트에 추가)
+          if (res === "no") {
+            setPageNumber(0);
+            // 더 이상 불러올 스크립트 없을 때 'no'로 response 받아옴
+          }
+        }
+      );
     }
   }, [inView]);
 
   const searchScript = () => {
     setDone(true);
+    setPageNumber(1)
     const v = searchRef.current.value;
     let reg = /^[A-z]{2,}$/;
     const ok = reg.test(v);
-    if (ok && pageNumber !== 0) {
-        setPageNumber (pageNumber => pageNumber+ 1);
-        // 스크롤 다운 시 페이지넘버 1씩 증가
-      dispatch(scriptActions.setSearchListDB(v, pageNumber+ 1, true)).then((res) => {
-          if (res === 'no') {
-              setPageNumber(0);
-          }
-      })
+    if (ok) {
+      dispatch(scriptActions.setSearchListDB(1, v, false));
+      // 새로 검색할 시 검색결과 바꿔줘야 함으로 false
+    } else if (!ok) {
+      alert('두글자 이상의 영문으로만 검색하실 수 있습니다.')
     }
     setDone(false);
   };
@@ -62,19 +76,17 @@ const Search = () => {
           </div>
         </div>
         <div className="search-result">
-          {(search_list !== "no" && !done) &&
-            (search_list?.map((a, i) => {
+          {search_list !== "no" &&
+            !done &&
+            search_list?.map((a, i) => {
               if (search_list.length - 1 === i) {
-                return <ScriptItem key={i} {...a} _ref={ref} /> // inView ref 넣어줌
+                return <ScriptItem key={i} {...a} _ref={ref} />; // inView ref 넣어줌
               }
               return <ScriptItem key={i} {...a} />;
-            })
-            )}
-          {(search_list === "no" && !done) && (
+            })}
+          {search_list === "no" && !done && (
             <>
-              <div className="filtering-result-none">
-                검색 결과가 없습니다.
-              </div>
+              <div className="filtering-result-none">검색 결과가 없습니다.</div>
               <div className="filtering-result-sentence">
                 앞으로 더 많은 스크립트가 더 추가될 예정입니다.
               </div>
