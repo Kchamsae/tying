@@ -147,6 +147,7 @@ const DictItem = (props) => {
       alert('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
       return;
     }
+
     if (!is_like) {
       dispatch(wordActions.upLikeDB(script_id, props.wordId));
     } else {

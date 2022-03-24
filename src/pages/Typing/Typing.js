@@ -456,23 +456,11 @@ function Typing() {
         <SectionCenter>
           <TitleProgress>
             <Title>
-              <h3>
-                {script_data?.scriptType} - {script_data?.scriptCategory}
-              </h3>
-              <h4
-                ref={titleRef}
-                onClick={(e) =>
-                  console.log(
-                    e.target.clientHeight,
-                    e.target.offsetHeight,
-                    e.target.scrollHeight
-                  )
-                }
-              >
-                {script_data?.scriptTitle}
-              </h4>
-              {titleRef.current?.clientHeight + 1 <
-                titleRef.current?.scrollHeight && (
+
+              <h3>{script_data?.scriptType} - {script_data?.scriptCategory}</h3>
+              <h4 ref={titleRef} onClick={(e)=>console.log(e.target.clientHeight, e.target.offsetHeight, e.target.scrollHeight)}>{script_data?.scriptTitle}</h4>
+              {titleRef.current?.clientHeight+2 < titleRef.current?.scrollHeight && (
+
                 <TitleMore>
                   <span></span>
                   <div>
