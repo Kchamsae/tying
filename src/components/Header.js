@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import Login from './Login';
@@ -11,9 +11,9 @@ const Header = (props) => {
   const is_login = useSelector((state) => state.user.is_login);
 
   const [login_modal, setLoginModal] = React.useState(false);
-  const [signup_modal, setSignupModal] = React.useState(false);
   const [fade_out, setFadeOut] = React.useState(false);
-  //   const [user_nav, setUserNav] = React.useState(false);
+  
+  const modal_on = useSelector(state => state.user.login_modal);
 
   const logout = () => {
     dispatch(userActions.outUser());
@@ -33,6 +33,15 @@ const Header = (props) => {
       setLoginModal(false);
     }, 400);
   };
+
+  useEffect(()=>{
+    if(modal_on){
+      document.body.style.overflow = 'hidden';
+    }
+    else if(!modal_on){
+      document.body.style.overflow = 'unset';
+    }
+  },[modal_on])
 
   return (
     <>
@@ -69,7 +78,7 @@ const Header = (props) => {
           <nav className='header-nav'>
             <div className='header-nav-login-menu'>
               {!is_login ? (
-                <span onClick={openModal}>로그인</span>
+                <span onClick={()=>{dispatch(userActions.setLoginModal(true));}}>로그인</span>
               ) : (
                 <span onClick={logout}>로그아웃</span>
               )}
@@ -78,7 +87,12 @@ const Header = (props) => {
             <div className='header-nav-script-menu'>
               <span
                 onClick={() => {
-                  history.push('/filtering');
+                  if(!is_login){
+                    window.alert('로그인 후에 이용할 수 있습니다.')
+                    dispatch(userActions.setLoginModal(true));
+                  }else{
+                    history.push('/filtering');
+                  }
                 }}
               >
                 스크립트 선택
@@ -88,7 +102,12 @@ const Header = (props) => {
             <div
               className='header-nav-icon'
               onClick={() => {
-                history.push('/search');
+                if(!is_login){
+                  window.alert('로그인 후에 이용할 수 있습니다.')
+                  dispatch(userActions.setLoginModal(true));
+                }else{
+                  history.push('/search');
+                }
               }}
             >
               <svg
@@ -109,12 +128,10 @@ const Header = (props) => {
           </nav>
         </div>
       </HeaderWrapper>
-      {login_modal && (
+      {modal_on && (
         <>
           <ModalBg
-            onClick={() => {
-              setLoginModal(false);
-            }}
+            onClick={()=>{dispatch(userActions.setLoginModal(false));}}
             login_modal={login_modal}
             className={fade_out ? 'fade_out' : ''}
           />
@@ -236,12 +253,10 @@ const HeaderWrapper = styled.div`
 `;
 
 const ModalBg = styled.div`
-  display: flex;
-  margin: auto;
+
   position: fixed;
   top: 0;
   left: 0;
-  justify-content: center;
   width: 100vw;
   height: 100vh;
   background: rgba(190, 190, 190, 0.91);

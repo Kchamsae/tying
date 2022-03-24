@@ -4,7 +4,9 @@ import ScriptItem from '../components/ScriptItem';
 import ScriptItemLoading from '../components/ScriptItemLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
+import { actionCreators as userActions } from '../redux/modules/user';
 import { useInView } from 'react-intersection-observer';
+import { history } from '../redux/configureStore';
 
 const ScriptFiltering = () => {
   const [filter, setFilter] = useState([]);
@@ -18,34 +20,26 @@ const ScriptFiltering = () => {
 
   const [ref, inView] = useInView();
 
-  // const getFilterScroll = async () => {
-  //     setPageNumber (pageNumber + 1);
-  // };
+  const is_login = useSelector(state => state.user.is_login);
+
+  useEffect(()=>{
+    if(!is_login){
+      alert('로그인 후에 이용할 수 있습니다.');
+      history.replace('/');
+      dispatch(userActions.setLoginModal(true));
+    }
+  },[is_login])
 
   useEffect(() => {
     if (inView && pageNumber !== 0) {
       setPageNumber((pageNumber) => pageNumber + 1);
       // 스크롤 다운 시 페이지넘버 1씩 증가
-      const _category =
-        filter.length === 0
-          ? 'all'
-          : filter
-              .join('|')
-              .split('')
-              .map((a) => {
+      const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map((a) => {
                 if (a === '&') return '%26';
                 if (a === '/') return '%2F';
                 return a;
-              })
-              .join('');
-      const _topic =
-        topic.length === 0
-          ? 'all'
-          : topic
-              .join('|')
-              .split('')
-              .map((a) => (a === '&' ? '%26' : a))
-              .join('');
+              }).join('');
+      const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map((a) => (a === '&' ? '%26' : a)).join('');
       dispatch(
         scriptActions.setFilterListDB(_category, _topic, pageNumber + 1, true)
       ).then((res) => {
