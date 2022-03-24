@@ -185,7 +185,11 @@ const Login = (props) => {
                   placeholder='비밀번호를 입력하세요.'
                   value={pwd}
                   onChange={changePwd}
-                />
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter"){
+                      login();
+                  }}}
+                  />
                 <button onClick={login}>로그인</button>
               </div>
             </div>
