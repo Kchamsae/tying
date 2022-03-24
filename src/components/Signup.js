@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import axios from "axios";
 import { apis } from "../shared/apis";
 import { idCheck, nicknameCheck, pwdCheck } from "../shared/signupRegex";
 
