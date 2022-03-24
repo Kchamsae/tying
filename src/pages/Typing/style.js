@@ -469,7 +469,17 @@ const StateItem = styled.div`
       left: 0;
     }
   }
-`
+`;
+
+const ModalBg = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  background: rgba(0, 0, 0, 0.53);
+  z-index: 100;
+`;
 
 export {
     TypingWrap, 
@@ -492,5 +502,6 @@ export {
     StateBox, 
     Toggle, 
     State, 
-    StateItem
+    StateItem,
+    ModalBg,
 }

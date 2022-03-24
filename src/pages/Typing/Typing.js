@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { textList } from "../../shared/getText";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as scriptActions } from "../../redux/modules/script";
+
 import { useParams } from "react-router-dom";
 import { history } from "../../redux/configureStore";
 
@@ -27,21 +28,15 @@ import{
   StateBox, 
   Toggle, 
   State, 
-  StateItem
+  StateItem,
+  ModalBg
 } from './style'
-import styled from "styled-components";
+import CertificateModal from '../../components/CertificateModal/CertificateModal';
+import dayjs from "dayjs";
 
 function Typing() {
   const script_id = +useParams().script_id;
   const script_data = useSelector((state) => state.script.typing_script);
-
-  // useEffect(()=>{
-  //   if(script_data === {} || script_data.scriptId !== script_id){
-  //     dispatch(scriptActions.setOneScriptDB(script_id));
-  //   }
-
-  //   console.log(script_data);
-  // },[])
 
   const _script = useSelector(
     (state) => state.script.typing_script?.scriptParagraph
@@ -67,7 +62,8 @@ function Typing() {
   const [enter_state, setEnterState] = useState(false);
   const [left_open, setLeftOpen] = useState(false);
   const [right_open, setRightOpen] = useState(false);
-
+  
+  const [certificate, setCertificate] = useState(false)
 
   const textbox = React.useRef(); // textarea
 
@@ -85,7 +81,7 @@ function Typing() {
 
   useEffect(() => {
     // textarea에서 방향키 작동 X
-    console.log("이런저런 이벤트");
+    console.log(dayjs().format('YYYY/MM/DD hh:mm A'))
     textbox.current.addEventListener("keydown", (e) => {
       if (
         e.key === "ArrowLeft" ||
@@ -122,13 +118,13 @@ function Typing() {
   });
   },[sec,sec_added])
 
-  // 다음 문단으로 넘어갈 때 세팅해야하는 것들
-  const onStop = () => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-    nowRef.current = null;
-    setStarted(false);
-  };
+  // // 다음 문단으로 넘어갈 때 세팅해야하는 것들
+  // const onStop = () => {
+  //   clearInterval(intervalRef.current);
+  //   intervalRef.current = null;
+  //   nowRef.current = null;
+  //   setStarted(false);
+  // };
   // 문단을 초기화 할 때 세팅해야하는 것들
   const onRestart = () => {
     clearInterval(intervalRef.current);
@@ -136,6 +132,7 @@ function Typing() {
     nowRef.current = null;
     setUserInput("");
     setSec((sec) => 0);
+    setSecAdded((sec_added)=>0);
     setAccuracy(100);
     setStarted(false);
   };
@@ -151,10 +148,14 @@ function Typing() {
         return total_length;
       };
       if (e.key === "Shift") return;
-      if (userInput.length >= text_length(script.length - 1)) {
+      if (userInput.length >= script[0].length) {
         e.preventDefault();
-        alert("스크립트 타이핑을 완료하셨습니다!");
-        history.push("/");
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setCpm(calCpm(userInput));
+        setCertificate(true);
+        // alert("스크립트 타이핑을 완료하셨습니다!");
+        // history.push("/");
         return;
       }
       if (userInput.length >= text_length(text_num)) {
@@ -191,7 +192,8 @@ function Typing() {
         }
 
         if (e.key === "Enter") {
-          return userInput.concat("\n");
+          e.preventDefault();
+          return 
         }
 
         if (e.key.length > 1) return userInput;
@@ -316,13 +318,19 @@ function Typing() {
 
   return (
     <>
-      {/* <ModalBg/> */}
-      {/* <ModalCertificate>
-        <Modal>
-        </Modal>
-      </ModalCertificate> */}
+      {certificate && (
+        <>
+          <ModalBg/>
+          <CertificateModal
+            sec={sec+sec_added}
+            cpm={cpm}
+            char_num={userInput.length}
+            progress={(userInput.length/textList.length)*100}
+          />
+        </>
+      )}
       <TypingWrap>
-        <SectionSide side={'left'} on={left_open ? true : false}>
+        <SectionSide side={'left'} on={left_open && true}>
           <i onClick={()=>{setLeftOpen(!left_open)}}>
             <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.4853 1.99909L3 10.4844L11.4853 18.9697" stroke="#636366" strokeWidth="3" strokeLinecap="round"/>
@@ -333,7 +341,7 @@ function Typing() {
             <SmallCategory>{script_data?.scriptCategory}</SmallCategory>
           </CategoryWrapper>
           <SelectCategory>
-            <SelectHeader onClick={() => {list_on ? listOff() : listOn()}} on={list_arrow_on ? true : false}>
+            <SelectHeader onClick={() => {list_on ? listOff() : listOn()}} on={list_arrow_on && true}>
               카테고리 바꾸기
               <i>
                 <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -342,7 +350,7 @@ function Typing() {
               </i>
             </SelectHeader>
             {list_on && script_data?.scriptType === "TOEFL" && (
-              <SelectList off={list_arrow_on ? false : true}>
+              <SelectList off={!list_arrow_on && true}>
                 {toefl_small.map((a, i) => {
                   return (
                     <li key={i} onClick={moveScript}>
@@ -353,7 +361,7 @@ function Typing() {
               </SelectList>
             )}
             {list_on && script_data?.scriptType === "IELTS" && (
-              <SelectList off={list_arrow_on ? false : true}>
+              <SelectList off={!list_arrow_on && true}>
                 {ielts_small.map((a, i) => {
                   return (
                     <li key={i} onClick={moveScript}>
@@ -364,7 +372,7 @@ function Typing() {
               </SelectList>
             )}
             {list_on && script_data?.scriptType === "Article" && (
-              <SelectList off={list_arrow_on ? false : true}>
+              <SelectList off={!list_arrow_on && true}>
                 {article_small.map((a, i) => {
                   return (
                     <li key={i} onClick={moveScript}>
@@ -376,7 +384,7 @@ function Typing() {
             )}
           </SelectCategory>
         </SectionSide>
-        <SectionSide side={'right'} on={right_open ? true : false}>
+        <SectionSide side={'right'} on={right_open && true}>
           <i onClick={()=>{setRightOpen(!right_open)}}>
             <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.4853 1.99909L3 10.4844L11.4853 18.9697" stroke="#636366" strokeWidth="3" strokeLinecap="round"/>
@@ -438,13 +446,13 @@ function Typing() {
           </Source>
           <StateBox>
             <Toggle
-              on={state_button_on ? true : false}
+              on={state_button_on && true}
               onClick={() => {
                 state_on ? stateOff() : stateOn();
               }}
             />
             {state_on && (
-              <State on={state_button_on ? true : false}>
+              <State on={state_button_on && true}>
                 <StateItem timer>
                   <div>TIMER</div>
                   {Math.floor(Math.round(sec+sec_added) / 60).toString().length < 2
@@ -472,32 +480,4 @@ function Typing() {
   );
 }
 
-const ModalBg = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0; 
-  left: 0;
-  background: rgba(0, 0, 0, 0.53);
-  z-index: 100;
-`;
-
-const ModalCertificate = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 101;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Modal = styled.div`
-  width: 435px;
-  height: 778px;
-  border-radius: 20px;
-  background-color: #eee;
-`
 export default Typing;

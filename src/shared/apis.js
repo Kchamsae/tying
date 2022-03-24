@@ -38,4 +38,6 @@ export const apis = {
   searchScript: (number, word) => api.get(`/api/script/search?page=${number}&targetWord=${word}`),
   randomScript: (category, small_category) => api.get(`/api/script/${category}/${small_category}`),
   oneScript: (script_id) => api.get(`/api/detail/${script_id}`),
+  // record
+  recordTyping: (doc) => api.post('/api/studyrecord', doc),
 };

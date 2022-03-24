@@ -7,6 +7,7 @@ import User from "./modules/user";
 import Typing from "./modules/typing";
 import Script from "./modules/script";
 import Word from "./modules/word"
+import Record from "./modules/record"
 
 export const history = createBrowserHistory();
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   typing: Typing,
   script: Script,
   word: Word,
+  record: Record,
   router: connectRouter(history),
 });
 
