@@ -20,6 +20,9 @@ export const apis = {
   login: (login) => api.post("/api/login", login ),
   getLoginUserInfo: () => api.get("/api/auth"),
   kakaoLogin: (code) => api.get(`/api/kakao/callback?code=${code}`),
+  // signup
+  idDuplicateCheck: (idCheckF) => api.post("/api/signup/idCheck", idCheckF),
+  nicknameDuplicateCheck: (nicknameCheckF) => api.post("/api/signup/nicknameCheck", nicknameCheckF),
   // word
   setDictUser: (script_id,word)=> api.get(`/opendict/user/${script_id}/${word}`),
   addDict: (script_id,word,meaning)=> api.post(`/opendict/${script_id}/${word}`,{meaning: meaning}),
