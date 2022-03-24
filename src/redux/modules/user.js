@@ -108,7 +108,7 @@ const kakaoLoginDB = (code) => {
     apis
       .kakaoLogin(code)
       .then(async (res) => {
-        console.log("카카오확인", res);
+        console.log("카카오 로그인 완료 : ", res);
         await setCookie("token", res.data.user.token, 1); // 토큰 쿠키에 저장
         dispatch(
           setUser({
