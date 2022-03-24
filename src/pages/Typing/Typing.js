@@ -1,39 +1,39 @@
-import Preview from "../../components/Preview";
-import React, { useCallback, useEffect, useState } from "react";
-import { textList } from "../../shared/getText";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as scriptActions } from "../../redux/modules/script";
+import Preview from '../../components/Preview';
+import React, { useCallback, useEffect, useState } from 'react';
+import { textList } from '../../shared/getText';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as scriptActions } from '../../redux/modules/script';
 
-import { useParams } from "react-router-dom";
-import { history } from "../../redux/configureStore";
+import { useParams } from 'react-router-dom';
+import { history } from '../../redux/configureStore';
 
-import{
-  TypingWrap, 
-  SectionSide, 
-  CategoryWrapper, 
-  Category, 
-  SmallCategory, 
-  SelectCategory, 
-  SelectHeader, 
-  SelectList, 
-  TranslateHeader, 
-  Translate, 
-  SectionCenter, 
-  TitleProgress, 
-  Title, 
-  ProgressBar, 
-  ProgressNum, 
-  TypingBox, 
-  Source, 
-  StateBox, 
-  Toggle, 
-  State, 
+import {
+  TypingWrap,
+  SectionSide,
+  CategoryWrapper,
+  Category,
+  SmallCategory,
+  SelectCategory,
+  SelectHeader,
+  SelectList,
+  TranslateHeader,
+  Translate,
+  SectionCenter,
+  TitleProgress,
+  Title,
+  ProgressBar,
+  ProgressNum,
+  TypingBox,
+  Source,
+  StateBox,
+  Toggle,
+  State,
   StateItem,
-  ModalBg
-} from './style'
+  ModalBg,
+} from './style';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
-import dayjs from "dayjs";
-import styled from "styled-components";
+import dayjs from 'dayjs';
+import styled from 'styled-components';
 
 function Typing() {
   const script_id = +useParams().script_id;
@@ -42,12 +42,12 @@ function Typing() {
   const _script = useSelector(
     (state) => state.script.typing_script?.scriptParagraph
   );
-  const script = _script?.join("\n").split("\n");
+  const script = _script?.join('\n').split('\n');
   // const script = textList.split('\n');
   // console.log(script)
   const [text_num, setTextNum] = useState(0); // 현재 위치한 문단 번호
-  const [text, setText] = useState(script ? script[0] : ""); // 현재 위치한 문단의 텍스트 내용
-  const [userInput, setUserInput] = useState(""); // 문단 별 유저가 입력한 텍스트 값
+  const [text, setText] = useState(script ? script[0] : ''); // 현재 위치한 문단의 텍스트 내용
+  const [userInput, setUserInput] = useState(''); // 문단 별 유저가 입력한 텍스트 값
   const [sec, setSec] = useState(0); // 문단 별 타이핑을 시작하고 흐른 시간 (cpm계산에 사용)
   const [sec_added, setSecAdded] = useState(0); // 시간 멈추기 전에 흘렀던 시간
   const [cpm, setCpm] = useState(0); // 문단 별 cpm(타수)
@@ -63,8 +63,8 @@ function Typing() {
   const [enter_state, setEnterState] = useState(false);
   const [left_open, setLeftOpen] = useState(false);
   const [right_open, setRightOpen] = useState(false);
-  
-  const [certificate, setCertificate] = useState(false)
+
+  const [certificate, setCertificate] = useState(false);
 
   const textbox = React.useRef(); // textarea
 
@@ -84,21 +84,21 @@ function Typing() {
 
   useEffect(() => {
     // textarea에서 방향키 작동 X
-    console.log(dayjs().format('YYYY/MM/DD hh:mm A'))
-    textbox.current.addEventListener("keydown", (e) => {
+    console.log(dayjs().format('YYYY/MM/DD hh:mm A'));
+    textbox.current.addEventListener('keydown', (e) => {
       if (
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight" ||
-        e.key === "ArrowDown" ||
-        e.key === "ArrowUp"
+        e.key === 'ArrowLeft' ||
+        e.key === 'ArrowRight' ||
+        e.key === 'ArrowDown' ||
+        e.key === 'ArrowUp'
       ) {
-        console.log("방향키");
+        console.log('방향키');
         e.preventDefault();
       }
     });
     // textarea에 포커스되었을 때 state값 세팅 (preview박스에서 커서 보이도록 작동시키는 데에 사용)
-    textbox.current.addEventListener("focusin", () => {
-      console.log("포커스 세팅");
+    textbox.current.addEventListener('focusin', () => {
+      console.log('포커스 세팅');
       setFocusin(true);
     });
   }, []);
@@ -130,9 +130,9 @@ function Typing() {
     clearInterval(intervalRef.current);
     intervalRef.current = null;
     nowRef.current = null;
-    setUserInput("");
+    setUserInput('');
     setSec((sec) => 0);
-    setSecAdded((sec_added)=>0);
+    setSecAdded((sec_added) => 0);
     setAccuracy(100);
     setStarted(false);
   };
@@ -147,7 +147,7 @@ function Typing() {
         }
         return total_length;
       };
-      if (e.key === "Shift") return;
+      if (e.key === 'Shift') return;
       if (userInput.length >= script[0].length) {
         e.preventDefault();
         clearInterval(intervalRef.current);
@@ -170,15 +170,15 @@ function Typing() {
         e.preventDefault();
         upDownRef.current.next();
         // onNextstart();
-        userInput.concat(" ");
+        userInput.concat(' ');
         setEnterState(false);
         giveFocus();
         return;
-      } else if (userInput.length <= 1 && e.key === "Backspace") {
+      } else if (userInput.length <= 1 && e.key === 'Backspace') {
         // 텍스트를 모두 지웠을 때 초기화
         e.preventDefault();
         setUserInput((userInput) => userInput.slice(0, -1));
-        console.log("...");
+        console.log('...');
         onRestart();
         return;
       }
@@ -186,14 +186,14 @@ function Typing() {
       setAccuracy(checkAccuracy(userInput));
       setUserInput((userInput) => {
         e.preventDefault();
-        if (e.key === "Backspace") {
+        if (e.key === 'Backspace') {
           e.preventDefault();
           return userInput.slice(0, -1);
         }
 
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
           e.preventDefault();
-          return 
+          return;
         }
 
         if (e.key.length > 1) return userInput;
@@ -207,8 +207,8 @@ function Typing() {
   useEffect(() => {
     // 한 문단의 작성이 끝났을 때 다음 문단으로 넘어가는 이벤트
     console.log(enter_state);
-    textbox.current.addEventListener("keydown", nextStart);
-    return () => textbox.current.removeEventListener("keydown", nextStart);
+    textbox.current.addEventListener('keydown', nextStart);
+    return () => textbox.current.removeEventListener('keydown', nextStart);
   }, [nextStart]);
 
   // const onUserInputChange = (e) => {
@@ -222,7 +222,9 @@ function Typing() {
 
   const calCpm = (userInput) => {
     const cpm =
-      sec+sec_added === 0 ? userInput.length * (50 / 0.01) : userInput.length / ((sec+sec_added) / 60);
+      sec + sec_added === 0
+        ? userInput.length * (50 / 0.01)
+        : userInput.length / ((sec + sec_added) / 60);
     return Math.round(cpm);
   };
 
@@ -231,9 +233,12 @@ function Typing() {
       return 100;
     }
     const correct_num = userInput
-      .split("")
-      .filter((a, i) => a === script.join("")[i]).length;
-    return Number.isNaN(accuracy) ? 100 : Math.floor((correct_num / userInput.length) * 100)};
+      .split('')
+      .filter((a, i) => a === script.join('')[i]).length;
+    return Number.isNaN(accuracy)
+      ? 100
+      : Math.floor((correct_num / userInput.length) * 100);
+  };
 
   // const countCorrectSymbols = (userInput) => {
   //   const _text = text.replace(' ','');
@@ -248,7 +253,7 @@ function Typing() {
       setStarted(true);
       intervalRef.current = setInterval(() => {
         const elapsedTime = Date.now() - nowRef.current;
-        setSec((elapsedTime / 1000));
+        setSec(elapsedTime / 1000);
       }, 100);
     }
   };
@@ -284,28 +289,28 @@ function Typing() {
   };
 
   const toefl_small = [
-    "Agree / Disagree",
-    "Paired Choice",
-    "Multiple Choice",
-    "Good Idea",
+    'Agree / Disagree',
+    'Paired Choice',
+    'Multiple Choice',
+    'Good Idea',
   ];
   const ielts_small = [
-    "Agree / Disagree",
-    "Both views",
-    "Advantage / Disadvantage",
-    "Problem & Solution",
+    'Agree / Disagree',
+    'Both views',
+    'Advantage / Disadvantage',
+    'Problem & Solution',
   ];
   const article_small = [
-    "The New York Times",
-    "National Geographic",
-    "The Korea Times",
+    'The New York Times',
+    'National Geographic',
+    'The Korea Times',
   ];
 
   const moveScript = (e) => {
     const _small_category = e.target.innerText
-      .split("")
-      .map((a) => (a === "/" ? (a = "%2F") : a))
-      .join("");
+      .split('')
+      .map((a) => (a === '/' ? (a = '%2F') : a))
+      .join('');
     dispatch(
       scriptActions.randomCategoryScriptDB(
         script_data?.scriptType,
@@ -320,20 +325,35 @@ function Typing() {
     <>
       {certificate && (
         <>
-          <ModalBg/>
+          <ModalBg />
           <CertificateModal
-            sec={sec+sec_added}
+            sec={sec + sec_added}
             cpm={cpm}
             char_num={userInput.length}
-            progress={(userInput.length/textList.length)*100}
+            progress={(userInput.length / textList.length) * 100}
           />
         </>
       )}
       <TypingWrap>
         <SectionSide side={'left'} on={left_open && true}>
-          <i onClick={()=>{setLeftOpen(!left_open)}}>
-            <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.4853 1.99909L3 10.4844L11.4853 18.9697" stroke="#636366" strokeWidth="3" strokeLinecap="round"/>
+          <i
+            onClick={() => {
+              setLeftOpen(!left_open);
+            }}
+          >
+            <svg
+              width='13'
+              height='21'
+              viewBox='0 0 13 21'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M11.4853 1.99909L3 10.4844L11.4853 18.9697'
+                stroke='#636366'
+                strokeWidth='3'
+                strokeLinecap='round'
+              />
             </svg>
           </i>
           <CategoryWrapper>
@@ -341,15 +361,29 @@ function Typing() {
             <SmallCategory>{script_data?.scriptCategory}</SmallCategory>
           </CategoryWrapper>
           <SelectCategory>
-            <SelectHeader onClick={() => {list_on ? listOff() : listOn()}} on={list_arrow_on && true}>
+            <SelectHeader
+              onClick={() => {
+                list_on ? listOff() : listOn();
+              }}
+              on={list_arrow_on && true}
+            >
               카테고리 바꾸기
               <i>
-                <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5.19384 1.09666C5.59344 0.552846 6.40591 0.552845 6.80551 1.09666L10.8919 6.65786C11.3772 7.31828 10.9056 8.25 10.0861 8.25L1.91325 8.25C1.09371 8.25 0.622136 7.31828 1.10742 6.65786L5.19384 1.09666Z" fill="#636366"/>
+                <svg
+                  width='12'
+                  height='9'
+                  viewBox='0 0 12 9'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    d='M5.19384 1.09666C5.59344 0.552846 6.40591 0.552845 6.80551 1.09666L10.8919 6.65786C11.3772 7.31828 10.9056 8.25 10.0861 8.25L1.91325 8.25C1.09371 8.25 0.622136 7.31828 1.10742 6.65786L5.19384 1.09666Z'
+                    fill='#636366'
+                  />
                 </svg>
               </i>
             </SelectHeader>
-            {list_on && script_data?.scriptType === "TOEFL" && (
+            {list_on && script_data?.scriptType === 'TOEFL' && (
               <SelectList off={!list_arrow_on && true}>
                 {toefl_small.map((a, i) => {
                   return (
@@ -360,7 +394,7 @@ function Typing() {
                 })}
               </SelectList>
             )}
-            {list_on && script_data?.scriptType === "IELTS" && (
+            {list_on && script_data?.scriptType === 'IELTS' && (
               <SelectList off={!list_arrow_on && true}>
                 {ielts_small.map((a, i) => {
                   return (
@@ -371,7 +405,7 @@ function Typing() {
                 })}
               </SelectList>
             )}
-            {list_on && script_data?.scriptType === "Article" && (
+            {list_on && script_data?.scriptType === 'Article' && (
               <SelectList off={!list_arrow_on && true}>
                 {article_small.map((a, i) => {
                   return (
@@ -385,9 +419,24 @@ function Typing() {
           </SelectCategory>
         </SectionSide>
         <SectionSide side={'right'} on={right_open && true}>
-          <i onClick={()=>{setRightOpen(!right_open)}}>
-            <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.4853 1.99909L3 10.4844L11.4853 18.9697" stroke="#636366" strokeWidth="3" strokeLinecap="round"/>
+          <i
+            onClick={() => {
+              setRightOpen(!right_open);
+            }}
+          >
+            <svg
+              width='13'
+              height='21'
+              viewBox='0 0 13 21'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M11.4853 1.99909L3 10.4844L11.4853 18.9697'
+                stroke='#636366'
+                strokeWidth='3'
+                strokeLinecap='round'
+              />
             </svg>
           </i>
           <TranslateHeader>
@@ -398,35 +447,79 @@ function Typing() {
             <div>
               <span>한글 뜻</span>
             </div>
-            <div>{!script_data?.scriptTranslate ? '' : script_data?.scriptTranslate[text_num]}</div>
+            <div>
+              {!script_data?.scriptTranslate
+                ? ''
+                : script_data?.scriptTranslate[text_num]}
+            </div>
           </Translate>
         </SectionSide>
         <SectionCenter>
           <TitleProgress>
             <Title>
+
               <h3>{script_data?.scriptType} - {script_data?.scriptCategory}</h3>
               <h4 ref={titleRef} onClick={(e)=>console.log(e.target.clientHeight, e.target.offsetHeight, e.target.scrollHeight)}>{script_data?.scriptTitle}</h4>
               {titleRef.current?.clientHeight+2 < titleRef.current?.scrollHeight && (
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2ecef5c45ce2fad5e983744813736f70d339191
                 <TitleMore>
                   <span></span>
                   <div>
                     {script_data?.scriptTitle}
-                    <svg viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g filter="url(#filter0_d_1569_11513)">
-                          <path d="M16.1758 36C18.5132 36 19.9527 33.4452 18.7419 31.4459L0 0.5L4 36H16.1758Z" fill="#DEDEDE"/>
-                        </g>
-                        <defs>
-                            <filter id="filter0_d_1569_11513" x="0" y="0.5" width="23.1797" height="39.5" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                            <feOffset dx="2" dy="2"/>
-                            <feGaussianBlur stdDeviation="1"/>
-                            <feComposite in2="hardAlpha" operator="out"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
-                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1569_11513"/>
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1569_11513" result="shape"/>
-                            </filter>
-                        </defs>
+                    <svg
+                      viewBox='0 0 24 40'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <g filter='url(#filter0_d_1569_11513)'>
+                        <path
+                          d='M16.1758 36C18.5132 36 19.9527 33.4452 18.7419 31.4459L0 0.5L4 36H16.1758Z'
+                          fill='#DEDEDE'
+                        />
+                      </g>
+                      <defs>
+                        <filter
+                          id='filter0_d_1569_11513'
+                          x='0'
+                          y='0.5'
+                          width='23.1797'
+                          height='39.5'
+                          filterUnits='userSpaceOnUse'
+                          colorInterpolationFilters='sRGB'
+                        >
+                          <feFlood
+                            floodOpacity='0'
+                            result='BackgroundImageFix'
+                          />
+                          <feColorMatrix
+                            in='SourceAlpha'
+                            type='matrix'
+                            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+                            result='hardAlpha'
+                          />
+                          <feOffset dx='2' dy='2' />
+                          <feGaussianBlur stdDeviation='1' />
+                          <feComposite in2='hardAlpha' operator='out' />
+                          <feColorMatrix
+                            type='matrix'
+                            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'
+                          />
+                          <feBlend
+                            mode='normal'
+                            in2='BackgroundImageFix'
+                            result='effect1_dropShadow_1569_11513'
+                          />
+                          <feBlend
+                            mode='normal'
+                            in='SourceGraphic'
+                            in2='effect1_dropShadow_1569_11513'
+                            result='shape'
+                          />
+                        </filter>
+                      </defs>
                     </svg>
                   </div>
                 </TitleMore>
@@ -439,11 +532,11 @@ function Typing() {
                 }}
               ></div>
             </ProgressBar>
-              <ProgressNum>
-                <span>
-                  {userInput.length}/{textList.length}
-                </span>
-              </ProgressNum>
+            <ProgressNum>
+              <span>
+                {userInput.length}/{textList.length}
+              </span>
+            </ProgressNum>
           </TitleProgress>
           <TypingBox>
             <Preview
@@ -465,7 +558,11 @@ function Typing() {
           </TypingBox>
           <Source>
             <span>출처 - </span>
-            <a href={script_data?.scriptSource} target='_blank' rel="noreferrer">
+            <a
+              href={script_data?.scriptSource}
+              target='_blank'
+              rel='noreferrer'
+            >
               {script_data?.scriptSource}
             </a>
           </Source>
@@ -480,13 +577,14 @@ function Typing() {
               <State on={state_button_on && true}>
                 <StateItem timer>
                   <div>TIMER</div>
-                  {Math.floor(Math.round(sec+sec_added) / 60).toString().length < 2
-                    ? "0" + Math.floor(Math.round(sec+sec_added) / 60)
-                    : Math.floor(Math.round(sec+sec_added) / 60)}
+                  {Math.floor(Math.round(sec + sec_added) / 60).toString()
+                    .length < 2
+                    ? '0' + Math.floor(Math.round(sec + sec_added) / 60)
+                    : Math.floor(Math.round(sec + sec_added) / 60)}
                   :
-                  {(Math.round(sec+sec_added) % 60).toString().length < 2
-                    ? "0" + (Math.round(sec+sec_added) % 60)
-                    : Math.round(sec+sec_added) % 60}
+                  {(Math.round(sec + sec_added) % 60).toString().length < 2
+                    ? '0' + (Math.round(sec + sec_added) % 60)
+                    : Math.round(sec + sec_added) % 60}
                 </StateItem>
                 <StateItem>
                   <div>SPEED</div>
@@ -503,14 +601,14 @@ function Typing() {
       </TypingWrap>
     </>
   );
-};
+}
 
 const TitleMore = styled.div`
   position: absolute;
   right: 0;
   bottom: 8px;
-  
-  >span{
+
+  > span {
     display: block;
     width: 16px;
     height: 16px;
@@ -520,7 +618,7 @@ const TitleMore = styled.div`
     transition: 0.3s;
 
     &::before {
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       top: calc(50% - 1px);
@@ -531,7 +629,7 @@ const TitleMore = styled.div`
       background-color: #fff;
     }
     &::after {
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       left: calc(50% - 1px);
@@ -541,10 +639,9 @@ const TitleMore = styled.div`
       border-radius: 1px;
       background-color: #fff;
     }
-  
   }
 
-  >div{
+  > div {
     display: none;
     right: 22px;
     bottom: -270%;
@@ -552,7 +649,7 @@ const TitleMore = styled.div`
     width: 1139px;
     padding: 26px 35px;
     box-sizing: border-box;
-    background: #DEDEDE;
+    background: #dedede;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
 
@@ -562,7 +659,7 @@ const TitleMore = styled.div`
     letter-spacing: -0.017em;
     color: #616161;
 
-    >svg{
+    > svg {
       position: absolute;
       right: -20px;
       top: calc(50% - 20px);
@@ -570,7 +667,7 @@ const TitleMore = styled.div`
       height: 40px;
     }
   }
-  >span:hover + div{
+  > span:hover + div {
     display: block;
   }
 `;

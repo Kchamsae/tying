@@ -1,12 +1,12 @@
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
-import { apis } from "../../shared/apis";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
+import { setCookie, getCookie, deleteCookie } from '../../shared/Cookie';
+import { apis } from '../../shared/apis';
 // import { history } from "../redux/configureStore";
 
 // actions
-const SET_USER = "SET_USER";
-const OUT_USER = "OUT_USER";
+const SET_USER = 'SET_USER';
+const OUT_USER = 'OUT_USER';
 
 // action creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
@@ -22,7 +22,7 @@ const initialState = {
 //회원가입
 const signupDB = (id, nickname, pwd) => {
   return async function (dispatch, getState, { history }) {
-    console.log("id : ", id, "nickname : ", nickname, "pwd : ", pwd);
+    console.log('id : ', id, 'nickname : ', nickname, 'pwd : ', pwd);
 
     apis
       .signup({
@@ -34,13 +34,13 @@ const signupDB = (id, nickname, pwd) => {
       .then((res) => {
         console.log(res);
         if (res.data.ok === true) {
-          window.alert("성공적으로 회원가입하셨습니다!");
+          window.alert('성공적으로 회원가입하셨습니다!');
         } else if (res.data.ok === false) {
           window.alert(res.data.errorMessage);
         }
       })
       .catch((err) => {
-        alert("회원가입에 실패했습니다.");
+        alert('회원가입에 실패했습니다.');
         console.log(err);
       });
   };
@@ -57,7 +57,7 @@ const loginDB = (id, pwd) => {
       })
       .then((res) => {
         if (res.data.ok) {
-          setCookie("token", res.data.token, 1); // 토큰 쿠키에 저장
+          setCookie('token', res.data.token, 1); // 토큰 쿠키에 저장
           dispatch(
             setUser({
               id: res.data.id,
@@ -65,13 +65,13 @@ const loginDB = (id, pwd) => {
               userId: res.data.userId,
             })
           );
-          return ("ok", window.alert("로그인이 완료 되었습니다!"));
+          return 'ok', window.alert('로그인이 완료 되었습니다!');
         } else if (res.data.ok === false) {
-          window.alert("아이디와 비밀번호를 다시 확인해주세요.");
+          window.alert('아이디와 비밀번호를 다시 확인해주세요.');
         }
       })
       .catch((err) => {
-        window.alert("아이디와 비밀번호를 다시 확인해주세요.");
+        window.alert('아이디와 비밀번호를 다시 확인해주세요.');
         console.log(err);
       });
   };
@@ -97,7 +97,7 @@ const loginCheckDB = (token) => {
         }
       })
       .catch((err) => {
-        console.log("에러발생", err);
+        console.log('에러발생', err);
       });
   };
 };
@@ -108,8 +108,8 @@ const kakaoLoginDB = (code) => {
     apis
       .kakaoLogin(code)
       .then(async (res) => {
-        console.log("카카오확인", res);
-        await setCookie("token", res.data.user.token, 1); // 토큰 쿠키에 저장
+        console.log('카카오 로그인 완료 : ', res);
+        await setCookie('token', res.data.user.token, 1); // 토큰 쿠키에 저장
         dispatch(
           setUser({
             nickname: res.data.user.nickname,
@@ -117,12 +117,12 @@ const kakaoLoginDB = (code) => {
         );
       })
       .then(() => {
-        window.alert("카카오 로그인이 완료 되었습니다!");
-        history.push("/");
+        window.alert('카카오 로그인이 완료 되었습니다!');
+        history.push('/');
         // 로그인 성공 시 메인으로 이동
       })
       .catch((err) => {
-        console.log("카카오 로그인실패", err);
+        console.log('카카오 로그인실패', err);
       });
   };
 };
@@ -138,7 +138,7 @@ export default handleActions(
       }),
     [OUT_USER]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("token");
+        deleteCookie('token');
         //로그아웃 시 쿠키에서 토큰 삭제
         draft.user = null;
         draft.is_login = false;
