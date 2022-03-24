@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios from "axios";
 import { apis } from "../../shared/apis";
 
 const SET_ONE_SCRIPT = "SET_ONE_SCRIPT";
@@ -24,9 +23,7 @@ const initialState = {
 const randomCategoryScriptDB = (category, small_category) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const random = await axios.get(
-        `http://13.209.69.234/api/script/${category}/${small_category}`
-      );
+      const random = await apis.randomScript(category, small_category);
 
       dispatch(setOneScript(random.data.script[0]));
       console.log(random.data);
@@ -41,9 +38,7 @@ const setOneScriptDB = (script_id) => {
   console.log("테스트");
   return async function (dispatch, getState, { history }) {
     try {
-      const get_one = await axios.get(
-        `http://13.209.69.234/api/detail/${script_id}`
-      );
+      const get_one = await apis.oneScript(script_id);
 
       console.log(get_one.data);
 

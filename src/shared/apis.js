@@ -24,6 +24,7 @@ export const apis = {
   idDuplicateCheck: (idCheckF) => api.post("/api/signup/idCheck", idCheckF),
   nicknameDuplicateCheck: (nicknameCheckF) => api.post("/api/signup/nicknameCheck", nicknameCheckF),
   // word
+  setDicts: (script_id,word)=> api.get(`/opendict/guest/${script_id}/${word}`),
   setDictUser: (script_id,word)=> api.get(`/opendict/user/${script_id}/${word}`),
   addDict: (script_id,word,meaning)=> api.post(`/opendict/${script_id}/${word}`,{meaning: meaning}),
   editDict: (script_id,word,word_id,meaning)=> api.put(`/opendict/${script_id}/${word}/${word_id}`,{meaning: meaning}),
@@ -35,6 +36,8 @@ export const apis = {
   // script
   filterScript: (category, topic, number) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}&page=${number}`),
   searchScript: (number, word) => api.get(`/api/script/search?page=${number}&targetWord=${word}`),
+  randomScript: (category, small_category) => api.get(`/api/script/${category}/${small_category}`),
+  oneScript: (script_id) => api.get(`/api/detail/${script_id}`),
   // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
 };
