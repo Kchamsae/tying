@@ -117,7 +117,7 @@ function Typing() {
 
   useEffect(()=>{
     textbox.current.addEventListener("focusout", focusOut)
-    return (()=>textbox.current.removeEventListener("focusout", focusOut))
+    return (()=>textbox.current?.removeEventListener("focusout", focusOut))
   },[sec,sec_added])
 
   // 문단을 초기화 할 때 세팅해야하는 것들
@@ -203,7 +203,7 @@ function Typing() {
     // 한 문단의 작성이 끝났을 때 다음 문단으로 넘어가는 이벤트
     console.log(enter_state);
     textbox.current.addEventListener('keydown', nextStart);
-    return () => textbox.current.removeEventListener('keydown', nextStart);
+    return () => textbox.current?.removeEventListener('keydown', nextStart);
   }, [nextStart]);
 
   // const onUserInputChange = (e) => {
