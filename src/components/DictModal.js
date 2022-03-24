@@ -431,7 +431,9 @@ const DictModalWrapper = styled.div`
             }
 
             > div:nth-of-type(2) {
+              font-family: 'Noto Sans KR';
               flex: 26.61% 0 0;
+              font-weight: 500;
               font-size: 0.83vw;
               letter-spacing: -0.08px;
               color: #bdbdbd;
