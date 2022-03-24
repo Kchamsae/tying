@@ -106,6 +106,7 @@ const Search = () => {
 };
 
 const SearchWrapper = styled.div`
+  background-color: #f9f9f9;
   .search-bar {
     width: 836px;
     height: 66px;
@@ -156,6 +157,7 @@ const SearchWrapper = styled.div`
   .search-result {
     width: 1144px;
     margin: 72px auto;
+    
 
     .filtering-result-none {
       width: max-content;

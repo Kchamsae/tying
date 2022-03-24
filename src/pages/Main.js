@@ -38,7 +38,7 @@ const Main = (props) => {
     }
 
     React.useEffect(()=>{
-        document.body.style.overflow = 'hidden';
+        // document.body.style.overflow = 'hidden';
 
         wrapperRef.current.addEventListener('click',(e)=>{
             if(e.target !== e.currentTarget) return;
