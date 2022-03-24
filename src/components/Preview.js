@@ -441,7 +441,7 @@ const DictModalBg = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  z-index: 850;
 `;
 const DictModalClose = styled.div`
   width: 17px;
