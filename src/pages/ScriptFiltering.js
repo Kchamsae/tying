@@ -4,6 +4,7 @@ import ScriptItem from '../components/ScriptItem';
 import ScriptItemLoading from '../components/ScriptItemLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
+import { useInView } from "react-intersection-observer";
 
 const ScriptFiltering = () => {
 
@@ -12,6 +13,36 @@ const ScriptFiltering = () => {
 
     const [done, setDone] = useState(false);
     const [reset, setReset] = useState(false);
+
+    // 무한 스크롤 구현부
+    const [pageNumber, setPageNumber] = useState(1); //첫페이지 넘버값 1
+
+    const [ref, inView] = useInView();
+    
+    // const getFilterScroll = async () => {
+    //     setPageNumber (pageNumber + 1);
+    // };
+
+    useEffect(() => {
+        if (inView && pageNumber !== 0) {
+            setPageNumber (pageNumber => pageNumber+ 1);
+            // 스크롤 다운 시 페이지넘버 1씩 증가
+            const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map(a => {
+                if(a === '&') return '%26';
+                if(a === '/') return '%2F';
+                return a;
+            }).join('');
+            const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map(a=>a==='&'?'%26':a).join('');
+            dispatch(scriptActions.setFilterListDB(_category,_topic,pageNumber+1,true)).then((res) => {
+                // 무한스크롤 불러오는 경우에 true
+                if (res === 'no') {
+                    setPageNumber(0)
+                    // 더 이상 불러올 스크립트 없을 때 'no'로 response 받아옴
+                }
+            })
+        }
+    }, [inView]);
+
 
     const scrollRef = useRef();
 
@@ -36,11 +67,11 @@ const ScriptFiltering = () => {
     }
     const addFilterOverlap = (e) => {
         if(reset) setReset(false);
-        if(filter.indexOf('1Agree/Disagree') === -1){
-            setFilter(list => list.concat('1Agree/Disagree'));
+        if(filter.indexOf('1Agree / Disagree') === -1){
+            setFilter(list => list.concat('1Agree / Disagree'));
             return;
         } else{
-            setFilter(list => list.filter(a => a !== '1Agree/Disagree')); 
+            setFilter(list => list.filter(a => a !== '1Agree / Disagree')); 
             return;
         }
     }
@@ -57,6 +88,7 @@ const ScriptFiltering = () => {
     const FilterList = () => {
         setDone(true);
         setReset(true);
+        setPageNumber(1); // 첫페이지 넘버값 1로 설정한것 넣어줌
         const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map(a => {
             if(a === '&') return '%26';
             if(a === '/') return '%2F';
@@ -64,7 +96,7 @@ const ScriptFiltering = () => {
         }).join('');
         const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map(a=>a==='&'?'%26':a).join('');
 
-        dispatch(scriptActions.setFilterListDB(_category,_topic));
+        dispatch(scriptActions.setFilterListDB(_category,_topic,1,false));
         setDone(false);
         scrollRef.current.scrollTo(0,0);
     }
@@ -89,8 +121,8 @@ const ScriptFiltering = () => {
                             <div>
                                 <div className='filtering-box-title'>TOFEL</div>
                                 <ul>
-                                    <li className={filter.indexOf('Agree/Disagree') !== -1 ? 'filter-checked' : ''}>
-                                        <span onClick={addFilter}>Agree/Disagree</span>
+                                    <li className={filter.indexOf('Agree / Disagree') !== -1 ? 'filter-checked' : ''}>
+                                        <span onClick={addFilter}>Agree / Disagree</span>
                                     </li>
                                     <li className={filter.indexOf('Multiple Choice') !== -1 ? 'filter-checked' : ''}>
                                         <span onClick={addFilter}>Multiple Choice</span>
@@ -106,17 +138,17 @@ const ScriptFiltering = () => {
                             <div>
                                 <div className='filtering-box-title'>IELTS</div>
                                 <ul>
-                                    <li className={filter.indexOf('1Agree/Disagree') !== -1 ? 'filter-checked' : ''}>
-                                        <span onClick={addFilterOverlap}>Agree/Disagree</span>
+                                    <li className={filter.indexOf('1Agree / Disagree') !== -1 ? 'filter-checked' : ''}>
+                                        <span onClick={addFilterOverlap}>Agree / Disagree</span>
                                     </li>
                                     <li className={filter.indexOf('Both views') !== -1 ? 'filter-checked' : ''}>
                                         <span onClick={addFilter}>Both views</span>
                                     </li>
-                                    <li className={filter.indexOf('Advantage/Disadvantage') !== -1 ? 'filter-checked' : ''}>
-                                        <span onClick={addFilter}>Advantage/Disadvantage</span>
+                                    <li className={filter.indexOf('Advantage / Disadvantage') !== -1 ? 'filter-checked' : ''}>
+                                        <span onClick={addFilter}>Advantage / Disadvantage</span>
                                     </li>
-                                    <li className={filter.indexOf('Problem&Solution') !== -1 ? 'filter-checked' : ''}>
-                                        <span onClick={addFilter}>Problem&amp;Solution</span>
+                                    <li className={filter.indexOf('Problem & Solution') !== -1 ? 'filter-checked' : ''}>
+                                        <span onClick={addFilter}>Problem &amp; Solution</span>
                                     </li>
                                 </ul>
                             </div>
@@ -150,8 +182,8 @@ const ScriptFiltering = () => {
                                 <li className={topic.indexOf('Culture') !== -1 ? 'filter-checked' : ''}>
                                     <span onClick={addTopic}>Culture</span>
                                 </li>
-                                <li className={topic.indexOf('Science&Technology') !== -1 ? 'filter-checked' : ''}>
-                                    <span onClick={addTopic}>Science&amp;Technology</span>
+                                <li className={topic.indexOf('Science & Technology') !== -1 ? 'filter-checked' : ''}>
+                                    <span onClick={addTopic}>Science &amp; Technology</span>
                                 </li>
                                 <li className={topic.indexOf('Economics') !== -1 ? 'filter-checked' : ''}>
                                     <span onClick={addTopic}>Economics</span>
@@ -189,7 +221,10 @@ const ScriptFiltering = () => {
                 <div className='filtering-right' ref={scrollRef}>
                     {(filter_list !== 'no' && !done) && (
                         filter_list.map((a,i)=>{
-                            return <ScriptItem key={i} {...a}/>
+                            if (filter_list.length -1 === i) {
+                                return <ScriptItem key={i} {...a} _ref={ref}/> // inView ref 넣어줌
+                            } 
+                            return <ScriptItem key={i} {...a} />
                         })
                     )}
                     {(filter_list === 'no' && !done) && (
