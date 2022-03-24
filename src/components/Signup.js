@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import axios from "axios";
+import { apis } from "../shared/apis";
 import { idCheck, nicknameCheck, pwdCheck } from "../shared/signupRegex";
 
 const Signup = (props) => {
@@ -34,8 +35,8 @@ const Signup = (props) => {
       return;
     }
 
-    axios
-      .post("http://13.209.69.234/api/signup/idCheck", {
+    apis
+      .idDuplicateCheck({
         id: id,
       })
       .then((res) => {
@@ -65,8 +66,8 @@ const Signup = (props) => {
       return;
     }
 
-    axios
-      .post("http://13.209.69.234/api/signup/nicknameCheck", {
+    apis
+      .nicknameDuplicateCheck({
         nickname: nickname,
       })
       .then((res) => {

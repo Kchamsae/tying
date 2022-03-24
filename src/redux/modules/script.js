@@ -7,11 +7,13 @@ const SET_ONE_SCRIPT = "SET_ONE_SCRIPT";
 const SET_FILTER_LIST = "SET_FILTER_LIST";
 const SET_SEARCH_LIST = "SET_SEARCH_LIST";
 const ADD_FILTER_LIST = "ADD_FILTER_LIST";
+const ADD_SEARCH_LIST = "ADD_SEARCH_LIST";
 
 const setOneScript = createAction(SET_ONE_SCRIPT, (script) => ({ script }));
 const setFilterList = createAction(SET_FILTER_LIST, (list) => ({ list }));
 const setSearchList = createAction(SET_SEARCH_LIST, (list) => ({ list }));
 const addFilterList = createAction(ADD_FILTER_LIST, (list) => ({ list }));
+const addSearchList = createAction(ADD_SEARCH_LIST, (list) => ({ list }));
 
 const initialState = {
   typing_script: {},
@@ -64,18 +66,19 @@ const setFilterListDB = (category, topic, number, scroll) => {
       const list = await apis.filterScript(category, topic, number);
 
       console.log("list.data :", list.data);
-      if (list.data.ok && list.data.ok !== 'no') {
+      if (list.data.ok && list.data.ok !== "no") {
         if (list.data.scripts?.length === 0) {
           dispatch(setFilterList("no"));
         } else {
-          if (scroll) { // 무한스크롤 관련
+          if (scroll) {
+            // 무한스크롤 관련
             dispatch(addFilterList(list.data.scripts));
           } else {
             dispatch(setFilterList(list.data.scripts));
           }
         }
-      } else if (list.data.ok === 'no') {
-          return 'no';
+      } else if (list.data.ok === "no") {
+        return "no";
       }
     } catch (err) {
       console.log(err);
@@ -84,18 +87,24 @@ const setFilterListDB = (category, topic, number, scroll) => {
   };
 };
 
-const setSearchListDB = (word) => {
+const setSearchListDB = (number, word, scroll) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const list = await apis.searchScript(word);
+      const list = await apis.searchScript(number, word);
 
       console.log(list.data);
-      if (list.data.ok) {
-        if (list.data.targetScripts.length === 0) {
+      if (list.data.ok && list.data.ok !== 'no') {
+        if (list.data.targetScripts?.length === 0) {
           dispatch(setSearchList("no"));
         } else {
-          dispatch(setSearchList(list.data.targetScripts));
+          if (scroll) {
+            dispatch(addSearchList(list.data.targetScripts));
+          } else {
+            dispatch(setSearchList(list.data.targetScripts));
+          }
         }
+      } else if (list.data.ok === 'no') {
+        return 'no';
       }
     } catch (err) {
       console.log(err);
@@ -122,6 +131,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.filter_list = [...draft.filter_list, ...action.payload.list];
         // 배열 안에 있는 리스트 꺼내준다
+      }),
+    [ADD_SEARCH_LIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.search_list = [...draft.search_list, ...action.payload.list];
       }),
   },
   initialState
