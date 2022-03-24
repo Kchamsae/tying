@@ -34,14 +34,14 @@ const Header = (props) => {
     }, 400);
   };
 
-  useEffect(()=>{
-    if(modal_on){
-      document.body.style.overflow = 'hidden';
-    }
-    else if(!modal_on){
-      document.body.style.overflow = 'unset';
-    }
-  },[modal_on])
+  // useEffect(()=>{
+  //   if(modal_on){
+  //     document.body.style.overflow = 'hidden';
+  //   }
+  //   else if(!modal_on){
+  //     document.body.style.overflow = 'unset';
+  //   }
+  // },[modal_on])
 
   return (
     <>

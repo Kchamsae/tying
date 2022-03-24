@@ -8,7 +8,8 @@ const RECORD_TYPING = 'RECORD_TYPING';
 const recordTyping = createAction(RECORD_TYPING, (record) => ({ record }));
 
 const recordTypingDB = (
-  script_id,
+  scriptId,
+  scriptType,
   duration,
   time,
   typingCnt,
@@ -18,7 +19,8 @@ const recordTypingDB = (
   return async function (dispatch, getState, { history }) {
     try {
       const doc = {
-        scriptId: script_id,
+        scriptId,
+        scriptType,
         duration,
         time,
         typingCnt,

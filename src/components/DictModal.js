@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as wordActions } from '../redux/modules/word';
+import { actionCreators as userActions } from '../redux/modules/user';
 
 const DictModal = (props) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const DictModal = (props) => {
   const typeMeaning = () => {
     if (!is_login) {
       alert('로그인 후 이용할 수 있습니다!');
+      dispatch(userActions.setLoginModal(true));
       return;
     }
     if (is_login) {
@@ -36,6 +38,7 @@ const DictModal = (props) => {
   const addMeaning = () => {
     if (!is_login) {
       alert('로그인 후 이용할 수 있습니다!');
+      dispatch(userActions.setLoginModal(true));
       setTypeMean(false);
     }
     const second = dict_list?.filter((a) => a.nickname === user.nickname);
@@ -141,6 +144,7 @@ const DictItem = (props) => {
   const pushLike = (is_like) => {
     if (!is_login) {
       alert('로그인 후 이용할 수 있습니다!');
+      dispatch(userActions.setLoginModal(true));
       return;
     }
     if (props.nickname === user.nickname) {
@@ -157,6 +161,7 @@ const DictItem = (props) => {
   const pushDislike = (is_dislike) => {
     if (!is_login) {
       alert('로그인 후 이용할 수 있습니다!');
+      dispatch(userActions.setLoginModal(true));
       return;
     }
     if (props.nickname === user.nickname) {
@@ -233,7 +238,7 @@ const DictItem = (props) => {
           </div>
         </div>
         <div>
-          {props.nickname === user.nickname && (
+          {props.nickname === user?.nickname && (
             <>
               <div
                 className='dict-edit'
@@ -279,7 +284,7 @@ const DictModalWrapper = styled.div`
   width: 49.74vw;
   height: 29.74vw;
   border-radius: 1.04vw;
-  z-index: 10000;
+  z-index: 900;
   display: flex;
   justify-content: center;
 
