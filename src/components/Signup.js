@@ -379,6 +379,10 @@ const Signup = (props) => {
                   onChange={(e) => {
                     setPwdCheck(e.target.value);
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter"){
+                      signup();
+                  }}}
                 />
 
                 {pwd !== '' && !pwdCheck(pwd_Check) && (
