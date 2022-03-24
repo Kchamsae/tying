@@ -17,7 +17,7 @@ const addSearchList = createAction(ADD_SEARCH_LIST, (list) => ({ list }));
 const initialState = {
   typing_script: {},
   filter_list: [],
-  Search_list: [],
+  search_list: [],
 };
 
 const randomCategoryScriptDB = (category, small_category) => {
