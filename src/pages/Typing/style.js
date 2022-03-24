@@ -279,8 +279,9 @@ const TitleProgress = styled.div`
 const Title = styled.hgroup`
   width: 100%;
   margin-bottom: 0.94vw;
-  padding: 0 25px;
+  padding: 0 26px;
   box-sizing: border-box;
+  position: relative;
   h3{
     font-weight: 500;
     font-size: 25px;
@@ -352,8 +353,14 @@ const TypingBox = styled.div`
 `;
 
 const Source = styled.div`
+    font-family: 'Noto Sans KR';
     text-align: right;
+    font-weight: 400;
+    font-size: 0.78vw;
+    letter-spacing: -0.015em;
+    color: rgba(135, 136, 137, 0.55);
     >a{
+      font-family: noto-sans;
       font-weight: 400;
       font-size: 0.78vw;
       letter-spacing: -0.015em;

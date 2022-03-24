@@ -32,5 +32,6 @@ export const apis = {
   // script
   filterScript: (category, topic) => api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}`),
   searchScript: (word) => api.get(`/api/search/${word}`),
+  // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
 };

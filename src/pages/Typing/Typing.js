@@ -33,6 +33,7 @@ import{
 } from './style'
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import dayjs from "dayjs";
+import styled from "styled-components";
 
 function Typing() {
   const script_id = +useParams().script_id;
@@ -73,6 +74,8 @@ function Typing() {
 
   const upDownRef = React.useRef(); // preview에서 가져올 함수
 
+  const titleRef = React.useRef();
+
   const paragraph_divided = useSelector((state) => state.typing.divided_num);
 
   const dispatch = useDispatch();
@@ -105,15 +108,11 @@ function Typing() {
     console.log("포커스 아웃");
     setFocusin(false);
     const _sec = sec
-    console.log(sec);
-    console.log(sec_added);
-    console.log(sec+sec_added);
     setSecAdded(sec_added+_sec);
     clearInterval(intervalRef.current);
     intervalRef.current = null;
     nowRef.current = null;
     setStarted(false);
-    console.log(sec_added)
     setSec(0);
   });
   },[sec,sec_added])
@@ -405,9 +404,33 @@ function Typing() {
           <TitleProgress>
             <Title>
               <h3>{script_data?.scriptType} - {script_data?.scriptCategory}</h3>
-              <h4>{script_data?.scriptTitle}</h4>
+              <h4 ref={titleRef} onClick={(e)=>console.log(e.target.clientHeight, e.target.offsetHeight, e.target.scrollHeight)}>{script_data?.scriptTitle}</h4>
+              {titleRef.current?.clientHeight+1 < titleRef.current?.scrollHeight && (
+                <TitleMore>
+                  <span></span>
+                  <div>
+                    {script_data?.scriptTitle}
+                    <svg viewBox="0 0 24 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g filter="url(#filter0_d_1569_11513)">
+                          <path d="M16.1758 36C18.5132 36 19.9527 33.4452 18.7419 31.4459L0 0.5L4 36H16.1758Z" fill="#DEDEDE"/>
+                        </g>
+                        <defs>
+                            <filter id="filter0_d_1569_11513" x="0" y="0.5" width="23.1797" height="39.5" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                            <feOffset dx="2" dy="2"/>
+                            <feGaussianBlur stdDeviation="1"/>
+                            <feComposite in2="hardAlpha" operator="out"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1569_11513"/>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1569_11513" result="shape"/>
+                            </filter>
+                        </defs>
+                    </svg>
+                  </div>
+                </TitleMore>
+              )}
             </Title>
-
             <ProgressBar>
               <div
                 style={{
@@ -440,6 +463,7 @@ function Typing() {
             <textarea ref={textbox} />
           </TypingBox>
           <Source>
+            <span>출처 - </span>
             <a href={script_data?.scriptSource} target='_blank' rel="noreferrer">
               {script_data?.scriptSource}
             </a>
@@ -478,6 +502,76 @@ function Typing() {
       </TypingWrap>
     </>
   );
-}
+};
+
+const TitleMore = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  
+  >span{
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ff2e00;
+    position: relative;
+    transition: 0.3s;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: calc(50% - 1px);
+      left: calc(50% - 5px);
+      width: 10px;
+      height: 2px;
+      border-radius: 1px;
+      background-color: #fff;
+    }
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: calc(50% - 1px);
+      top: calc(50% - 5px);
+      width: 2px;
+      height: 10px;
+      border-radius: 1px;
+      background-color: #fff;
+    }
+  
+  }
+
+  >div{
+    display: none;
+    right: 22px;
+    bottom: -270%;
+    position: absolute;
+    width: 1139px;
+    padding: 26px 35px;
+    box-sizing: border-box;
+    background: #DEDEDE;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 38px;
+    letter-spacing: -0.017em;
+    color: #616161;
+
+    >svg{
+      position: absolute;
+      right: -20px;
+      top: calc(50% - 20px);
+      width: 24px;
+      height: 40px;
+    }
+  }
+  >span:hover + div{
+    display: block;
+  }
+`;
 
 export default Typing;
