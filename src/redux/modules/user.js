@@ -7,73 +7,60 @@ import { apis } from '../../shared/apis';
 // actions
 const SET_USER = 'SET_USER';
 const OUT_USER = 'OUT_USER';
+const SET_LOGIN_MODAL = 'SET_LOGIN_MODAL'
 
 // action creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const outUser = createAction(OUT_USER, () => ({}));
+const setLoginModal = createAction(SET_LOGIN_MODAL,(set)=>({set}));
 
 //initial state
 const initialState = {
   user: null,
   is_login: false,
+  login_modal: false,
 };
 
 //middleware actions
 //회원가입
 const signupDB = (id, nickname, pwd) => {
   return async function (dispatch, getState, { history }) {
-    console.log('id : ', id, 'nickname : ', nickname, 'pwd : ', pwd);
-
-    apis
-      .signup({
-        id: id,
-        nickname: nickname,
-        pwd: pwd,
-      })
-      //회원가입 시 서버로 해당 값들 보냄
-      .then((res) => {
-        console.log(res);
-        if (res.data.ok === true) {
-          window.alert('성공적으로 회원가입하셨습니다!');
-        } else if (res.data.ok === false) {
-          window.alert(res.data.errorMessage);
-        }
-      })
-      .catch((err) => {
-        alert('회원가입에 실패했습니다.');
-        console.log(err);
-      });
+    try{
+      const doc = {id, nickname, pwd};
+      const signup = await apis.signup(doc);
+      if(signup.data.ok){
+        return 'ok';
+      }else if (signup.data.ok === false) {
+        window.alert(signup.data.errorMessage);
+      }
+    }catch(err){
+      console.log(err);
+    }
   };
 };
 
 //로그인
 const loginDB = (id, pwd) => {
-  console.log(id, pwd);
   return async function (dispatch, getState, { history }) {
-    apis
-      .login({
-        id: id,
-        pwd: pwd,
-      })
-      .then((res) => {
-        if (res.data.ok) {
-          setCookie('token', res.data.token, 1); // 토큰 쿠키에 저장
-          dispatch(
-            setUser({
-              id: res.data.id,
-              nickname: res.data.nickname,
-              userId: res.data.userId,
-            })
-          );
-          return 'ok', window.alert('로그인이 완료 되었습니다!');
-        } else if (res.data.ok === false) {
-          window.alert('아이디와 비밀번호를 다시 확인해주세요.');
-        }
-      })
-      .catch((err) => {
+    try{
+      const doc = {id, pwd}
+      const login = await apis.login(doc)
+      if(login.data.ok){
+        setCookie('token', login.data.token, 1); // 토큰 쿠키에 저장
+        dispatch(
+          setUser({
+            id: login.data.id,
+            nickname: login.data.nickname,
+            userId: login.data.userId,
+          })
+        );
+        return 'ok'
+      } else if (login.data.ok === false) {
         window.alert('아이디와 비밀번호를 다시 확인해주세요.');
-        console.log(err);
-      });
+      }
+    }catch(err){
+      console.log(err);
+    }
   };
 };
 
@@ -135,14 +122,18 @@ export default handleActions(
         draft.user = action.payload.user;
         draft.is_login = true;
         //원본값을 복사한 값을 draft로 받아옴
-      }),
+    }),
     [OUT_USER]: (state, action) =>
       produce(state, (draft) => {
         deleteCookie('token');
         //로그아웃 시 쿠키에서 토큰 삭제
         draft.user = null;
         draft.is_login = false;
-      }),
+    }),
+    [SET_LOGIN_MODAL]:(state, action) =>
+      produce(state, (draft) => {
+        draft.login_modal = action.payload.set;
+    }),
   },
   initialState
 );
@@ -151,6 +142,7 @@ export default handleActions(
 const actionCreators = {
   setUser,
   outUser,
+  setLoginModal,
   signupDB,
   loginDB,
   loginCheckDB,
