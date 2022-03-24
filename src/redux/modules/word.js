@@ -30,7 +30,7 @@ const initialState = {
 const setDictDB = (script_id,word) => {
     return async function(dispatch, getState, {history}){
         try{
-            const word_list = await axios.get(`http://13.209.69.234/opendict/guest/${script_id}/${word}`)
+            const word_list = await apis.setDicts(script_id,word);
 
             if(word_list.data.ok){
                 dispatch(setDict(word_list.data.opendict))
