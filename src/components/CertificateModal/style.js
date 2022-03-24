@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const CertificateModalWrap = styled.div`
   width: 100vw;
@@ -21,7 +21,7 @@ const Modal = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 0 27px;
-  position: relative;     
+  position: relative;
 `;
 
 const ModalClose = styled.div`
@@ -51,15 +51,15 @@ const ModalGraphic = styled.div`
 const ModalTime = styled.div`
   margin: 0 3px 26px 0;
   align-self: flex-end;
-  >div{
+  > div {
     margin-top: 5px;
     width: 175px;
     height: 31px;
-    background: #FCFCFC;
+    background: #fcfcfc;
     border-radius: 19.5px;
     display: flex;
     align-items: center;
-    >span:first-of-type{
+    > span:first-of-type {
       font-weight: 700;
       font-size: 14px;
       letter-spacing: -0.015em;
@@ -67,7 +67,7 @@ const ModalTime = styled.div`
       width: 67px;
       text-align: center;
       position: relative;
-      &::before{
+      &::before {
         content: '';
         display: block;
         width: 2px;
@@ -79,7 +79,7 @@ const ModalTime = styled.div`
         top: calc(50% - 10px);
       }
     }
-    >span:last-of-type{
+    > span:last-of-type {
       font-weight: 500;
       font-size: 14px;
       letter-spacing: -0.015em;
@@ -102,23 +102,23 @@ const ModalTitle = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-    &::before{
-      content: '';
-      display: block;
-      width: 11px;
-      height: 22px;
-      background: #FF2E00;
-      border-radius: 2px;
-      position: absolute;
-      left: 0;
-      top: calc(50% - 11px)
-    }
+  &::before {
+    content: '';
+    display: block;
+    width: 11px;
+    height: 22px;
+    background: #ff2e00;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 11px);
+  }
 `;
 
 const ModalBody = styled.div`
   width: 386px;
   height: 486px;
-  background: #DFDFDF;
+  background: #dfdfdf;
   border-radius: 20px;
   box-sizing: border-box;
   padding-top: 18px;
@@ -171,7 +171,7 @@ const ModalDataItem = styled.div`
   box-sizing: border-box;
   padding: 0 22px;
   margin-top: 5px;
-  background: #C4C4C4;
+  background: #c4c4c4;
   border-radius: 11px;
   filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.08));
 
@@ -179,7 +179,7 @@ const ModalDataItem = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  >span:first-of-type{
+  > span:first-of-type {
     font-family: 'Noto Sans KR';
     font-weight: 700;
     font-size: 20px;
@@ -191,7 +191,7 @@ const ModalDataItem = styled.div`
     text-align: center;
     position: relative;
 
-    &::before{
+    &::before {
       content: '';
       display: block;
       width: 2px;
@@ -204,7 +204,7 @@ const ModalDataItem = styled.div`
     }
   }
 
-  >span:last-of-type{
+  > span:last-of-type {
     width: 100px;
     font-size: 25px;
     display: flex;
@@ -213,10 +213,10 @@ const ModalDataItem = styled.div`
     display: inline-block;
     position: relative;
 
-    ${props => {
-      if(props.progress){
+    ${(props) => {
+      if (props.progress) {
         return css`
-          >span{
+          > span {
             font-size: 15px;
             color: #a5a5a5;
           }
@@ -224,10 +224,10 @@ const ModalDataItem = styled.div`
       }
     }}
 
-    ${props => {
-      if(props.timer){
+    ${(props) => {
+      if (props.timer) {
         return css`
-          &::before{
+          &::before {
             content: 'MIN';
             position: absolute;
             font-size: 10px;
@@ -237,7 +237,7 @@ const ModalDataItem = styled.div`
             bottom: -5px;
             left: 5px;
           }
-          &::after{
+          &::after {
             content: 'SEC';
             position: absolute;
             font-size: 5px;
@@ -253,7 +253,7 @@ const ModalDataItem = styled.div`
   }
 `;
 
-const ModalNicknameInput = styled.input.attrs(()=>({
+const ModalNicknameInput = styled.input.attrs(() => ({
   type: 'text',
   placeholder: '닉네임을 입력해주세요',
 }))`
@@ -263,7 +263,7 @@ const ModalNicknameInput = styled.input.attrs(()=>({
   padding: 0 17px;
   width: 189px;
   height: 27px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 
@@ -271,10 +271,9 @@ const ModalNicknameInput = styled.input.attrs(()=>({
   letter-spacing: -0.015em;
   color: #000;
 
-  &::placeholder{
-    color: #BDBDBD;
-  };
-
+  &::placeholder {
+    color: #bdbdbd;
+  }
 `;
 
 const ModalNickname = styled.div`
@@ -286,8 +285,8 @@ const ModalNickname = styled.div`
   font-weight: 500;
   font-size: 20px;
   letter-spacing: -0.015em;
-  
-  >span{
+
+  > span {
     font-size: 20px;
     color: #bdbdbd;
     margin-right: 7px;
@@ -301,7 +300,7 @@ const ModalButton = styled.button`
   width: 179px;
   height: 40px;
   margin: auto;
-  background: #0B0B0B;
+  background: #0b0b0b;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
 
@@ -315,28 +314,28 @@ const ModalButton = styled.button`
   align-items: center;
   cursor: pointer;
 
-  >svg{
+  > svg {
     width: 18px;
     height: 17px;
     margin-left: 12px;
   }
 `;
 
-export{
-    CertificateModalWrap,
-    Modal,
-    ModalClose,
-    ModalTop,
-    ModalGraphic,
-    ModalTime,
-    ModalTitle,
-    ModalBody,
-    ModalTag,
-    ModalTagItem,
-    ModalScriptTitle,
-    ModalData,
-    ModalDataItem,
-    ModalNicknameInput,
-    ModalNickname,
-    ModalButton,
-}
+export {
+  CertificateModalWrap,
+  Modal,
+  ModalClose,
+  ModalTop,
+  ModalGraphic,
+  ModalTime,
+  ModalTitle,
+  ModalBody,
+  ModalTag,
+  ModalTagItem,
+  ModalScriptTitle,
+  ModalData,
+  ModalDataItem,
+  ModalNicknameInput,
+  ModalNickname,
+  ModalButton,
+};

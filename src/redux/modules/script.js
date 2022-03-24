@@ -1,12 +1,12 @@
-import { createAction, handleActions } from "redux-actions";
-import { produce } from "immer";
-import { apis } from "../../shared/apis";
+import { createAction, handleActions } from 'redux-actions';
+import { produce } from 'immer';
+import { apis } from '../../shared/apis';
 
-const SET_ONE_SCRIPT = "SET_ONE_SCRIPT";
-const SET_FILTER_LIST = "SET_FILTER_LIST";
-const SET_SEARCH_LIST = "SET_SEARCH_LIST";
-const ADD_FILTER_LIST = "ADD_FILTER_LIST";
-const ADD_SEARCH_LIST = "ADD_SEARCH_LIST";
+const SET_ONE_SCRIPT = 'SET_ONE_SCRIPT';
+const SET_FILTER_LIST = 'SET_FILTER_LIST';
+const SET_SEARCH_LIST = 'SET_SEARCH_LIST';
+const ADD_FILTER_LIST = 'ADD_FILTER_LIST';
+const ADD_SEARCH_LIST = 'ADD_SEARCH_LIST';
 
 const setOneScript = createAction(SET_ONE_SCRIPT, (script) => ({ script }));
 const setFilterList = createAction(SET_FILTER_LIST, (list) => ({ list }));
@@ -35,7 +35,7 @@ const randomCategoryScriptDB = (category, small_category) => {
 };
 
 const setOneScriptDB = (script_id) => {
-  console.log("테스트");
+  console.log('테스트');
   return async function (dispatch, getState, { history }) {
     try {
       const get_one = await apis.oneScript(script_id);
@@ -50,7 +50,7 @@ const setOneScriptDB = (script_id) => {
       };
     } catch (err) {
       console.log(err);
-      alert("스크립트를 불러오지 못했습니다!");
+      alert('스크립트를 불러오지 못했습니다!');
     }
   };
 };
@@ -60,10 +60,10 @@ const setFilterListDB = (category, topic, number, scroll) => {
     try {
       const list = await apis.filterScript(category, topic, number);
 
-      console.log("list.data :", list.data);
-      if (list.data.ok && list.data.ok !== "no") {
+      console.log('list.data :', list.data);
+      if (list.data.ok && list.data.ok !== 'no') {
         if (list.data.scripts?.length === 0) {
-          dispatch(setFilterList("no"));
+          dispatch(setFilterList('no'));
         } else {
           if (scroll) {
             // 무한스크롤 관련
@@ -72,12 +72,12 @@ const setFilterListDB = (category, topic, number, scroll) => {
             dispatch(setFilterList(list.data.scripts));
           }
         }
-      } else if (list.data.ok === "no") {
-        return "no";
+      } else if (list.data.ok === 'no') {
+        return 'no';
       }
     } catch (err) {
       console.log(err);
-      alert("스크립트를 필터링 하지 못했습니다!");
+      alert('스크립트를 필터링 하지 못했습니다!');
     }
   };
 };
@@ -90,7 +90,7 @@ const setSearchListDB = (number, word, scroll) => {
       console.log(list.data);
       if (list.data.ok && list.data.ok !== 'no') {
         if (list.data.targetScripts?.length === 0) {
-          dispatch(setSearchList("no"));
+          dispatch(setSearchList('no'));
         } else {
           if (scroll) {
             dispatch(addSearchList(list.data.targetScripts));
@@ -103,7 +103,7 @@ const setSearchListDB = (number, word, scroll) => {
       }
     } catch (err) {
       console.log(err);
-      alert("검색결과를 가져오지 못했습니다!");
+      alert('검색결과를 가져오지 못했습니다!');
     }
   };
 };
