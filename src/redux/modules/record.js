@@ -13,7 +13,7 @@ const recordTypingDB = (script_id, duration, time, typingCnt, speed, progress) =
     return async function(dispatch, getState, {history}){
         try{
             const doc = {
-                script_id,
+                scriptId: script_id,
                 duration,
                 time,
                 typingCnt,
