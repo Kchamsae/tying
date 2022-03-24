@@ -212,7 +212,7 @@ const loadDictDB = () => {
       let dicts = [];
 
       load_dicts.forEach((doc) => {
-        dicts.push({ id: doc.id, ...doc });
+        dicts.push({ ...doc });
       });
       dispatch(loadDict(dicts));
     } catch (err) {
@@ -227,13 +227,13 @@ const loadAllDictDB = () => {
       const load_alldict = await apis.loadAllDict();
       console.log(load_alldict);
       const load_alldicts = load_alldict.data.mydict;
-      let allDicts = [];
+      // let allDicts = [];
 
-      load_alldicts.forEach((doc) => {
-        allDicts.push({ id: doc, ...doc });
-      });
-      console.log(allDicts);
-      dispatch(loadAllDict(allDicts));
+      // load_alldicts.forEach((doc) => {
+      //   allDicts.push({ ...doc });
+      // });
+      // console.log(allDicts);
+      dispatch(loadAllDict(load_alldicts));
     } catch (err) {
       console.log(err);
     }
@@ -366,7 +366,7 @@ export default handleActions(
 
     [DELETE_MYDICT]: (state, action) =>
       // console.log(
-      //   state.dict_list2[0][2],
+      //   state.dict_list2,
       //   'state 입니다.',
       //   action.payload.script_id.script_id,
       //   'action script_id 입니다.',
@@ -374,12 +374,13 @@ export default handleActions(
       //   'action word 입니다.'
       // ),
       produce(state, (draft) => {
-        draft.dict_list2 = draft.dict_list2.filter(
-          (a) =>
-            a[0][0] !== action.payload.script_id.word &&
-            a[0][2] !== action.payload.script_id.script_id
-        );
-        console.log(draft.dict_list2);
+        draft.dict_list2 = draft.dict_list2.filter((a) => {
+          console.log(a[2], a[4]);
+          return (
+            a[2] !== action.payload.word || a[4] !== action.payload.script_id
+          );
+        });
+        // console.log(draft.dict_list2);
       }),
   },
   initialState
