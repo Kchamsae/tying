@@ -79,7 +79,7 @@ const DictModal = (props) => {
                                 {type_mean&&(
                                     <div className='dict-mean-item dict-mean-add'>
                                         <div>
-                                            <input type='text' placeholder='Type the meaning...' ref={meaningRef}/>
+                                            <input type='text' placeholder='뜻을 입력하세요.' ref={meaningRef}/>
                                         </div>
                                         <div>by. {user.nickname}</div>
                                         <div></div>
@@ -162,7 +162,7 @@ const DictItem = (props) => {
         return(
             <div className='dict-mean-item dict-mean-add'>
                 <div>
-                    <input type='text' placeholder='Type the meaning...' ref={editMeaningRef} defaultValue={props.meaning}/>
+                    <input type='text' placeholder='뜻을 입력하세요.' ref={editMeaningRef} defaultValue={props.meaning}/>
                 </div>
                 <div>by. {user.nickname}</div>
                 <div></div>
