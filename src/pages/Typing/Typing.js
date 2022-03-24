@@ -1,6 +1,5 @@
 import Preview from '../../components/Preview';
 import React, { useCallback, useEffect, useState } from 'react';
-import { textList } from '../../shared/getText';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../../redux/modules/script';
 
@@ -39,10 +38,8 @@ function Typing() {
   const script_id = +useParams().script_id;
   const script_data = useSelector((state) => state.script.typing_script);
 
-  const _script = useSelector(
-    (state) => state.script.typing_script?.scriptParagraph
-  );
-  const script = _script?.join('\n').split('\n');
+  const script = useSelector((state) => state.script.typing_script?.scriptParagraph);
+  // const script = _script?.join('\n').split('\n');
   // const script = textList.split('\n');
   // console.log(script)
   const [text_num, setTextNum] = useState(0); // 현재 위치한 문단 번호
@@ -96,34 +93,33 @@ function Typing() {
         e.preventDefault();
       }
     });
-    // textarea에 포커스되었을 때 state값 세팅 (preview박스에서 커서 보이도록 작동시키는 데에 사용)
+    // textarea에 포커스되었을 때 
     textbox.current.addEventListener('focusin', () => {
       console.log('포커스 세팅');
       setFocusin(true);
     });
   }, []);
 
-  useEffect(() => {
-    textbox.current.addEventListener('focusout', () => {
-      console.log('포커스 아웃');
+  const focusOut = useCallback(
+    ()=>{
+      console.log(sec,sec_added);
       setFocusin(false);
       const _sec = sec;
-      setSecAdded(sec_added + _sec);
+      setSecAdded(sec_added+_sec);
       clearInterval(intervalRef.current);
       intervalRef.current = null;
       nowRef.current = null;
       setStarted(false);
       setSec(0);
-    });
-  }, [sec, sec_added]);
+    },
+    [sec,sec_added]
+  )
 
-  // // 다음 문단으로 넘어갈 때 세팅해야하는 것들
-  // const onStop = () => {
-  //   clearInterval(intervalRef.current);
-  //   intervalRef.current = null;
-  //   nowRef.current = null;
-  //   setStarted(false);
-  // };
+  useEffect(()=>{
+    textbox.current.addEventListener("focusout", focusOut)
+    return (()=>textbox.current.removeEventListener("focusout", focusOut))
+  },[sec,sec_added])
+
   // 문단을 초기화 할 때 세팅해야하는 것들
   const onRestart = () => {
     clearInterval(intervalRef.current);
@@ -329,7 +325,7 @@ function Typing() {
             sec={sec + sec_added}
             cpm={cpm}
             char_num={userInput.length}
-            progress={(userInput.length / textList.length) * 100}
+            progress={(userInput.length / script?.join('').length) * 100}
           />
         </>
       )}
@@ -460,7 +456,6 @@ function Typing() {
               <h3>{script_data?.scriptType} - {script_data?.scriptCategory}</h3>
               <h4 ref={titleRef} onClick={(e)=>console.log(e.target.clientHeight, e.target.offsetHeight, e.target.scrollHeight)}>{script_data?.scriptTitle}</h4>
               {titleRef.current?.clientHeight+2 < titleRef.current?.scrollHeight && (
-
                 <TitleMore>
                   <span></span>
                   <div>
@@ -524,13 +519,13 @@ function Typing() {
             <ProgressBar>
               <div
                 style={{
-                  width: `${(userInput.length * 100) / textList.length}%`,
+                  width: `${(userInput.length * 100) / script?.join('').length}%`,
                 }}
               ></div>
             </ProgressBar>
             <ProgressNum>
               <span>
-                {userInput.length}/{textList.length}
+                {userInput.length}/{script?.join('').length}
               </span>
             </ProgressNum>
           </TitleProgress>
