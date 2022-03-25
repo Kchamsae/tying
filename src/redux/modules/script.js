@@ -20,14 +20,17 @@ const initialState = {
   search_list: [],
 };
 
-const randomCategoryScriptDB = (category, small_category) => {
+const randomCategoryScriptDB = (category, small_category, reload=false) => {
   return async function (dispatch, getState, { history }) {
     try {
       const random = await apis.randomScript(category, small_category);
-
-      dispatch(setOneScript(random.data.script[0]));
-      console.log(random.data);
-      history.push(`/typing/${random.data.script[0].scriptId}`);
+      if(!reload){
+        dispatch(setOneScript(random.data.script[0]));
+        console.log(random.data);
+        history.push(`/typing/${random.data.script[0].scriptId}`);
+      }else if(reload){
+        return random.data.script[0].scriptId;
+      }
     } catch (err) {
       console.log(err);
     }
