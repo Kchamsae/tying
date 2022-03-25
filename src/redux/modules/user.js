@@ -8,11 +8,13 @@ import { apis } from '../../shared/apis';
 const SET_USER = 'SET_USER';
 const OUT_USER = 'OUT_USER';
 const SET_LOGIN_MODAL = 'SET_LOGIN_MODAL'
+const EDIT_USER = 'EDIT_USER';
 
 // action creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const outUser = createAction(OUT_USER, () => ({}));
 const setLoginModal = createAction(SET_LOGIN_MODAL,(set)=>({set}));
+const editUser = createAction(EDIT_USER, (nickname) => ({ nickname }));
 
 //initial state
 const initialState = {
@@ -114,6 +116,20 @@ const kakaoLoginDB = (code) => {
   };
 };
 
+// 닉네임 수정
+// const editUserDB = (nickname) => {
+//   return async function (dispatch, getState, { history }) {
+//     apis
+//     .editUserNickname(nickname)
+
+
+//     }
+//     catch (err) {
+//       window.alert(err.response.data.errorMessage)
+//       console.log(err);
+//     }
+//   }
+
 //reducer
 export default handleActions(
   {
@@ -123,6 +139,10 @@ export default handleActions(
         draft.is_login = true;
         //원본값을 복사한 값을 draft로 받아옴
     }),
+    // [EDIT_USER]: (state, action) =>
+    // produce(state, (draft) => {
+    //   draft.nickname = action.payload.nickname;
+    // }),
     [OUT_USER]: (state, action) =>
       produce(state, (draft) => {
         deleteCookie('token');
@@ -143,10 +163,12 @@ const actionCreators = {
   setUser,
   outUser,
   setLoginModal,
+  editUser,
   signupDB,
   loginDB,
   loginCheckDB,
   kakaoLoginDB,
+  // editUserDB,
 };
 
 export { actionCreators };
