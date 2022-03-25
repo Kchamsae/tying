@@ -12,8 +12,6 @@ const MyCertificateList = () => {
 
   const recordLoad = useSelector((state) => state.record.record_list);
 
-  console.log(recordLoad);
-
   return (
     <div>
       <div style={{ display: 'flex' }}>
