@@ -77,6 +77,7 @@ const CertificateModal = (props) => {
     const card = cardRef.current;
     const filter = (card) => {
       console.log(card.className)
+      // 인증서에 close button과 download button 제외
       return card.tagName !== 'BUTTON' && card.tagName !== 'svg';
     };
       domtoimage
