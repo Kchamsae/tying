@@ -29,10 +29,11 @@ import {
   State,
   StateItem,
   ModalBg,
+  TitleMore,
+  FinishBtn,
 } from './style';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import dayjs from 'dayjs';
-import styled from 'styled-components';
 
 function Typing() {
   const script_id = +useParams().script_id;
@@ -97,12 +98,14 @@ function Typing() {
     textbox.current.addEventListener('focusin', () => {
       console.log('포커스 세팅');
       setFocusin(true);
+      // if(textbox.current.style.imeMode === 'active'){
+        // textbox.current.style.imeMode = 'inactive'
+      // }
     });
   }, []);
 
   const focusOut = useCallback(
     ()=>{
-      console.log(sec,sec_added);
       setFocusin(false);
       const _sec = sec;
       setSecAdded(sec_added+_sec);
@@ -134,6 +137,7 @@ function Typing() {
   // 다음문단으로 넘어가거나 내용을 모두 지웠을 때 이벤트리스너로 전달될 함수
   const nextStart = useCallback(
     (e) => {
+      console.log(enter_state)
       // 텍스트를 모두 입력했을 때
       const text_length = (n) => {
         let total_length = 0;
@@ -142,8 +146,14 @@ function Typing() {
         }
         return total_length;
       };
-      if (e.key === 'Shift') return;
-      if (userInput.length >= script[0].length) {
+      if(e.key === 'Process'){
+        e.preventDefault();
+        window.alert('영어로 입력해주세요!');
+        return;
+      }
+      if(e.key === 'Shift') return;
+      // script?.join('').length
+      if(userInput.length >= script?.join('').length) {
         e.preventDefault();
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -162,13 +172,13 @@ function Typing() {
         giveFocus();
         return;
       } else if (enter_state) {
-        e.preventDefault();
+        // e.preventDefault();
         upDownRef.current.next();
         // onNextstart();
         userInput.concat(' ');
         setEnterState(false);
         giveFocus();
-        return;
+        
       } else if (userInput.length <= 1 && e.key === 'Backspace') {
         // 텍스트를 모두 지웠을 때 초기화
         e.preventDefault();
@@ -196,7 +206,7 @@ function Typing() {
         return userInput.concat(e.key);
       });
     },
-    [userInput, text_num, setSec, script]
+    [userInput, text_num, setSec, script, enter_state]
   );
 
   useEffect(() => {
@@ -227,12 +237,9 @@ function Typing() {
     if (userInput.length === 0) {
       return 100;
     }
-    const correct_num = userInput
-      .split('')
-      .filter((a, i) => a === script.join('')[i]).length;
-    return Number.isNaN(accuracy)
-      ? 100
-      : Math.floor((correct_num / userInput.length) * 100);
+    const correct_num = userInput.split('').filter((a, i) => a === script.join('')[i]).length;
+
+    return Number.isNaN(accuracy) ? 100 : Math.floor((correct_num / userInput.length) * 100);
   };
 
   // const countCorrectSymbols = (userInput) => {
@@ -316,6 +323,18 @@ function Typing() {
     });
   };
 
+  const finishScript = () => {
+    const check = window.confirm('정말 타이핑을 끝내시겠습니까?');
+    if(!check){
+      return;
+    }else if(check){
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      setCpm(calCpm(userInput));
+      setCertificate(true);
+    }
+  }
+
   return (
     <>
       {certificate && (
@@ -330,6 +349,22 @@ function Typing() {
         </>
       )}
       <TypingWrap>
+        {script && userInput.length >= script[0]?.length && (
+          <FinishBtn onClick={finishScript}>
+            <svg
+              width='30'
+              height='24'
+              viewBox='0 0 30 24'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M11.34 0V2.07C10.095 1.575 8.76 1.32 7.425 1.32C4.74 1.32 2.055 2.34 0 4.395L4.995 9.39H6.66V11.055C7.95 12.345 9.63 13.02 11.325 13.095V16.5H6.84V21C6.84 22.65 8.19 24 9.84 24H24.84C27.33 24 29.34 21.99 29.34 19.5V0H11.34ZM9.675 9.615V6.39H6.255L4.695 4.83C5.55 4.5 6.48 4.32 7.425 4.32C9.435 4.32 11.31 5.1 12.735 6.51L14.85 8.625L14.55 8.925C13.785 9.69 12.765 10.125 11.67 10.125C10.965 10.125 10.275 9.945 9.675 9.615V9.615ZM26.34 19.5C26.34 20.325 25.665 21 24.84 21C24.015 21 23.34 20.325 23.34 19.5V16.5H14.34V12.615C15.195 12.27 15.99 11.76 16.68 11.07L16.98 10.77L21.225 15H23.34V12.885L14.34 3.93V3H26.34V19.5Z'
+                fill='#000'
+              />
+            </svg>
+          </FinishBtn>
+        )}
         <SectionSide side={'left'} on={left_open && true}>
           <i
             onClick={() => {
@@ -545,7 +580,7 @@ function Typing() {
               setEnterState={setEnterState}
               ref={upDownRef}
             />
-            <textarea ref={textbox} />
+            <textarea ref={textbox}/>
           </TypingBox>
           <Source>
             <span>출처 - </span>
@@ -593,74 +628,5 @@ function Typing() {
     </>
   );
 }
-
-const TitleMore = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 8px;
-
-  > span {
-    display: block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #ff2e00;
-    position: relative;
-    transition: 0.3s;
-
-    &::before {
-      content: '';
-      display: block;
-      position: absolute;
-      top: calc(50% - 1px);
-      left: calc(50% - 5px);
-      width: 10px;
-      height: 2px;
-      border-radius: 1px;
-      background-color: #fff;
-    }
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      left: calc(50% - 1px);
-      top: calc(50% - 5px);
-      width: 2px;
-      height: 10px;
-      border-radius: 1px;
-      background-color: #fff;
-    }
-  }
-
-  > div {
-    display: none;
-    right: 22px;
-    bottom: -270%;
-    position: absolute;
-    width: 1139px;
-    padding: 26px 35px;
-    box-sizing: border-box;
-    background: #dedede;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 38px;
-    letter-spacing: -0.017em;
-    color: #616161;
-
-    > svg {
-      position: absolute;
-      right: -20px;
-      top: calc(50% - 20px);
-      width: 24px;
-      height: 40px;
-    }
-  }
-  > span:hover + div {
-    display: block;
-  }
-`;
 
 export default Typing;

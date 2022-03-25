@@ -358,7 +358,6 @@ const TypingBox = styled.div`
     border: none;
     outline: none;
     background: none;
-    ime-mode: disabled;
   }
 `;
 
@@ -499,6 +498,104 @@ const ModalBg = styled.div`
   z-index: 100;
 `;
 
+const TitleMore = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+
+  > span {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #ff2e00;
+    position: relative;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: calc(50% - 1px);
+      left: calc(50% - 5px);
+      width: 10px;
+      height: 2px;
+      border-radius: 1px;
+      background-color: #fff;
+    }
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: calc(50% - 1px);
+      top: calc(50% - 5px);
+      width: 2px;
+      height: 10px;
+      border-radius: 1px;
+      background-color: #fff;
+    }
+  }
+
+  > div {
+    display: none;
+    right: 22px;
+    bottom: -270%;
+    position: absolute;
+    width: 1139px;
+    padding: 26px 35px;
+    box-sizing: border-box;
+    background: #dedede;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 38px;
+    letter-spacing: -0.017em;
+    color: #616161;
+
+    > svg {
+      position: absolute;
+      right: -20px;
+      top: calc(50% - 20px);
+      width: 24px;
+      height: 40px;
+    }
+  }
+  > span:hover + div {
+    display: block;
+  }
+`;
+
+const FinishBtn = styled.div`
+  position: fixed;
+  width: 2.92vw;
+  height: 2.92vw;
+  left: 143px;
+  bottom: 4.22vw;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 2.6vw;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: 300ms ease 0ms 1 normal forwards running ${opacityIn};
+
+  svg {
+    width: 1.56vw;
+    height: 1.25vw;
+    margin-right: 0.16vw;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
+
 export {
   TypingWrap,
   SectionSide,
@@ -522,4 +619,6 @@ export {
   State,
   StateItem,
   ModalBg,
+  TitleMore,
+  FinishBtn,
 };

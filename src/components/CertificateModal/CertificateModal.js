@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { history } from '../../redux/configureStore';
 import { actionCreators as recordActions } from '../../redux/modules/record';
+import { actionCreators as scriptActions } from '../../redux/modules/script';
 
 import {
   CertificateModalWrap,
@@ -68,11 +70,22 @@ const CertificateModal = (props) => {
     }
   };
 
+  const Close = () => {
+    const again = window.confirm("계속 타이핑하시겠습니까?");
+    if(again){
+      dispatch(scriptActions.randomCategoryScriptDB('all', 'all', true)).then((res)=>[
+        window.location.replace(`/typing/${res}`)
+      ])
+    }else{
+      history.replace('/');
+    }
+  }
+
   return (
     <>
-      <CertificateModalWrap onClick={props.close_click}>
+      <CertificateModalWrap>
         <Modal>
-          <ModalClose onClick={props.close_click}>
+          <ModalClose onClick={Close}>
             <svg
               viewBox='0 0 17 17'
               fill='none'
@@ -105,7 +118,7 @@ const CertificateModal = (props) => {
               <ModalTagItem>#{script_data?.scriptCategory}</ModalTagItem>
               {script_data?.scriptTopic.map((a, i) => {
                 if (i <= 1) {
-                  return <ModalTagItem key={i}>{a}</ModalTagItem>;
+                  return <ModalTagItem key={i}>#{a}</ModalTagItem>;
                 }
               })}
             </ModalTag>

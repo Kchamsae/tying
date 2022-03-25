@@ -70,6 +70,7 @@ const loginCheckDB = (token) => {
     apis
       .getLoginUserInfo()
       .then((res) => {
+        console.log(res.data);
         if (res.data.ok === true) {
           dispatch(
             setUser({

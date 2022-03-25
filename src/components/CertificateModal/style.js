@@ -127,13 +127,13 @@ const ModalBody = styled.div`
 const ModalTag = styled.ul`
   display: flex;
   list-style: none;
-  padding: 0 13px;
+  padding: 0 10px;
   margin: 0;
 `;
 
 const ModalTagItem = styled.li`
   height: 24px;
-  padding: 0 16px;
+  padding: 0 10px;
   background: #878889;
   border-radius: 30px;
   display: flex;
@@ -142,6 +142,7 @@ const ModalTagItem = styled.li`
   font-size: 12px;
   letter-spacing: -0.015em;
   margin-right: 7px;
+  white-space: nowrap;
 `;
 
 const ModalScriptTitle = styled.div`
