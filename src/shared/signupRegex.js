@@ -4,7 +4,7 @@ export const idCheck = (id) => {
   return _reg.test(id);
 };
 
-// 닉네임(이름) 형식: 한글 또는 알파벳 대소문자(a~z, A~Z)
+// 닉네임(이름) 형식: 최소 2자 이상, 한글 또는 알파벳 대소문자(a~z, A~Z)
 export const nicknameCheck = (nickname) => {
   let _reg = /^[ㄱ-힣a-zA-Z]{2,}$/;
   return _reg.test(nickname);
