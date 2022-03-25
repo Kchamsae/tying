@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as recordActions } from '../../redux/modules/record';
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver';
 
 import {
   CertificateModalWrap,
@@ -54,11 +56,16 @@ const CertificateModal = (props) => {
     }
   }, []);
 
+  // 인증서 다운로드 ref
+  const cardRef = useRef();
+
   const onChangeNick = (e) => {
     setNick(e.target.value);
   };
 
+  // 인증서 다운로드 함수
   const download = () => {
+    // 비회원인 경우 닉네임 입력 요청
     if (write & (nick === '')) {
       alert('닉네임을 입력해주세요!');
       return;
@@ -66,12 +73,23 @@ const CertificateModal = (props) => {
     if (write) {
       setWrite(false);
     }
+    // 회원인 경우
+    const card = cardRef.current;
+    const filter = (card) => {
+      console.log(card.className)
+      return card.tagName !== 'BUTTON' && card.tagName !== 'svg';
+    };
+      domtoimage
+      .toBlob(card, { filter: filter})
+      .then((blob) => {
+        saveAs(blob, 'card.png');
+    });
   };
 
   return (
     <>
       <CertificateModalWrap onClick={props.close_click}>
-        <Modal>
+        <Modal ref={cardRef}>
           <ModalClose onClick={props.close_click}>
             <svg
               viewBox='0 0 17 17'
