@@ -233,9 +233,9 @@ const NicknameModal = (props) => {
                     )}
                   </div>
                 </div>
-                <button className="editNickname-button" onClick={editNickname}>
+                <EditNicknameButton onClick={editNickname}>
                   완료
-                </button>
+                </EditNicknameButton>
               </div>
             </div>
         </ModalBox>
@@ -260,6 +260,8 @@ const ModalBox = styled.div`
   width: 478px;
   height: 349px;
   position: fixed;
+  display: flex;
+  justify-content: center;
   top: calc(50% - 239px);
   left: calc(50% - 239px);
   z-index: 10000;
@@ -390,40 +392,41 @@ const ModalBox = styled.div`
         }
       }
     }
-    .editNickname-button {
-      display: block;
-      margin: auto;
-      width: 268px;
-      height: 48px;
-      margin-top: 27px;
+  }
+`;
 
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 17px;
-      line-height: 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      letter-spacing: -0.015em;
+const EditNicknameButton = styled.div`
+  display: block;
+  margin: auto;
+  width: 268px;
+  height: 48px;
+  margin-top: 27px;
 
-      color: #ffffff;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.015em;
 
-      background: #ff2e00;
-      border: 3px solid #ff2e00;
-      box-sizing: border-box;
-      border-radius: 20px;
-      outline: none;
+  color: #ffffff;
 
-      cursor: pointer;
-      transition: 0.3s;
+  background: #ff2e00;
+  border: 3px solid #ff2e00;
+  box-sizing: border-box;
+  border-radius: 20px;
+  outline: none;
 
-      &:hover {
-        background-color: #e6e7e8;
-        border: none;
-      }
-    }
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #e6e7e8;
+    border: none;
   }
 `;
 
