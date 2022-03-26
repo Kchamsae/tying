@@ -6,7 +6,9 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useCallback
 } from 'react';
+
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as typingActions } from '../redux/modules/typing';
@@ -39,6 +41,7 @@ const Preview = memo(
       const [sentence, setSentence] = useState('');
 
       const charRef = useRef();
+      const charPrevRef = useRef();
 
       // const [focus, setFocus] = useState('out');
 
@@ -47,7 +50,7 @@ const Preview = memo(
       const script_splitted_sentence = useMemo(() => {
         // 문장수준까지 나눈 배열
         return script?.map((a) => {
-          return a.match(/[^\.!\?]+[(\.\s|\.)(!\s|!)(\?\s|\?)]+/g);
+          return a.match(/[^\.!\?]+[(\.\s|\.)(!\s|!)(\?\s|\?)(\:\s|\:)]+/g);
         });
       }, [script]);
 
@@ -55,7 +58,7 @@ const Preview = memo(
         // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map((a) =>
           a.map((b) => {
-            return b.match(/[0-9a-z.,’'?\(\)":\-—\$\%\&\#]+[$(\.|\s)+]/gi);
+            return b.match(/[0-9a-zA-Z.,’'?\(\)":\-—\$\%\&\#]+[$(\.|\s:?)+]/gi);
           })
         );
       }, [script]);
@@ -80,12 +83,9 @@ const Preview = memo(
       );
 
       useEffect(() => {
-        console.log(charRef.current?.offsetTop);
-        const p = 57 + (current_divided + 1) * 120;
-        if (
-          p < charRef.current?.offsetTop &&
-          charRef.current?.offsetTop <= p + 40
-        ) {
+        const standard = paragraphRef.current[text_num]?.offsetTop + ((current_divided + 1)*3-1) * charPrevRef.current?.clientHeight;
+        
+        if (standard < charRef.current?.offsetTop && charRef.current?.offsetTop > charPrevRef.current?.offsetTop) {
           setEnterState(true);
         } else {
           setEnterState(false);
@@ -95,21 +95,22 @@ const Preview = memo(
       useEffect(() => {
         let paragraph_height = [];
         for (let i = 0; i < script?.length; i++) {
-          console.log(paragraphRef.current[i].clientHeight);
-          paragraph_height[i] = paragraphRef.current[i].clientHeight;
+          // console.log(paragraphRef.current[i].clientHeight);
+          paragraph_height[i] = paragraphRef.current[i]?.clientHeight;
         }
 
         if (script_data === {} || script_data.scriptId !== script_id) {
           dispatch(scriptActions.setOneScriptDB(script_id)).then((res) => {
-            for (let i = 0; i < res.length; i++) {
-              console.log(paragraphRef.current[i].clientHeight);
-              paragraph_height[i] = paragraphRef.current[i].clientHeight;
+            for (let i = 0; i < res?.length; i++) {
+              console.log(paragraphRef.current[i]?.clientHeight);
+              paragraph_height[i] = paragraphRef.current[i]?.clientHeight;
             }
-            dispatch(typingActions.divideParagraph(paragraph_height));
+            dispatch(typingActions.divideParagraph(paragraph_height,charPrevRef.current?.clientHeight));
           });
         } else {
-          dispatch(typingActions.divideParagraph(paragraph_height));
+          dispatch(typingActions.divideParagraph(paragraph_height,charPrevRef.current?.clientHeight));
         }
+       
       }, []);
 
       useEffect(() => {
@@ -117,58 +118,58 @@ const Preview = memo(
         // scrollRef.current.style.height = `${paragraphRef.current[text_num].clientHeight}px`;
       }, []);
 
-      const nextInParagraph = () => {};
+      const prev = useCallback(
+        () => {
+          if (current_divided !== 0) {
+            paragraphWrapRef.current[text_num].scroll({
+              behavior: 'smooth',
+              left: 0,
+              top: (current_divided - 1) * (charPrevRef.current?.clientHeight*3),
+            });
+            dispatch(typingActions.setCurrentDivided(current_divided - 1));
+          } else if (text_num > 0 && current_divided === 0) {
+            // scrollRef.current.style.height = `${paragraphRef.current[text_num-1].clientHeight}px`;
+            scrollRef.current.scroll({
+              behavior: 'smooth',
+              left: 0,
+              top: paragraphRef.current[text_num - 1].offsetTop - parseFloat(window.getComputedStyle(paragraphWrapRef.current[0]).getPropertyValue('margin-top')),
+            });
+            dispatch(
+              typingActions.setCurrentDivided(paragraph_divided[text_num - 1] - 1)
+            );
+            // removeEvent();
+            setTextNum((text_num) => text_num - 1);
+            setText(script[text_num - 1]);
+          }
+        },[text_num,userInput]
+      )
 
-      const prev = () => {
-        if (current_divided !== 0) {
-          console.log((current_divided - 1) * 120);
-          paragraphWrapRef.current[text_num].scroll({
-            behavior: 'smooth',
-            left: 0,
-            top: (current_divided - 1) * 120,
-          });
-          dispatch(typingActions.setCurrentDivided(current_divided - 1));
-        } else if (text_num > 0 && current_divided === 0) {
-          // scrollRef.current.style.height = `${paragraphRef.current[text_num-1].clientHeight}px`;
-          scrollRef.current.scroll({
-            behavior: 'smooth',
-            left: 0,
-            top: paragraphRef.current[text_num - 1].offsetTop - 96.5,
-          });
-          dispatch(
-            typingActions.setCurrentDivided(paragraph_divided[text_num - 1] - 1)
-          );
-          // removeEvent();
-          setTextNum((text_num) => text_num - 1);
-          setText(script[text_num - 1]);
-        }
-      };
-
-      const next = () => {
-        console.log(current_divided, paragraph_divided[text_num]);
-        if (current_divided + 1 !== paragraph_divided[text_num]) {
-          paragraphWrapRef.current[text_num].scroll({
-            behavior: 'smooth',
-            left: 0,
-            top: (current_divided + 1) * 120,
-          });
-          dispatch(typingActions.setCurrentDivided(current_divided + 1));
-        } else if (
-          text_num < script_splitted?.length - 1 &&
-          current_divided + 1 === paragraph_divided[text_num]
-        ) {
-          // scrollRef.current.style.height = `${paragraphRef.current[text_num+1].clientHeight}px`;
-          scrollRef.current.scroll({
-            behavior: 'smooth',
-            left: 0,
-            top: paragraphRef.current[text_num + 1].offsetTop - 96.5,
-          });
-          // removeEvent();
-          setTextNum((text_num) => text_num + 1);
-          setText(script[text_num + 1]);
-          dispatch(typingActions.setCurrentDivided(0));
-        }
-      };
+      const next = useCallback(
+        () => {
+          if (current_divided + 1 !== paragraph_divided[text_num]) {
+            paragraphWrapRef.current[text_num].scroll({
+              behavior: 'smooth',
+              left: 0,
+              top: (current_divided + 1) * (charPrevRef.current?.clientHeight*3),
+            });
+            dispatch(typingActions.setCurrentDivided(current_divided + 1));
+          } else if (
+            text_num < script_splitted?.length - 1 &&
+            current_divided + 1 === paragraph_divided[text_num]
+          ) {
+            // scrollRef.current.style.height = `${paragraphRef.current[text_num+1].clientHeight}px`;
+            scrollRef.current.scroll({
+              behavior: 'smooth',
+              left: 0,
+              top: paragraphRef.current[text_num + 1].offsetTop - parseFloat(window.getComputedStyle(paragraphWrapRef.current[0]).getPropertyValue('margin-top')),
+            });
+            // removeEvent();
+            setTextNum((text_num) => text_num + 1);
+            setText(script[text_num + 1]);
+            dispatch(typingActions.setCurrentDivided(0));
+          }
+        },[userInput,text_num]
+      )
 
       const openDict = (w, si) => {
         // if(focus){
@@ -252,21 +253,13 @@ const Preview = memo(
                               if (text_num === pi && n === userInput?.length) {
                                 if (a === ' ') {
                                   return (
-                                    <span
-                                      key={i}
-                                      className={
-                                        focus ? 'is-next-space space' : 'space'
-                                      }
-                                    >
+                                    <span key={i} className={focus ? 'is-next-space space' : 'space'} ref={charPrevRef}>
                                       {a}
                                     </span>
                                   );
                                 } else {
                                   return (
-                                    <span
-                                      key={i}
-                                      className={focus ? 'is-next' : ''}
-                                    >
+                                    <span key={i} className={focus ? 'is-next' : ''} ref={charPrevRef}>
                                       {a}
                                     </span>
                                   );
@@ -278,11 +271,7 @@ const Preview = memo(
                               ) {
                                 if (a === ' ') {
                                   return (
-                                    <span
-                                      key={i}
-                                      className='space'
-                                      ref={charRef}
-                                    >
+                                    <span key={i} className='space' ref={charRef}>
                                       {a}
                                     </span>
                                   );
@@ -617,7 +606,7 @@ const PreviewBox = styled.div`
       content: '';
       display: block;
       position: absolute;
-      bottom: -0.3125rem;
+      bottom: 7px;
       left: 0;
       width: 100%;
       border-bottom: 3px solid #ff2e00;

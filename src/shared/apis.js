@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from './Cookie';
 
 const api = axios.create({
-  baseURL: 'http://3.34.193.107/',
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 // Alter defaults after instance has been created
@@ -20,6 +20,7 @@ export const apis = {
   login: (login) => api.post('/api/login', login),
   getLoginUserInfo: () => api.get('/api/auth'),
   kakaoLogin: (code) => api.get(`/api/kakao/callback?code=${code}`),
+  editUserNickname: (nickname) => api.put('/api/info', nickname),
   // signup
   idDuplicateCheck: (idCheckF) => api.post('/api/signup/idCheck', idCheckF),
   nicknameDuplicateCheck: (nicknameCheckF) =>
