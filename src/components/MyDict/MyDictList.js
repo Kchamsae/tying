@@ -13,6 +13,7 @@ const MyDictList = () => {
   }, []);
 
   const saveDict = useSelector((state) => state.word.dict_list2);
+  console.log(saveDict);
 
   return (
     <div>
