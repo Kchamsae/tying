@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Login from './Login';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { history } from '../redux/configureStore';
+import NicknameModal from './NicknameModal/NicknameModal';
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Header = (props) => {
   const [fade_out, setFadeOut] = React.useState(false);
   
   const modal_on = useSelector(state => state.user.login_modal);
+  const nickname_modal_on = useSelector(state => state.user.nickname_modal);
 
   const logout = () => {
     dispatch(userActions.outUser());
@@ -142,6 +144,17 @@ const Header = (props) => {
           >
             <button onClick={closeModal} />
           </Login>
+        </>
+      )}
+
+      {nickname_modal_on && ( //닉네임 수정 모달
+        <>
+          <ModalBg
+            onClick={()=>{dispatch(userActions.setNicknameModal(false));}}
+            login_modal={login_modal}
+            className={fade_out ? 'fade_out' : ''}
+          />
+          <NicknameModal />
         </>
       )}
     </>

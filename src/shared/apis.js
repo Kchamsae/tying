@@ -65,4 +65,10 @@ export const apis = {
 
   // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
+  recordLoad: () => api.get('/api/mypage/certificate'),
+  recordLoadAll: (startdate, enddate) =>
+    api.post('/api/mypage/statistic', {
+      startdate: startdate,
+      enddate: enddate,
+    }),
 };

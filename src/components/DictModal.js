@@ -59,6 +59,10 @@ const DictModal = (props) => {
     meaningRef.current.value = '';
   };
 
+  const saveDict = () => {
+    dispatch(wordActions.saveDictDB(script_id, props.word, props.sentence));
+  };
+
   return (
     <>
       <DictModalWrapper>
@@ -98,7 +102,7 @@ const DictModal = (props) => {
             </div>
             <div className='dict-buttons'>
               <div onClick={typeMeaning}>뜻 추가하기</div>
-              <div>내 단어장에 저장</div>
+              <div onClick={saveDict}>내 단어장에 저장</div>
             </div>
           </div>
           <p>

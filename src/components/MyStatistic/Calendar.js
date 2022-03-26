@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   format,
   startOfWeek,
@@ -9,11 +9,49 @@ import {
   addWeeks,
   subWeeks,
 } from 'date-fns';
+import DataList from './DataList';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as recordActions } from '../../redux/modules/record';
 
-const Calendar = ({ showDetailsHandle }) => {
+const Calendar = () => {
+  const dispatch = useDispatch();
+  const [date, setDate] = useState(null);
+  const [tab, setTab] = useState('');
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date(startOfWeek));
+
+  const tabHandler = (e) => {
+    const activeTab = e.target.id;
+    setTab(activeTab);
+  };
+
+  const showDetailsHandle = (dayStr) => {
+    setDate(dayStr);
+  };
+
+  const dateStart = startOfWeek(currentMonth, { weekStartsOn: 0 }); // 27 일 00 : 00 : 00
+  const _dateStart = new Date(
+    dateStart.getTime() - dateStart.getTimezoneOffset() * 60000
+  ).toISOString();
+
+  const dateEnd = lastDayOfWeek(currentMonth, { weekStartsOn: 1 }); // 4월 2일 00 : 00 : 00
+  const _dateEnd = new Date(
+    dateEnd.getTime() - dateEnd.getTimezoneOffset() * 60000
+  ).toISOString();
+
+  // useEffect(() => {
+  //   dispatch(
+  //     recordActions.recordLoadAllDB(
+  //       '2022-03-21T00:00:00.000Z',
+  //       '2022-03-27T00:00:00.000Z'
+  //     )
+  //   );
+  // }, []);
+
+  // const recordLoad = useSelector((state) => state.record.record_list2);
+  // console.log(recordLoad);
 
   const changeWeekHandle = (btnType) => {
     console.log('current week', currentWeek);
@@ -55,7 +93,7 @@ const Calendar = ({ showDetailsHandle }) => {
   const renderDays = () => {
     const dateFormat = 'EEE';
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+    let startDate = startOfWeek(currentMonth, { weekStartsOn: 0 });
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className='col col-center' key={i}>
@@ -66,8 +104,8 @@ const Calendar = ({ showDetailsHandle }) => {
     return <div className='days row'>{days}</div>;
   };
   const renderCells = () => {
-    const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
-    const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 1 });
+    const startDate = startOfWeek(currentMonth, { weekStartsOn: 0 });
+    const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 0 });
     const dateFormat = 'd';
     const rows = [];
     let days = [];
@@ -92,15 +130,13 @@ const Calendar = ({ showDetailsHandle }) => {
               onDateClickHandle(cloneDay, dayStr);
             }}
           >
-            <span className='number'>{formattedDate}</span>
+            <span className='number' id='a' onClick={tabHandler}>
+              {formattedDate}
+            </span>
           </div>
         );
         day = addDays(day, 1);
       }
-
-      let a = selectedDate.getMonth() + 1;
-
-      console.log('0' + a, selectedDate.getDate());
 
       rows.push(
         <div className='row' key={day}>
@@ -119,8 +155,17 @@ const Calendar = ({ showDetailsHandle }) => {
         {renderDays()}
         {renderCells()}
       </div>
-      <div>타이핑한 글자 수</div>
-      <div>타이핑 시간</div>
+      <div>
+        {tab === 'a' ? (
+          <DataList
+            sDate={_dateStart}
+            eDate={_dateEnd}
+            selectedDate={selectedDate}
+          />
+        ) : (
+          ''
+        )}
+      </div>
     </>
   );
 };

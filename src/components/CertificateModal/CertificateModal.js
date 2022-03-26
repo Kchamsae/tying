@@ -28,7 +28,7 @@ import {
   ModalButton,
 } from './style';
 
-const CertificateModal = (props) => {
+const CertificateModal = (props, { a }) => {
   const dispatch = useDispatch();
 
   const [write, setWrite] = useState(false);
