@@ -61,4 +61,10 @@ export const apis = {
   oneScript: (script_id) => api.get(`/api/detail/${script_id}`),
   // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
+  recordLoad: () => api.get('/api/mypage/certificate'),
+  recordLoadAll: (startdate, enddate) =>
+    api.post('/api/mypage/statistic', {
+      startdate: startdate,
+      enddate: enddate,
+    }),
 };
