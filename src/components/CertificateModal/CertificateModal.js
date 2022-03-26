@@ -87,7 +87,7 @@ const CertificateModal = (props) => {
       domtoimage
       .toBlob(card, { filter: filter})
       .then((blob) => {
-        saveAs(blob, 'card.png');
+        saveAs(blob, 'certificate.png');
     });
   };
 
