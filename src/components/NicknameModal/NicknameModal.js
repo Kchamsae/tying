@@ -4,14 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { apis } from "../../shared/apis";
 import { nicknameCheck } from "../../shared/signupRegex";
-import { history } from "../../redux/configureStore";
 
 const NicknameModal = (props) => {
   const dispatch = useDispatch();
 
   // modal창 관리 state
-  const [modal_state, setModalState] = React.useState("nicknameEdit");
   const [nickname_modal, setNicknameModal] = React.useState(false);
+  const [fade_out, setFadeOut] = React.useState(false);
+
+
+  //닉네임 수정 구현부
+  const editNickname = () => {
+    dispatch(userActions.editUserDB(nickname)).then((res) => {
+      if(res === 'ok'){
+      dispatch(userActions.setNicknameModal(false));
+      }
+    })
+    console.log("nickname : ", nickname)
+  };
 
   //닉네임 확인
   const [nickname, setNickName] = React.useState("");
@@ -53,15 +63,6 @@ const NicknameModal = (props) => {
       });
   };
 
-  const [fade_out, setFadeOut] = React.useState(false);
-
-  const modal_on = useSelector((state) => state.user.nickname_modal);
-
-  const editNickname = () => {
-    dispatch(userActions.editUserDB(nickname));
-    console.log("nickname : ", nickname)
-  };
-
   const openModal = () => {
     setFadeOut(false);
     document.body.style.overflow = "hidden";
@@ -80,10 +81,9 @@ const NicknameModal = (props) => {
     <>
       <ModalWrapper>
         <ModalBox>
-          <div
-            className="close-button"
+          <div className="close-button"
             onClick={() => {
-              dispatch(userActions.setLoginModal(false));
+              dispatch(userActions.setNicknameModal(false));
             }}
           >
             <svg
@@ -101,8 +101,8 @@ const NicknameModal = (props) => {
               />
             </svg>
           </div>
-          {modal_state === "nicknameEdit" && (
-            <div className="modal-wrapper">
+
+            <div className="modal-wrap">
               <div className="white_block">
                 <div className="tying-welcome-logo">
                   <svg
@@ -238,7 +238,6 @@ const NicknameModal = (props) => {
                 </button>
               </div>
             </div>
-          )}
         </ModalBox>
       </ModalWrapper>
     </>
@@ -259,7 +258,7 @@ const ModalWrapper = styled.div`
 
 const ModalBox = styled.div`
   width: 478px;
-  height: 616px;
+  height: 349px;
   position: fixed;
   top: calc(50% - 239px);
   left: calc(50% - 239px);
@@ -289,6 +288,20 @@ const ModalBox = styled.div`
         fill: #464646;
       }
     }
+  }
+
+  .nicknameEdit-title {
+    font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      letter-spacing: -0.015em;
+      color: #878889;
   }
 
   .nickname-form-wrapper {
@@ -410,6 +423,39 @@ const ModalBox = styled.div`
         background-color: #e6e7e8;
         border: none;
       }
+    }
+  }
+`;
+
+const ModalBg = styled.div`
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(190, 190, 190, 0.91);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.125s ease-in 0s;
+  animation: 250ms ease 0ms 1 normal forwards running opacityIn;
+  @keyframes opacityIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  &.fade_out {
+    animation: 250ms ease 0ms 1 normal forwards running opacityOut;
+  }
+  @keyframes opacityOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
 `;
