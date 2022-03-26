@@ -7,6 +7,8 @@ import { history } from '../../redux/configureStore';
 import MyDictList from '../../components/MyDict/MyDictList';
 import MyCertificateList from '../../components/MyCertificate/MyCertificateList';
 import MyStatisticList from '../../components/MyStatistic/MyStatisticList';
+import Calendar from '../../components/MyStatistic/Calendar';
+
 import NicknameModal from '../../components/NicknameModal/NicknameModal';
 
 const MyPage = () => {
@@ -40,7 +42,7 @@ const MyPage = () => {
           <h1>마이페이지 입니다.</h1>
           <div style={{ display: 'flex' }}>
             <h3>{user.nickname}</h3>
-            <NicknameModal/>
+            <NicknameModal />
             <h3 onClick={editProfile}>이름수정</h3>
             <h3 onClick={logout}>로그아웃</h3>
           </div>
@@ -57,7 +59,7 @@ const MyPage = () => {
           </div>
           {tab === 'myVoca' ? <MyDictList /> : ''}
           {tab === 'verify' ? <MyCertificateList /> : ''}
-          {tab === 'statistics' ? <MyStatisticList /> : ''}
+          {tab === 'statistics' ? <Calendar /> : ''}
         </div>
       ) : (
         '로그인이 필요합니다.'

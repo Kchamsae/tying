@@ -14,12 +14,7 @@ const MyDict = (props) => {
         <CardBox key={idx}>
           <button
             onClick={() => {
-              dispatch(
-                wordActions.deleteMyDictDB({
-                  script_id: dict[4],
-                  word: dict[2],
-                })
-              );
+              dispatch(wordActions.deleteMyDictDB(dict[4], dict[2]));
             }}
           >
             삭제
