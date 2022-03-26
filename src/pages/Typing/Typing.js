@@ -31,6 +31,7 @@ import {
   ModalBg,
   TitleMore,
   FinishBtn,
+  HelpBtn
 } from './style';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import dayjs from 'dayjs';
@@ -57,10 +58,13 @@ function Typing() {
   const [list_arrow_on, setListArrowOn] = useState(false); // 카테고리 리스트 아이콘
   const [state_on, setStateOn] = useState(false); // 상태박스 리스트 열기
   const [state_button_on, setStateButtonOn] = useState(false); // 상태박스 버튼
+  const [save_phrase, setSavePhrase] = useState(true);
+  const [save_phrase_ani, setSavePhraseAni] = useState(true);
 
   const [enter_state, setEnterState] = useState(false);
   const [left_open, setLeftOpen] = useState(false);
   const [right_open, setRightOpen] = useState(false);
+  
 
   const [certificate, setCertificate] = useState(false);
 
@@ -123,7 +127,7 @@ function Typing() {
     return (()=>textbox.current?.removeEventListener("focusout", focusOut))
   },[sec,sec_added])
 
-  // 문단을 초기화 할 때 세팅해야하는 것들
+  // 초기화 할 때 세팅해야하는 것들
   const onRestart = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = null;
@@ -153,7 +157,7 @@ function Typing() {
       }
       if(e.key === 'Shift') return;
       // script?.join('').length
-      if(userInput.length >= script?.join('').length) {
+      if(userInput.length >= script?.join('').length && e.key !== 'Backspace') {
         e.preventDefault();
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -163,7 +167,7 @@ function Typing() {
         // history.push("/");
         return;
       }
-      if (userInput.length >= text_length(text_num)) {
+      if (userInput.length >= text_length(text_num) && e.key !== 'Backspace') {
         const a = text_num;
         e.preventDefault();
         upDownRef.current.next();
@@ -171,7 +175,7 @@ function Typing() {
         setText(script[a + 1]);
         giveFocus();
         return;
-      } else if (enter_state) {
+      } else if (enter_state && e.key !== 'Backspace') {
         // e.preventDefault();
         upDownRef.current.next();
         // onNextstart();
@@ -187,6 +191,12 @@ function Typing() {
         onRestart();
         return;
       }
+      
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        return;
+      }
+
       setTimer();
       setAccuracy(checkAccuracy(userInput));
       setUserInput((userInput) => {
@@ -194,11 +204,6 @@ function Typing() {
         if (e.key === 'Backspace') {
           e.preventDefault();
           return userInput.slice(0, -1);
-        }
-
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          return;
         }
 
         if (e.key.length > 1) return userInput;
@@ -284,6 +289,18 @@ function Typing() {
     }, 300);
   };
 
+  const phraseOn = () => {
+    setSavePhrase(true);
+    setSavePhraseAni(true);
+  }
+
+  const phraseOff = () => {
+    setSavePhraseAni(false);
+    setTimeout(()=>{
+      setSavePhrase(false);
+    },300);
+  }
+
   const giveFocus = () => {
     textbox.current.focus();
     textbox.current.selectionStart = textbox.current.selectionEnd =
@@ -319,6 +336,7 @@ function Typing() {
         _small_category
       )
     ).then((res) => {
+      onRestart();
       history.replace(`/typing/${res.script_id}`);
     });
   };
@@ -345,32 +363,30 @@ function Typing() {
             cpm={cpm}
             char_num={userInput.length}
             progress={(userInput.length / script?.join('').length) * 100}
+            onRestart={onRestart}
+            setCertificate={setCertificate}
           />
         </>
       )}
       <TypingWrap>
         {script && userInput.length >= script[0]?.length && (
-          <FinishBtn onClick={finishScript}>
-            <svg
-              width='30'
-              height='24'
-              viewBox='0 0 30 24'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M11.34 0V2.07C10.095 1.575 8.76 1.32 7.425 1.32C4.74 1.32 2.055 2.34 0 4.395L4.995 9.39H6.66V11.055C7.95 12.345 9.63 13.02 11.325 13.095V16.5H6.84V21C6.84 22.65 8.19 24 9.84 24H24.84C27.33 24 29.34 21.99 29.34 19.5V0H11.34ZM9.675 9.615V6.39H6.255L4.695 4.83C5.55 4.5 6.48 4.32 7.425 4.32C9.435 4.32 11.31 5.1 12.735 6.51L14.85 8.625L14.55 8.925C13.785 9.69 12.765 10.125 11.67 10.125C10.965 10.125 10.275 9.945 9.675 9.615V9.615ZM26.34 19.5C26.34 20.325 25.665 21 24.84 21C24.015 21 23.34 20.325 23.34 19.5V16.5H14.34V12.615C15.195 12.27 15.99 11.76 16.68 11.07L16.98 10.77L21.225 15H23.34V12.885L14.34 3.93V3H26.34V19.5Z'
-                fill='#000'
-              />
+          <FinishBtn onClick={finishScript} onMouseEnter={phraseOn} onMouseLeave={phraseOff} on={save_phrase && true} onAni={save_phrase_ani && true}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 16.5V21H3V16.5H0V21C0 22.65 1.35 24 3 24H21C22.65 24 24 22.65 24 21V16.5H21ZM19.5 10.5L17.385 8.385L13.5 12.255V0H10.5V12.255L6.615 8.385L4.5 10.5L12 18L19.5 10.5Z" fill="black"/>
             </svg>
+            <div>
+              인증서 발급받고 마치기
+              <span/>
+            </div>
           </FinishBtn>
         )}
+        <HelpBtn onClick={finishScript}>
+          <svg width="17" height="24" viewBox="0 0 17 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.00998 15.1182C3.59376 14.1148 3.36875 13.2935 3.33496 12.6544C3.27864 11.5892 3.54418 10.7527 4.13157 10.1448C4.74027 9.53584 5.57434 8.94698 6.6338 8.37825C7.23583 8.04734 7.64951 7.79047 7.87484 7.60766C8.10017 7.42484 8.20664 7.21626 8.19425 6.98192C8.15821 6.3002 7.29869 6.00384 5.61571 6.09282C4.12446 6.17166 2.75437 6.52182 1.50544 7.14329L0.801262 2.30973C1.77888 1.80942 2.83669 1.41168 3.97469 1.11652C5.11157 0.800053 6.16999 0.615915 7.14995 0.564104C8.66251 0.484135 10.0181 0.668819 11.2169 1.11816C12.4145 1.54619 13.3571 2.20134 14.0446 3.0836C14.7523 3.94344 15.1366 4.94855 15.1974 6.09894C15.2515 7.12152 15.0835 7.98492 14.6935 8.68916C14.3023 9.3721 13.8293 9.92051 13.2743 10.3344C12.7183 10.727 11.9823 11.1504 11.0663 11.6047C10.1302 12.0815 9.44745 12.5021 9.01809 12.8666C8.61004 13.23 8.42122 13.6993 8.45163 14.2745L8.48373 14.8817L4.00998 15.1182ZM6.65417 23.31C5.56769 23.3674 4.67847 23.1154 3.98653 22.5538C3.29458 21.9922 2.9227 21.2214 2.87089 20.2415C2.8202 19.2828 3.1093 18.4878 3.73817 17.8564C4.38835 17.2238 5.24602 16.8794 6.3112 16.8231C7.33378 16.769 8.20225 17.0328 8.91663 17.6146C9.63101 18.1964 10.0124 18.9453 10.0608 19.8613C10.1149 20.8839 9.83759 21.6997 9.2289 22.3087C8.6415 22.9165 7.78326 23.2503 6.65417 23.31Z" fill="black"/>
+          </svg>
+        </HelpBtn>
         <SectionSide side={'left'} on={left_open && true}>
-          <i
-            onClick={() => {
-              setLeftOpen(!left_open);
-            }}
-          >
+          <i onClick={() => { setLeftOpen(!left_open); }}>
             <svg
               width='13'
               height='21'

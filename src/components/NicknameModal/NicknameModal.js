@@ -64,13 +64,13 @@ const NicknameModal = (props) => {
 
   const openModal = () => {
     setFadeOut(false);
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setNicknameModal(true);
   };
 
   const closeModal = () => {
     setFadeOut(true);
-    document.body.style.overflow = "unset";
+    // document.body.style.overflow = "unset";
     setTimeout(() => {
       setNicknameModal(false);
     }, 400);

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { history } from './../redux/configureStore';
+import Bookmark from './Bookmark';
 
 const ScriptItem = (props) => {
   return (
@@ -10,21 +11,7 @@ const ScriptItem = (props) => {
           history.replace(`/typing/${props.scriptId}`);
         }}
       >
-        <div className='bookmark-button'>
-          <div className='bookmark-innershadow'></div>
-          <svg
-            width='27'
-            height='35'
-            viewBox='0 0 27 35'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              fillRule='evenodd'
-              clipRule='evenodd'
-              d='M23 0H3.83333C1.725 0 0 1.725 0 3.83333V34.5L13.4167 28.75L26.8333 34.5V3.83333C26.8333 1.725 25.1083 0 23 0Z'
-            />
-          </svg>
-        </div>
+        <Bookmark/>
         <div className='item-header'>
           <div className='item-category'>{props.scriptType}</div>
           <div className='item-hashtag'>

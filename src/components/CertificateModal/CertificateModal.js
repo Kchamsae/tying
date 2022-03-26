@@ -77,6 +77,7 @@ const CertificateModal = (props) => {
     if (write) {
       setWrite(false);
     }
+    const file_name = time[0].split('/').join('_')+'_'+time[1].split(':').join('_')+'_'+time[2];
     // 회원인 경우
     const card = cardRef.current;
     const filter = (card) => {
@@ -87,7 +88,7 @@ const CertificateModal = (props) => {
       domtoimage
       .toBlob(card, { filter: filter})
       .then((blob) => {
-        saveAs(blob, 'card.png');
+        saveAs(blob, `tying_${file_name}.png`);
     });
   };
 
