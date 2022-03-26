@@ -5,6 +5,7 @@ import { apis } from '../../shared/apis';
 
 const RECORD_TYPING = 'RECORD_TYPING';
 const RECORD_LOAD = 'RECORD_LOAD';
+const RECORD_LOADALL = 'RECORD_LOADALL';
 
 const recordTyping = createAction(RECORD_TYPING, (record) => ({ record }));
 
@@ -12,12 +13,18 @@ const recordLoad = createAction(RECORD_LOAD, (record_list) => ({
   record_list,
 }));
 
+const recordLoadAll = createAction(RECORD_LOADALL, (record_list2) => ({
+  record_list2,
+}));
+
 const initialState = {
   record_list: [],
+  record_list2: [],
 };
 
 const recordTypingDB = (
-  script_id,
+  scriptId,
+  scriptType,
   duration,
   time,
   typingCnt,
@@ -27,7 +34,8 @@ const recordTypingDB = (
   return async function (dispatch, getState, { history }) {
     try {
       const doc = {
-        scriptId: script_id,
+        scriptId,
+        scriptType,
         duration,
         time,
         typingCnt,
@@ -57,12 +65,30 @@ const recordLoadDB = () => {
   };
 };
 
+const recordLoadAllDB = (startdate, enddate) => {
+  // console.log(startdate, enddate);
+  return async function (dispatch) {
+    try {
+      const record_loadall = await apis.recordLoadAll(startdate, enddate);
+      // console.log(record_loadall);
+      dispatch(recordLoadAll(record_loadall));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export default handleActions(
   {
     [RECORD_LOAD]: (state, action) =>
       // console.log(state, action);
       produce(state, (draft) => {
         draft.record_list = action.payload.record_list;
+      }),
+
+    [RECORD_LOADALL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.record_list2 = action.payload.record_list2;
       }),
   },
   initialState
@@ -72,6 +98,8 @@ const actionCreators = {
   recordTypingDB,
   recordLoad,
   recordLoadDB,
+  recordLoadAll,
+  recordLoadAllDB,
 };
 
 export { actionCreators };

@@ -172,16 +172,9 @@ const Preview = memo(
 
       const openDict = (w, si) => {
         // if(focus){
-        setWord(
-          w
-            .join('')
-            .trim()
-            .match(/^[a-zA-Z][a-zA-z-]+$[a-zA-Z]/)
-            .toString()
-            .toLowerCase()
-        );
-        setSentence(script_splitted_sentence[text_num][si].trim());
-        setWordModal(true);
+            setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+/).toString().toLowerCase());
+            setSentence(script_splitted_sentence[text_num][si].trim());
+            setWordModal(true);
         // }
       };
 
@@ -448,7 +441,7 @@ const DictModalBg = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  z-index: 850;
 `;
 const DictModalClose = styled.div`
   width: 17px;

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from './Cookie';
 
 const api = axios.create({
-  baseURL: 'http://13.209.69.234/',
+  baseURL: 'http://3.34.193.107/',
 });
 
 // Alter defaults after instance has been created
@@ -61,4 +61,9 @@ export const apis = {
   // record
   recordTyping: (doc) => api.post('/api/studyrecord', doc),
   recordLoad: () => api.get('/api/mypage/certificate'),
+  recordLoadAll: (startdate, enddate) =>
+    api.post('/api/mypage/statistic', {
+      startdate: startdate,
+      enddate: enddate,
+    }),
 };

@@ -22,7 +22,7 @@ import {
   ModalButton,
 } from './style';
 
-const CertificateModal = (props) => {
+const CertificateModal = (props, { a }) => {
   const dispatch = useDispatch();
 
   const [write, setWrite] = useState(false);
@@ -42,7 +42,8 @@ const CertificateModal = (props) => {
     if (is_login) {
       dispatch(
         recordActions.recordTypingDB(
-          script_data.scriptId,
+          script_data?.scriptId,
+          script_data?.scriptType,
           props.sec,
           _time,
           props.char_num,

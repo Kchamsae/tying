@@ -1,25 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as recordActions } from '../../redux/modules/record';
 
-const BarChart = () => {
-  const data = {
-    labels: ['2015', '2016', '2017', '2018', '2019', '2020'],
-    datasets: [
-      {
-        type: 'bar',
-        label: '릴리즈되는 한국 컨텐츠 수',
-        borderColor: 'white',
-        borderWidth: 5,
-        backgroundColor: '#BDBDBD',
-        data: [700, 600, 807, 432, 234, 453],
-      },
-    ],
+const BarChart = ({ recordTyping, recordTime }) => {
+  const [tab, setTab] = useState('');
+
+  const tabHandler = (e) => {
+    const activeTab = e.target.id;
+    setTab(activeTab);
   };
+
+  const dispatch = useDispatch();
+
+  const dataTyping = recordTyping;
+  const dataTime = recordTime;
 
   return (
     <div className='chart3Container'>
-      <Chart type='bar' data={data} />
+      <Chart type='bar' data={dataTyping} />
     </div>
   );
 };

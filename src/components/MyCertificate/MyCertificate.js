@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import CertificateModal from '../CertificateModal/CertificateModal';
 
+import { ModalBg } from './style';
+
 const MyCertificate = (props) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const onSetIsVisible = (active) => {
+    setIsVisible(active);
+  };
+
   const record = props.recordLoad;
   console.log(record);
   return (
@@ -10,7 +17,7 @@ const MyCertificate = (props) => {
       {record.map((a) => (
         <CertificationBox key={a._id}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <h1>TOEFL</h1>
+            <h1>{a.scriptType}</h1>
             <div>
               <p>
                 Date <span>{a.time.split(' ')[0]}</span>
@@ -25,7 +32,18 @@ const MyCertificate = (props) => {
             <p>Proudly presented to</p>
             <h3>{a.id}</h3>
           </div>
-          <button onClick={() => <CertificateModal />}>download</button>
+          <button onClick={() => onSetIsVisible(true)}>다운로드</button>
+          <div>
+            {isVisible && (
+              <CertificateModal
+                sec={a.duration}
+                cpm={a.speed}
+                char_num={a.typingCnt}
+                progress={(a.typingCnt / 2000) * 100}
+                onSetIsVisible={onSetIsVisible}
+              />
+            )}
+          </div>
         </CertificationBox>
       ))}
     </div>

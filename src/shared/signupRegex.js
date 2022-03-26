@@ -4,16 +4,16 @@ export const idCheck = (id) => {
   return _reg.test(id);
 };
 
-// 닉네임(이름) 형식: 한글 또는 알파벳 대소문자(a~z, A~Z)
+// 닉네임(이름) 형식: 최소 2자 이상, 한글 또는 알파벳 대소문자(a~z, A~Z)
 export const nicknameCheck = (nickname) => {
-  let _reg = /^[ㄱ-힣a-zA-Z]+$/;
+  let _reg = /^[ㄱ-힣a-zA-Z]{2,}$/;
   return _reg.test(nickname);
 };
 
-//비번: 10자 이상, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
+//비번: 8자 이상, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
 export const pwdCheck = (pwd) => {
   let _reg =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/;
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 
   return _reg.test(pwd);
 };

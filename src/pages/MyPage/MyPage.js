@@ -7,6 +7,7 @@ import { history } from '../../redux/configureStore';
 import MyDictList from '../../components/MyDict/MyDictList';
 import MyCertificateList from '../../components/MyCertificate/MyCertificateList';
 import MyStatisticList from '../../components/MyStatistic/MyStatisticList';
+import Calendar from '../../components/MyStatistic/Calendar';
 
 const MyPage = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const MyPage = () => {
           </div>
           {tab === 'myVoca' ? <MyDictList /> : ''}
           {tab === 'verify' ? <MyCertificateList /> : ''}
-          {tab === 'statistics' ? <MyStatisticList /> : ''}
+          {tab === 'statistics' ? <Calendar /> : ''}
         </div>
       ) : (
         '로그인이 필요합니다.'

@@ -123,15 +123,19 @@ const Signup = (props) => {
     }
 
     //signupDB에 회원가입 시 입력한 내역들을 보내주기
-    dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check));
-    props.setModalState('login');
+    dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check)).then((res)=>{
+      if(res === 'ok'){
+        alert('성공적으로 회원가입되었습니다.');
+        props.setModalState('login');
+      }
+    })
   };
 
   return (
     <React.Fragment>
       {modals_state === 'signup' && (
-        <ModalsBox>
-          <div className='modal-wrapper'>
+        // <ModalsBox>
+          <SignupWrapper>
             <div className='white_block'>
               <div className='tying-welcome-logo'>
                 <svg
@@ -171,16 +175,21 @@ const Signup = (props) => {
                     }}
                   />
 
-                  {id !== '' && !idCheck(id) && (
+                  {id !== '' && !idCheck(id) && !id_check && (
                     <p className='incorrect-id'>
-                      아이디 형식이 올바르지 않습니다.
+                      영문 또는 숫자로 구성된 6자 이상의 아이디.
                     </p>
                   )}
 
-                  {id !== '' && idCheck(id) && (
+                  {id !== '' && idCheck(id) && !id_check && (
                     <p className='correct-id'>
                       사용할 수 있는 아이디 형식입니다.
                     </p>
+                  )}
+                  {id !== '' && idCheck(id) && id_check && (
+                    <p className='correct-id'>
+                    사용할 수 있는 아이디입니다.
+                  </p>
                   )}
                 </div>
 
@@ -272,14 +281,19 @@ const Signup = (props) => {
                     }}
                   />
 
-                  {nickname !== '' && !nicknameCheck(nickname) && (
+                  {nickname !== '' && !nicknameCheck(nickname) && !nickname_check && (
                     <p className='incorrect-nickname'>
-                      닉네임 형식이 올바르지 않습니다.
+                      공백없이 한글 또는 영문으로 구성된 2자 이상의 닉네임.
                     </p>
                   )}
-                  {nickname !== '' && nicknameCheck(nickname) && (
+                  {nickname !== '' && nicknameCheck(nickname) && !nickname_check && (
                     <p className='correct-nickname'>
                       사용할 수 있는 닉네임 형식입니다.
+                    </p>
+                  )}
+                  {nickname !== '' && nicknameCheck(nickname) && nickname_check && (
+                    <p className='correct-nickname'>
+                      사용할 수 있는 닉네임입니다.
                     </p>
                   )}
                 </div>
@@ -364,7 +378,7 @@ const Signup = (props) => {
 
                 {pwd !== '' && !pwdCheck(pwd) && (
                   <p className='incorrect-pwd'>
-                    최소 하나의 숫자, 특수문자를 포함한 10자 이상의 비밀번호.
+                    영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호
                   </p>
                 )}
                 {pwd !== '' && pwdCheck(pwd) && (
@@ -379,14 +393,18 @@ const Signup = (props) => {
                   onChange={(e) => {
                     setPwdCheck(e.target.value);
                   }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter"){
+                      signup();
+                  }}}
                 />
 
-                {pwd !== '' && !pwdCheck(pwd_Check) && (
+                {pwd_Check !== '' && !pwdCheck(pwd_Check) && (
                   <p className='incorrect-pwd-check'>
                     비밀번호가 일치하지 않습니다.
                   </p>
                 )}
-                {pwd !== '' && pwdCheck(pwd_Check) && (
+                {pwd_Check !== '' && pwdCheck(pwd_Check) && (
                   <p className='correct-pwd-check'>비밀번호가 일치합니다.</p>
                 )}
               </div>
@@ -395,8 +413,8 @@ const Signup = (props) => {
                 회원가입
               </button>
             </div>
-          </div>
-        </ModalsBox>
+          </SignupWrapper>
+        // </ModalsBox>
       )}
     </React.Fragment>
   );
@@ -416,6 +434,9 @@ const ModalsBox = styled.div`
   padding: 75px;
   box-sizing: border-box;
 
+  `;
+
+const SignupWrapper = styled.div`
   .tying-welcome-logo {
     display: flex;
   }
@@ -518,6 +539,9 @@ const ModalsBox = styled.div`
         border-radius: 5px;
         outline: none;
 
+        cursor: pointer;
+        transition: 0.3s;
+
         &:hover {
           background-color: #e6e7e8;
           border: none;
@@ -602,6 +626,9 @@ const ModalsBox = styled.div`
         box-sizing: border-box;
         border-radius: 5px;
         outline: none;
+        
+        cursor: pointer;
+        transition: 0.3s;
 
         &:hover {
           background-color: #e6e7e8;
@@ -729,12 +756,17 @@ const ModalsBox = styled.div`
     border-radius: 20px;
     outline: none;
 
+    cursor: pointer;
+    transition: 0.3s;
+
     &:hover {
       background-color: #e6e7e8;
       border: none;
     }
   }
+
 `;
+
 
 Signup.defaultProps = {};
 
