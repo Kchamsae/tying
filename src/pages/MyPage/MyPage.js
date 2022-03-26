@@ -23,7 +23,7 @@ const MyPage = () => {
     history.replace('/');
   };
 
-  // 닉네임 수정
+  // 닉네임 수정 함수
   const editProfile = () => {
     dispatch(userActions.editUserDB(nickname));
   };
