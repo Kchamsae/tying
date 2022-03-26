@@ -416,7 +416,7 @@ const EditNicknameButton = styled.div`
   margin: auto;
   width: 268px;
   height: 48px;
-  margin-top: 27px;
+  margin-top: 30px;
 
   font-family: "Noto Sans KR";
   font-style: normal;
