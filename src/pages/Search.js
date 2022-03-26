@@ -60,7 +60,7 @@ const Search = () => {
     setDone(true);
     setPageNumber(1);
     const v = searchRef.current.value;
-    let reg = /^[A-z]{2,}$/;
+    let reg = /^[a-zA-Z][a-zA-z-]{1,}/;
     const ok = reg.test(v);
     if (ok) {
       dispatch(scriptActions.setSearchListDB(1, v, false));

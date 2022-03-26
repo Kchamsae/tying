@@ -15,6 +15,7 @@ import { actionCreators as typingActions } from '../redux/modules/typing';
 import { actionCreators as wordActions } from '../redux/modules/word';
 import { actionCreators as scriptActions } from '../redux/modules/script';
 import DictModal from './DictModal';
+import Bookmark from './Bookmark';
 
 const Preview = memo(
   forwardRef(
@@ -39,9 +40,11 @@ const Preview = memo(
       const [word_modal, setWordModal] = useState(false);
       const [word, setWord] = useState('');
       const [sentence, setSentence] = useState('');
+      const [focus_in, setFocusIn] = useState(false);
 
       const charRef = useRef();
       const charPrevRef = useRef();
+      const charHeightRef = useRef();
 
       // const [focus, setFocus] = useState('out');
 
@@ -58,7 +61,7 @@ const Preview = memo(
         // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map((a) =>
           a.map((b) => {
-            return b.match(/[0-9a-zA-Z.,’'?\(\)":\-—\$\%\&\#]+[$(\.|\s:?)+]/gi);
+            return b.match(/[0-9a-zA-Z.,’'?\(\)":;\-—\$\%\&\#]+[$(\.|\s:?)+]/gi);
           })
         );
       }, [script]);
@@ -81,6 +84,12 @@ const Preview = memo(
       const current_divided = useSelector(
         (state) => state.typing.current_divided
       );
+
+      useEffect(()=>{
+        if(focus !== focus_in){
+          setFocusIn(!focus_in);
+        }
+      },[focus])
 
       useEffect(() => {
         const standard = paragraphRef.current[text_num]?.offsetTop + ((current_divided + 1)*3-1) * charPrevRef.current?.clientHeight;
@@ -111,12 +120,8 @@ const Preview = memo(
           dispatch(typingActions.divideParagraph(paragraph_height,charPrevRef.current?.clientHeight));
         }
        
-      }, []);
+      }, [script]);
 
-      useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        // scrollRef.current.style.height = `${paragraphRef.current[text_num].clientHeight}px`;
-      }, []);
 
       const prev = useCallback(
         () => {
@@ -124,11 +129,10 @@ const Preview = memo(
             paragraphWrapRef.current[text_num].scroll({
               behavior: 'smooth',
               left: 0,
-              top: (current_divided - 1) * (charPrevRef.current?.clientHeight*3),
+              top: (current_divided - 1) * (charHeightRef.current?.clientHeight*3),
             });
             dispatch(typingActions.setCurrentDivided(current_divided - 1));
           } else if (text_num > 0 && current_divided === 0) {
-            // scrollRef.current.style.height = `${paragraphRef.current[text_num-1].clientHeight}px`;
             scrollRef.current.scroll({
               behavior: 'smooth',
               left: 0,
@@ -137,15 +141,15 @@ const Preview = memo(
             dispatch(
               typingActions.setCurrentDivided(paragraph_divided[text_num - 1] - 1)
             );
-            // removeEvent();
             setTextNum((text_num) => text_num - 1);
             setText(script[text_num - 1]);
           }
-        },[text_num,userInput]
+        },[text_num,userInput, current_divided]
       )
 
       const next = useCallback(
         () => {
+          console.log(current_divided, )
           if (current_divided + 1 !== paragraph_divided[text_num]) {
             paragraphWrapRef.current[text_num].scroll({
               behavior: 'smooth',
@@ -157,26 +161,25 @@ const Preview = memo(
             text_num < script_splitted?.length - 1 &&
             current_divided + 1 === paragraph_divided[text_num]
           ) {
-            // scrollRef.current.style.height = `${paragraphRef.current[text_num+1].clientHeight}px`;
             scrollRef.current.scroll({
               behavior: 'smooth',
               left: 0,
               top: paragraphRef.current[text_num + 1].offsetTop - parseFloat(window.getComputedStyle(paragraphWrapRef.current[0]).getPropertyValue('margin-top')),
             });
-            // removeEvent();
             setTextNum((text_num) => text_num + 1);
             setText(script[text_num + 1]);
             dispatch(typingActions.setCurrentDivided(0));
           }
-        },[userInput,text_num]
+        },[userInput,text_num, current_divided]
       )
 
       const openDict = (w, si) => {
-        // if(focus){
-            setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+/).toString().toLowerCase());
-            setSentence(script_splitted_sentence[text_num][si].trim());
-            setWordModal(true);
-        // }
+        if(focus_in){
+          console.log(focus);
+          setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+/).toString().toLowerCase());
+          setSentence(script_splitted_sentence[text_num][si].trim());
+          setWordModal(true);
+        }
       };
 
       const sentences = useMemo(() => {
@@ -194,16 +197,10 @@ const Preview = memo(
               >
                 {p?.map((s, si) => {
                   return (
-                    <ul className='sentence' key={si}>
+                    <ul className='sentence' key={si}> 
                       {s?.map((w, wi) => {
                         return (
-                          <li
-                            className={focus ? 'word word-click' : 'word'}
-                            key={wi}
-                            onClick={() => {
-                              openDict(w, si);
-                            }}
-                          >
+                          <li className={focus ? 'word word-click' : 'word'} key={wi} onClick={()=>{openDict(w, si)}}>
                             {w?.map((a, i) => {
                               let n = 0;
                               for (let j = 0; j < pi; j++) {
@@ -217,8 +214,8 @@ const Preview = memo(
                               for (let j = 0; j < wi; j++) {
                                 n += script_splitted_word[pi][si][j].length;
                               }
-
                               n += i;
+
                               if (n < userInput?.length) {
                                 if (a === userInput[n]) {
                                   if (a === ' ') {
@@ -250,7 +247,7 @@ const Preview = memo(
                                   }
                                 }
                               }
-                              if (text_num === pi && n === userInput?.length) {
+                              if (n === userInput?.length) {
                                 if (a === ' ') {
                                   return (
                                     <span key={i} className={focus ? 'is-next-space space' : 'space'} ref={charPrevRef}>
@@ -289,7 +286,7 @@ const Preview = memo(
                                     {a}
                                   </span>
                                 );
-                              } else if (a.match(/[0-9.,!"'-;:%$&\(\)]/)) {
+                              } else if (a.match(/[0-9.,!?"'-;:%$&\(\)]/)) {
                                 return (
                                   <span key={i} className='not-char'>
                                     {a}
@@ -309,78 +306,27 @@ const Preview = memo(
             </div>
           );
         });
-      }, [userInput, focus, word_modal, script, text_num]);
+      }, [userInput, focus, word_modal, script, text_num, script]);
 
       return (
         <>
           <Wrapper onClick={giveFocus}>
             <UpDownButtonBox>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prev();
-                }}
-                disabled={
-                  text_num === 0 && current_divided === 0 ? true : false
-                }
-              >
-                <svg
-                  width='19'
-                  height='17'
-                  viewBox='0 0 19 17'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z'
-                    fill='#D2D2D2'
-                  />
+              <button onClick={(e) => { e.stopPropagation(); prev(); }}
+                disabled={text_num === 0 && current_divided === 0 ? true : false}>
+                <svg width='19' height='17' viewBox='0 0 19 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z' fill='#D2D2D2'/>
                 </svg>
               </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  next();
-                }}
-                disabled={
-                  text_num === script_splitted?.length - 1 &&
-                  current_divided + 1 === paragraph_divided[text_num]
-                    ? true
-                    : false
-                }
-              >
-                <svg
-                  width='19'
-                  height='17'
-                  viewBox='0 0 19 17'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z'
-                    fill='#D2D2D2'
-                  />
+              <button onClick={(e) => { e.stopPropagation(); next(); }}
+                disabled={text_num === script_splitted?.length - 1 &&current_divided + 1 === paragraph_divided[text_num]? true : false}>
+                <svg width='19' height='17' viewBox='0 0 19 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z' fill='#D2D2D2'/>
                 </svg>
               </button>
-              <div className='paragraph-now'>{`${text_num + 1}/${
-                script?.length
-              }`}</div>
+              <div className='paragraph-now'>{`${text_num + 1}/${script ? script?.length : '1'}`}</div>
             </UpDownButtonBox>
-            <div className='bookmark-button'>
-              <div className='bookmark-innershadow'></div>
-              <svg
-                width='27'
-                height='35'
-                viewBox='0 0 27 35'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M23 0H3.83333C1.725 0 0 1.725 0 3.83333V34.5L13.4167 28.75L26.8333 34.5V3.83333C26.8333 1.725 25.1083 0 23 0Z'
-                />
-              </svg>
-            </div>
+            <Bookmark script_id={script_id} detail/>
             <PreviewBox ref={scrollRef}>{sentences}</PreviewBox>
           </Wrapper>
           {word_modal && (
@@ -450,28 +396,6 @@ const DictModalClose = styled.div`
 
 const Wrapper = styled.div`
   position: relative;
-
-  .bookmark-button {
-    position: absolute;
-    top: -17px;
-    right: 30px;
-    height: min-content;
-    cursor: pointer;
-
-    svg {
-      fill: #d8d8d8;
-    }
-
-    .bookmark-innershadow {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 27px;
-      height: 35px;
-      border-radius: 4px;
-      box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
-    }
-  }
 `;
 
 const UpDownButtonBox = styled.div`

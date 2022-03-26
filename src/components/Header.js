@@ -24,13 +24,13 @@ const Header = (props) => {
 
   const openModal = () => {
     setFadeOut(false);
-    document.body.style.overflow = 'hidden';
+    // document.body.style.overflow = 'hidden';
     setLoginModal(true);
   };
 
   const closeModal = () => {
     setFadeOut(true);
-    document.body.style.overflow = 'unset';
+    // document.body.style.overflow = 'unset';
     setTimeout(() => {
       setLoginModal(false);
     }, 400);
