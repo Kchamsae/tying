@@ -42,7 +42,7 @@ const MyPage = () => {
           <h1>마이페이지 입니다.</h1>
           <div style={{ display: 'flex' }}>
             <h3>{user.nickname}</h3>
-            <NicknameModal />
+
             <h3 onClick={editProfile}>이름수정</h3>
             <h3 onClick={logout}>로그아웃</h3>
           </div>
