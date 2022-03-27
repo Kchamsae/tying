@@ -7,17 +7,24 @@ const SET_FILTER_LIST = 'SET_FILTER_LIST';
 const SET_SEARCH_LIST = 'SET_SEARCH_LIST';
 const ADD_FILTER_LIST = 'ADD_FILTER_LIST';
 const ADD_SEARCH_LIST = 'ADD_SEARCH_LIST';
+const GET_MY_SCRIPT = 'GET_MY_SCRIPT';
+const ADD_MY_SCRIPT = 'ADD_MY_SCRIPT';
+const DELETE_MY_SCRIPT = 'DELETE_MY_SCRIPT';
 
 const setOneScript = createAction(SET_ONE_SCRIPT, (script) => ({ script }));
 const setFilterList = createAction(SET_FILTER_LIST, (list) => ({ list }));
 const setSearchList = createAction(SET_SEARCH_LIST, (list) => ({ list }));
 const addFilterList = createAction(ADD_FILTER_LIST, (list) => ({ list }));
 const addSearchList = createAction(ADD_SEARCH_LIST, (list) => ({ list }));
+const getMyScript = createAction(GET_MY_SCRIPT, (saved) => ({saved}));
+const addMyScript = createAction(ADD_MY_SCRIPT, () => ({}));
+const deleteMyScript = createAction(DELETE_MY_SCRIPT, () => ({}));
 
 const initialState = {
   typing_script: {},
   filter_list: [],
   search_list: [],
+  bookmark: false,
 };
 
 const randomCategoryScriptDB = (category, small_category, reload=false) => {
@@ -91,8 +98,8 @@ const setSearchListDB = (number, word, scroll) => {
       const list = await apis.searchScript(number, word);
 
       console.log(list.data);
-      if (list.data.ok && list.data.ok !== 'no') {
-        if (list.data.targetScripts?.length === 0) {
+      if (list.data.ok !== 'no') {
+        if (!list.data.ok && list.data.errorMessage === '해당 값이 존재하지 않습니다.') {
           dispatch(setSearchList('no'));
         } else {
           if (scroll) {
@@ -107,6 +114,49 @@ const setSearchListDB = (number, word, scroll) => {
     } catch (err) {
       console.log(err);
       alert('검색결과를 가져오지 못했습니다!');
+    }
+  };
+};
+
+const getMyScriptDB = (script_id) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const my_script = await apis.getMyScript(script_id);
+
+      console.log(my_script.data);
+      dispatch(getMyScript(my_script.data.saved));
+      }catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+const addMyScriptDB = (script_id) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const my_script = await apis.addMyScript(script_id);
+
+      console.log(my_script.data);
+      if(getState().script.typing_script.scriptId === script_id){
+        dispatch(addMyScript(my_script.data.saved));
+      }
+      }catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+const deleteMyScriptDB = (script_id) => {
+  return async function (dispatch, getState, { history }) {
+    try {
+      const my_script = await apis.deleteMyScript(script_id);
+
+      console.log(my_script.data);
+      if(getState().script.typing_script.scriptId === script_id){
+        dispatch(deleteMyScript(my_script.data.saved));
+      }
+      }catch (err) {
+      console.log(err);
     }
   };
 };
@@ -134,6 +184,18 @@ export default handleActions(
       produce(state, (draft) => {
         draft.search_list = [...draft.search_list, ...action.payload.list];
       }),
+    [GET_MY_SCRIPT]: (state, action) =>
+    produce(state, (draft) => {
+      draft.bookmark = action.payload.saved; 
+    }),
+    [ADD_MY_SCRIPT]: (state, action) =>
+    produce(state, (draft) => {
+      draft.bookmark = true;
+    }),
+    [DELETE_MY_SCRIPT]: (state, action) =>
+    produce(state, (draft) => {
+      draft.bookmark = false;
+    }),
   },
   initialState
 );
@@ -142,10 +204,16 @@ const actionCreators = {
   setOneScript,
   setFilterList,
   setSearchList,
+  getMyScript,
+  addMyScript,
+  deleteMyScript,
   randomCategoryScriptDB,
   setOneScriptDB,
   setFilterListDB,
   setSearchListDB,
+  getMyScriptDB,
+  addMyScriptDB,
+  deleteMyScriptDB,
 };
 
 export { actionCreators };

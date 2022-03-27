@@ -18,6 +18,7 @@ const opacityOut = keyframes`
 `;
 
 const TypingWrap = styled.div`
+  overflow: hidden;
   padding-top: 80px;
   position: relative;
   width: 100%;
@@ -572,9 +573,9 @@ const FinishBtn = styled.div`
   position: fixed;
   width: 2.92vw;
   height: 2.92vw;
-  left: 143px;
+  right: 229px;
   bottom: 4.22vw;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -586,13 +587,61 @@ const FinishBtn = styled.div`
   animation: 300ms ease 0ms 1 normal forwards running ${opacityIn};
 
   svg {
-    width: 1.56vw;
-    height: 1.25vw;
-    margin-right: 0.16vw;
+    width: 24px;
+    height: 24px;
   }
 
   &:hover {
     background-color: #f0f0f0;
+  }
+
+  >div{
+    width: 144px;
+    border-radius: 4px;
+    height: 50px;
+    background: #DEDEDE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+
+    position: absolute;
+    left: calc(50% - 72px);
+    top: -75px;
+    z-index: 10;
+    
+    font-family: 'Noto Sans KR';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    display: ${props => props.on ? 'flex' : 'none'};
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+    animation: 300ms ease 0ms 1 normal forwards running ${props => props.onAni ? opacityIn : opacityOut};
+
+    color: #000000;
+
+    >span{
+      width: 0px;
+      height: 0px;
+      border-bottom: calc( 11px * 1.732 ) solid #DEDEDE;
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      /* box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.08); */
+      position: absolute;
+      bottom: calc( -11px * 1.732 );
+      transform: rotate(180deg);
+
+    }
+  }
+`;
+
+const HelpBtn = styled(FinishBtn)`
+  left: unset;
+  right: 157px;
+  svg {
+    margin: 2px 0 0 3px;
+    width: 17px;
+    height: 24px;
   }
 `;
 
@@ -621,4 +670,5 @@ export {
   ModalBg,
   TitleMore,
   FinishBtn,
+  HelpBtn,
 };

@@ -1,20 +1,22 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
+import { setCookie, deleteCookie } from "../../shared/Cookie";
 import { apis } from "../../shared/apis";
 // import { history } from "../redux/configureStore";
 
 // actions
 const SET_USER = "SET_USER";
 const OUT_USER = "OUT_USER";
-const SET_LOGIN_MODAL = "SET_LOGIN_MODAL";
 const EDIT_USER = "EDIT_USER";
+const SET_LOGIN_MODAL = "SET_LOGIN_MODAL";
+const SET_NICKNAME_MODAL = "SET_NICKNAME_MODAL";
 
 // action creators
 const setUser = createAction(SET_USER, (user) => ({ user }));
 const outUser = createAction(OUT_USER, () => ({}));
-const setLoginModal = createAction(SET_LOGIN_MODAL, (set) => ({ set }));
 const editUser = createAction(EDIT_USER, (nickname) => ({ nickname }));
+const setLoginModal = createAction(SET_LOGIN_MODAL, (set) => ({ set }));
+const setNicknameModal = createAction(SET_NICKNAME_MODAL, (set) => ({ set }));
 
 //initial state
 const initialState = {
@@ -120,17 +122,19 @@ const kakaoLoginDB = (code) => {
 // 닉네임 수정
 const editUserDB = (nickname) => {
   return async function (dispatch, getState, { history }) {
-    console.log("nickname확인 : ", nickname)
-    await apis
-      .editUserNickname({nickname})
-      .then((res) => {
-        console.log("닉네임 수정 완료 :", res);
-        window.alert("닉네임 수정이 완료 되었습니다!");
+    console.log("nickname확인 : ", nickname);
+    try {
+      const nick = await apis.editUserNickname({ nickname })
+      if (nick.data.ok) {
         dispatch(editUser(nickname));
-      })
-      .catch((err) => {
-        console.log("닉네임 수정 실패", err);
-      });
+        window.alert("닉네임 수정이 완료 되었습니다!");
+        return 'ok';
+      } else if (!nick.data.ok) {
+        window.alert("닉네임을 수정할 수 없습니다!");
+      }
+    } catch(err) {
+      console.log("닉네임 수정 실패", err);
+    }
   };
 };
 
@@ -158,6 +162,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.login_modal = action.payload.set;
       }),
+    [SET_NICKNAME_MODAL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.nickname_modal = action.payload.set;
+      }),
   },
   initialState
 );
@@ -166,8 +174,9 @@ export default handleActions(
 const actionCreators = {
   setUser,
   outUser,
-  setLoginModal,
   editUser,
+  setLoginModal,
+  setNicknameModal,
   signupDB,
   loginDB,
   loginCheckDB,

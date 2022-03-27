@@ -1,21 +1,43 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CertificateModal from '../CertificateModal/CertificateModal';
 import { ModalBg } from './style';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import Slider from 'react-slick';
+
+import { actionCreators as recordActions } from '../../redux/modules/record';
+import MyCertificateModal from './MyCertificateModal';
 
 // import 'slick-carousel/slick/slick.css';
 // import 'slick-carousel/slick/slick-theme.css';
 
 const MyCertificate = (props) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const onSetIsVisible = (active) => {
-    setIsVisible(active);
-  };
+  const [modal, setModal] = useState(false);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(recordActions.certificateLoadDB());
+  // }, []);
+
+  const certificateLoad = useSelector((state) => state.record.record_list);
+  console.log(certificateLoad);
+
+  const _certificateLoad = useSelector((state) => state.record.record_list3);
+  console.log(_certificateLoad);
+
+  // const openCertificate = () => {
+  //   dispatch(
+  //     recordActions.certificateLoadDB(
+  //       certificateLoad.certificateId,
+  //       certificateLoad.scriptId
+  //     )
+  //   );
+  // };
 
   const record = props.recordLoad;
-  console.log(record);
+  // console.log(record);
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -75,21 +97,25 @@ const MyCertificate = (props) => {
               <p>Proudly presented to</p>
               <h3>{a.id}</h3>
             </div>
-            <button onClick={() => onSetIsVisible(true)}>다운로드</button>
-            <div>
-              {isVisible && (
-                <CertificateModal
-                  sec={a.duration}
-                  cpm={a.speed}
-                  char_num={a.typingCnt}
-                  progress={(a.typingCnt / 2000) * 100}
-                  onSetIsVisible={onSetIsVisible}
-                />
-              )}
+            <div
+              onClick={() => {
+                dispatch(
+                  recordActions.certificateLoadDB(a.certificateId, a.scriptId)
+                );
+                setModal(true);
+              }}
+            >
+              다운로드
             </div>
           </CertificationBox>
         ))}
       </Slider>
+      {modal && (
+        <>
+          <ModalBg />
+          <MyCertificateModal certificateLoad={_certificateLoad} />
+        </>
+      )}
     </div>
   );
 };
