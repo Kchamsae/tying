@@ -67,7 +67,7 @@ const MyPage = () => {
 };
 
 const TabMenu = styled.div`
-  width: 200px;
+  width: 180px;
   height: 50px;
   background-color: grey;
   color: white;
