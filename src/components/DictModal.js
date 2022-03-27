@@ -60,6 +60,15 @@ const DictModal = (props) => {
   };
 
   const saveDict = () => {
+    if(!is_login) {
+      alert('로그인 후 이용할 수 있습니다!');
+      dispatch(userActions.setLoginModal(true));
+      return;
+    }
+    if(dict_list?.length === 0){
+      alert('작성된 뜻이 없습니다. 먼저 뜻을 작성해주세요.')
+      setTypeMean(true);
+    }
     dispatch(wordActions.saveDictDB(script_id, props.word, props.sentence));
   };
 

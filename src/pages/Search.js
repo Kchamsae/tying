@@ -7,6 +7,7 @@ import ScriptItem from "../components/ScriptItem";
 import ScriptItemLoading from "../components/ScriptItemLoading";
 import { useInView } from "react-intersection-observer";
 import { history } from "../redux/configureStore";
+import { getCookie } from "../shared/Cookie";
 
 const Search = () => {
   const searchRef = useRef();
@@ -21,9 +22,10 @@ const Search = () => {
   const search_list = useSelector((state) => state.script.search_list);
 
   const is_login = useSelector(state => state.user.is_login);
+  const token = getCookie('token'); 
 
   useEffect(()=>{
-    if(!is_login){
+    if(!token){
       alert('로그인 후에 이용할 수 있습니다.');
       history.replace('/');
       dispatch(userActions.setLoginModal(true));
