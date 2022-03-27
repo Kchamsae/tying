@@ -6,6 +6,7 @@ import { apis } from '../../shared/apis';
 const RECORD_TYPING = 'RECORD_TYPING';
 const RECORD_LOAD = 'RECORD_LOAD';
 const RECORD_LOADALL = 'RECORD_LOADALL';
+const CERTIFICATE_LOAD = 'CERTIFICATE_LOAD';
 
 const recordTyping = createAction(RECORD_TYPING, (record) => ({ record }));
 
@@ -17,9 +18,14 @@ const recordLoadAll = createAction(RECORD_LOADALL, (record_list2) => ({
   record_list2,
 }));
 
+const certificateLoad = createAction(CERTIFICATE_LOAD, (record_list3) => ({
+  record_list3,
+}));
+
 const initialState = {
   record_list: [],
   record_list2: [],
+  record_list3: [],
 };
 
 const recordTypingDB = (
@@ -55,7 +61,7 @@ const recordLoadDB = () => {
   return async function (dispatch, getState, { history }) {
     try {
       const record_load = await apis.recordLoad();
-      console.log(record_load.data.getcertificate);
+      // console.log(record_load.data.getcertificate);
       const record_loads = record_load.data.getcertificate;
 
       dispatch(recordLoad(record_loads));
@@ -78,6 +84,30 @@ const recordLoadAllDB = (startdate, enddate) => {
   };
 };
 
+const certificateLoadDB = (certificateId, scriptId) => {
+  console.log(
+    certificateId,
+    'certificateId 가 잘 넘어 왔습니다.',
+    scriptId,
+    'scriptId 가 잘 넘어 왔습니다.'
+  );
+  return async function (dispatch) {
+    try {
+      const load_certificate = await apis.certificateLoad(
+        certificateId,
+        scriptId
+      );
+      console.log(load_certificate);
+      const load_certificates = load_certificate.data;
+
+      console.log(load_certificates);
+      dispatch(certificateLoad(load_certificates));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export default handleActions(
   {
     [RECORD_LOAD]: (state, action) =>
@@ -90,6 +120,17 @@ export default handleActions(
       produce(state, (draft) => {
         draft.record_list2 = action.payload.record_list2;
       }),
+
+    [CERTIFICATE_LOAD]: (state, action) =>
+      // console.log(
+      //   state,
+      //   'state 가 잘 전달되었습니다.',
+      //   action,
+      //   'action 이 잘 전달되었습니다.'
+      // ),
+      produce(state, (draft) => {
+        draft.record_list3 = action.payload.record_list3;
+      }),
   },
   initialState
 );
@@ -100,6 +141,8 @@ const actionCreators = {
   recordLoadDB,
   recordLoadAll,
   recordLoadAllDB,
+  certificateLoad,
+  certificateLoadDB,
 };
 
 export { actionCreators };

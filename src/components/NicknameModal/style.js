@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const ModalWrapper = styled.div`
   width: 100vw;
@@ -48,15 +48,15 @@ const ModalBox = styled.div`
 
   .nicknameEdit-title {
     font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 17px;
-      line-height: 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      letter-spacing: -0.015em;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.015em;
   }
 
   .nickname-form-wrapper {
@@ -76,7 +76,7 @@ const ModalBox = styled.div`
         font-size: 16px;
         margin-top: 27px;
 
-        font-family: "Noto Sans KR";
+        font-family: 'Noto Sans KR';
         font-style: normal;
         color: #212529;
 
@@ -96,7 +96,7 @@ const ModalBox = styled.div`
         position: absolute;
         width: max-content;
         padding-left: 10px;
-        font-family: "Noto Sans KR";
+        font-family: 'Noto Sans KR';
         font-style: normal;
         font-size: 12px;
         &.incorrect-nickname {
@@ -121,7 +121,7 @@ const ModalBox = styled.div`
         height: 32px;
         left: 30px;
 
-        font-family: "Noto Sans KR";
+        font-family: 'Noto Sans KR';
         font-style: normal;
         font-weight: 600;
         font-size: 12px;
@@ -152,7 +152,7 @@ const ModalBox = styled.div`
       height: 48px;
       margin-top: 27px;
 
-      font-family: "Noto Sans KR";
+      font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
       font-size: 17px;
@@ -183,7 +183,6 @@ const ModalBox = styled.div`
 `;
 
 const ModalBg = styled.div`
-
   position: fixed;
   top: 0;
   left: 0;

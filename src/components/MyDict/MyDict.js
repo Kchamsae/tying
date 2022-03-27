@@ -11,35 +11,136 @@ const MyDict = (props) => {
   return (
     <div style={{ display: 'flex' }}>
       {dicts.map((dict, idx) => (
-        <CardBox key={idx}>
-          <button
-            onClick={() => {
-              dispatch(wordActions.deleteMyDictDB(dict[4], dict[2]));
-            }}
-          >
-            삭제
-          </button>
-          <h1>{dict[2]}</h1>
-          {dict[0] === dict[1] ? (
-            <h2>{dict[0]}</h2>
-          ) : (
-            <div>
-              <h2>{dict[0]}</h2>
-              <h2>{dict[1]}</h2>
+        <BoxDict key={idx}>
+          <div style={{ height: '50%' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                verticalAlign: 'center',
+                padding: 0,
+              }}
+            >
+              <div style={{ display: 'flex', verticalAlign: 'center' }}>
+                <div className='bar-title'></div>
+                <h1 className='word-title'>{dict[2]}</h1>
+              </div>
+              <button
+                className='delete-btn'
+                onClick={() => {
+                  dispatch(wordActions.deleteMyDictDB(dict[4], dict[2]));
+                }}
+              >
+                삭제
+              </button>
             </div>
-          )}
-          <p>{dict[3]}</p>
-        </CardBox>
+            {dict[0] === dict[1] ? (
+              <div className='dict-meaning'>
+                <h2 className='word-meaning'>{dict[0]}</h2>
+              </div>
+            ) : (
+              <React.Fragment>
+                <div className='dict-meaning'>
+                  <h2 className='word-meaning'>{dict[0]}</h2>
+                </div>
+                <div className='dict-meaning'>
+                  <h2 className='word-meaning'>{dict[1]}</h2>
+                </div>
+              </React.Fragment>
+            )}
+          </div>
+          <div style={{ display: 'flex', flexGrow: 1, marginTop: '10px' }}>
+            <svg
+              width='19'
+              height='18'
+              viewBox='0 0 19 18'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M16.1257 1.91225V10.5174H11.0864V15.298H2.01571V1.91225H16.1257ZM16.1257 0H2.01571C0.907068 0 0 0.860513 0 1.91225V15.298C0 16.3498 0.907068 17.2103 2.01571 17.2103H12.0942L18.1414 11.4735V1.91225C18.1414 0.860513 17.2343 0 16.1257 0ZM9.07068 10.5174H4.03141V8.60513H9.07068V10.5174ZM14.1099 6.69288H4.03141V4.78063H14.1099V6.69288Z'
+                fill='black'
+              />
+            </svg>
+            <p className='word-paragraph'>{dict[3]}</p>
+          </div>
+        </BoxDict>
       ))}
     </div>
   );
 };
 
-const CardBox = styled.div`
-  width: 300px;
-  heigth: 300px;
-  background-color: grey;
+const BoxDict = styled.div`
+  width: 438px;
+  heigth: 411px;
+  background: #e2e2e2;
+  border-radius: 10px;
+  color: black;
+  margin: 10px;
+  padding: 10px;
+
+  .bar-title {
+    width: 11px;
+    height: 41px;
+    margin: auto;
+    border-radius: 5px;
+    background: #FF2E00
+  }
+
+  .word-title {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+  }
+
+  .delete-btn {
+    width: 21px;
+    height: 21px;
+  }
+
+  .dict-meaning {
+    width: 374px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding-left: 25px;
+    background: #3a3a3c;
+    margin: 5px;
+  }
+
+  .word-meaning {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffffff;
+  }
+
+  .word-paragraph {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    display: block;
+    color: #000000
+    padding-left: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+  }
+`;
+
+const BoxMeaning = styled.div`
+  width: 374px;
+  height: auto;
+  background: #3A3A3C !important
   color: white;
+  padding-left: 10px;
 `;
 
 export default MyDict;

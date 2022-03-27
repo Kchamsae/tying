@@ -19,7 +19,7 @@ const MyDictList = () => {
     <div>
       <div style={{ display: 'flex' }}>
         <h1>최근에 저장한 단어</h1>
-        <h3 onClick={() => history.push('/mypage/all')}>전체 보기</h3>
+        <p onClick={() => history.push('/mypage/all')}>전체 보기</p>
       </div>
       <MyDict saveDict={saveDict} />
     </div>
