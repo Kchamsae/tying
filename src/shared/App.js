@@ -6,6 +6,7 @@ import Main from '../pages/Main';
 import Typing from './../pages/Typing/Typing';
 import MyPage from '../pages/MyPage/MyPage';
 import MyAllDict from '../components/MyDict/MyAllDict';
+import MyAllDictList from '../components/MyDict/MyAllDictList';
 
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
@@ -49,7 +50,7 @@ function App() {
             <Route exact path='/filtering' component={ScriptFiltering} />
             <Route exact path='/search' component={Search} />
             <Route exact path='/mypage' component={MyPage} />
-            <Route exact path='/mypage/all' component={MyAllDict} />
+            <Route exact path='/mypage/all' component={MyAllDictList} />
             <Route path='*' component={NotFound} />
           </Switch>
           <FeedbackButton />
