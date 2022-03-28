@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from './Cookie';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "https://mkdev.shop/",
 });
 
 // Alter defaults after instance has been created
