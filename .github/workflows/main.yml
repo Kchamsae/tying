@@ -35,6 +35,7 @@ jobs:
         env:
           REACT_APP_REST_API_KEY: ${{ secrets.REACT_APP_REST_API_KEY }}
           REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
       
       - name: Install Dependencies   
         run: yarn install
