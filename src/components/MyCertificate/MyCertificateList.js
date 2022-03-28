@@ -2,6 +2,12 @@ import React, { useEffect } from 'react';
 import MyCertificate from './MyCertificate';
 import { actionCreators as recordActions } from '../../redux/modules/record';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+import Slider from 'react-slick';
+
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const MyCertificateList = () => {
   const dispatch = useDispatch();
