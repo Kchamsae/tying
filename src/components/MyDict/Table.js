@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { useTable } from 'react-table';
 import './table.css';
 
+import styled from 'styled-components';
+
 const Table = ({ COLUMNS, DATA }) => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => DATA, []);
@@ -15,7 +17,7 @@ const Table = ({ COLUMNS, DATA }) => {
     tableInstance;
 
   return (
-    <table {...getTableProps()}>
+    <table {...getTableProps()} frame='void'>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -31,7 +33,18 @@ const Table = ({ COLUMNS, DATA }) => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                return (
+                  <td
+                    {...cell.getCellProps([
+                      {
+                        className: cell.column.className,
+                        style: cell.column.style,
+                      },
+                    ])}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                );
               })}
             </tr>
           );

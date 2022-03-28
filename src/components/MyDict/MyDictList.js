@@ -38,6 +38,7 @@ const Title = styled.p`
   font-family: noto-sans;
   font-weight: bold;
   font-size: 32px;
+  margin-left: 20px;
 `;
 
 const SeeAll = styled.p`
@@ -47,6 +48,7 @@ const SeeAll = styled.p`
   margin-left: 10px;
   margin-top: auto;
   margin-bottom: auto;
+  cursor: pointer;
 `;
 
 export default MyDictList;

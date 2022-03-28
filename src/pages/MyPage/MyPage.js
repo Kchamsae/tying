@@ -9,6 +9,7 @@ import MyCertificateList from '../../components/MyCertificate/MyCertificateList'
 import MyStatisticList from '../../components/MyStatistic/MyStatisticList';
 import Calendar from '../../components/MyStatistic/Calendar';
 import NicknameModal from '../../components/NicknameModal/NicknameModal';
+import Test from '../../components/MyStatistic/Test';
 
 const MyPage = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       {is_login ? (
         <div>
           <h1>마이페이지 입니다.</h1>
@@ -62,7 +63,7 @@ const MyPage = () => {
       ) : (
         '로그인이 필요합니다.'
       )}
-    </>
+    </React.Fragment>
   );
 };
 

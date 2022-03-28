@@ -7,13 +7,19 @@ body {
 
 table {
   width: 80%;
-  margin-left: 90px;
+  margin-left: 150px;
   border-collapse: collapse;
 }
 
 th,
 td {
-  padding: 0.5rem;
-  border: 1px solid #d2d2d2;
-  outline: none;
+  border: 2px solid #d2d2d2;
+  padding: 25px;
+}
+
+th {
+  font-weight: 400;
+  font-size: 20px;
+  color: #878889;
+  text-align: left;
 }
