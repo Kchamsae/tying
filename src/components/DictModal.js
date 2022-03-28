@@ -87,7 +87,7 @@ const DictModal = (props) => {
                     <div>
                       <input
                         type='text'
-                        placeholder='Type the meaning...'
+                        placeholder='뜻을 입력하세요.'
                         ref={meaningRef}
                       />
                     </div>
@@ -185,7 +185,7 @@ const DictItem = (props) => {
         <div>
           <input
             type='text'
-            placeholder='Type the meaning...'
+            placeholder='뜻을 입력하세요.'
             ref={editMeaningRef}
             defaultValue={props.meaning}
           />

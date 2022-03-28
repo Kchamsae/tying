@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { history } from "../redux/configureStore";
 import { KAKAO_AUTH_URL } from '../shared/social/Kakao';
 import Signup from './Signup';
 
@@ -31,13 +32,12 @@ const Login = (props) => {
       return;
     }
     dispatch(userActions.loginDB(id, pwd)).then((res)=>{
+      // redux의 loginDB에 id, pwd를 보내줌
       if(res === 'ok'){
         alert('로그인 되었습니다!')
         dispatch(userActions.setLoginModal(false));
       }
     })
-    // redux의 loginDB에 id, pwd를 보내줌
-    // alert("로그인이 완료 되었습니다!");
   };
 
   return (
