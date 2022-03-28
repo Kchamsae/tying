@@ -88,7 +88,7 @@ const Header = (props) => {
                   로그인
                 </span>
               ) : (
-                <span onClick={logout}>로그아웃</span>
+                <span onClick={()=>{history.push('/mypage')}}>마이페이지</span>
               )}
             </div>
 

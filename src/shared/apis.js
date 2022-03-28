@@ -50,14 +50,10 @@ export const apis = {
   loadAllDict: () => api.get('/mydict/all'),
   deleteMyDict: (script_id, word) => api.delete(`/mydict/${script_id}/${word}`),
   // script
-  filterScript: (category, topic, number) =>
-    api.get(
-      `/api/script/list?scriptCategory=${category}&scriptTopic=${topic}&page=${number}`
-    ),
-  searchScript: (number, word) =>
-    api.get(`/api/script/search?page=${number}&targetWord=${word}`),
-  randomScript: (category, small_category) =>
-    api.get(`/api/script/${category}/${small_category}`),
+  filterScript: (category, topic, number, my_script) =>
+    api.get(`/api/script/list?scriptCategory=${category}&scriptTopic=${topic}&page=${number}&myscript=${my_script}`),
+  searchScript: (number, word) => api.get(`/api/script/search?page=${number}&targetWord=${word}`),
+  randomScript: (category, small_category) => api.get(`/api/script/${category}/${small_category}`),
   oneScript: (script_id) => api.get(`/api/detail/${script_id}`),
   getMyScript: (script_id) => api.get(`/api/myScript/${script_id}`),
   addMyScript: (script_id) => api.post(`/api/myScript/${script_id}`),
