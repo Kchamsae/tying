@@ -1,0 +1,19 @@
+body {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+table {
+  width: 80%;
+  margin-left: 90px;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border: 1px solid #d2d2d2;
+  outline: none;
+}

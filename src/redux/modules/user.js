@@ -107,6 +107,11 @@ const kakaoLoginDB = (code) => {
             nickname: res.data.user.nickname,
           })
         );
+        let _reg = /\d+.\d/;
+        console.log(_reg.test(res.data.user.nickname))
+        if (_reg.test(res.data.user.nickname)){ // 닉네임에 숫자 들어간 경우 로그인 시 닉네임 변경 설정 모달 띄워줌
+          dispatch(setNicknameModal(true));
+        }
       })
       .then(() => {
         window.alert("카카오 로그인이 완료 되었습니다!");

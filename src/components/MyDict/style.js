@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+<<<<<<< HEAD
 
 const CardBox = styled.div`
   width: 438px;
@@ -27,3 +28,5 @@ const SaveMeaning = styled.h2`
   font-weight: 'Bold';
   font-size: 24px;
 `;
+=======
+>>>>>>> fbad8d6c91d95dd22da00009fbfe74cf035d1598

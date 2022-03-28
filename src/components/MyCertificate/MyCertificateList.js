@@ -55,8 +55,4 @@ const MyCertificateSlider = styled.div`
     margin-right: 26px;
   }
 `;
-
-const EmptySlide = styled.div`
-  width: 10px;
-`;
 export default MyCertificateList;
