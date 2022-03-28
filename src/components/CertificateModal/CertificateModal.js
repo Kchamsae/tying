@@ -49,6 +49,7 @@ const CertificateModal = (props, { a }) => {
       dispatch(
         recordActions.recordTypingDB(
           script_data?.scriptId,
+          script_data?.scriptTitle,
           script_data?.scriptType,
           props.sec,
           _time,
@@ -58,6 +59,7 @@ const CertificateModal = (props, { a }) => {
         )
       );
     }
+    console.log('실행')
   }, []);
 
   // 인증서 다운로드 ref

@@ -30,6 +30,7 @@ const initialState = {
 
 const recordTypingDB = (
   scriptId,
+  scriptTitle,
   scriptType,
   duration,
   time,
@@ -41,6 +42,7 @@ const recordTypingDB = (
     try {
       const doc = {
         scriptId,
+        scriptTitle,
         scriptType,
         duration,
         time,
