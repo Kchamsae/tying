@@ -2,8 +2,15 @@ import React, { useEffect } from 'react';
 import MyCertificate from './MyCertificate';
 import { actionCreators as recordActions } from '../../redux/modules/record';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-const MyCertificateList = () => {
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+import { MyPageTitleCertificate } from '../../pages/MyPage/style';
+
+const MyCertificateList = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -12,16 +19,44 @@ const MyCertificateList = () => {
 
   const recordLoad = useSelector((state) => state.record.record_list);
 
+  const settings = {
+    className: "slider variable-width",
+      dots: false,
+      infinite: false,
+      centerMode: false,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      variableWidth: true
+  };
+
   return (
-    <div>
-      <div style={{ display: 'flex' }}>
-        <h1>인증서 페이지 입니다.</h1>
-        <h1>총 {recordLoad.length}개</h1>
-        <h3>전체 보기</h3>
-      </div>
-      <MyCertificate recordLoad={recordLoad} />
-    </div>
+    <>
+      <MyPageTitleCertificate>
+        <h3>타잉 인증서</h3>
+        <div>총 {recordLoad.length}개</div>
+      </MyPageTitleCertificate>
+      <MyCertificateSlider>
+        <Slider {...settings}>
+          {recordLoad.map((a,i)=>{
+            return <MyCertificate key={i} {...a} _onClick={()=>{props.setModal(true)}}/>
+          })}
+        </Slider>
+      </MyCertificateSlider>
+    </>
   );
 };
 
+const MyCertificateSlider = styled.div`
+  margin-top: 28px;
+  .slick-list{
+    padding-left: 60px;
+  }
+  .slick-slide{
+    margin-right: 26px;
+  }
+`;
+
+const EmptySlide = styled.div`
+  width: 10px;
+`;
 export default MyCertificateList;

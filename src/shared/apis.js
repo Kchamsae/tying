@@ -67,4 +67,6 @@ export const apis = {
       startdate: startdate,
       enddate: enddate,
     }),
+  certificateLoad: (certificateId, scriptId) =>
+    api.get(`/api/mypage/certificate/${certificateId}/${scriptId}`),
 };

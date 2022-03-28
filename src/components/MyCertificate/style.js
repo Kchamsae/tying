@@ -1,13 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ModalScriptTitle } from '../CertificateModal/style';
 
-const ModalBg = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.53);
-  z-index: 100;
+const MiniTitle = styled(ModalScriptTitle)`
+  -webkit-line-clamp: 1;
+  width: 360px;
+  margin-top: 7px;
 `;
 
-export { ModalBg };
+export {
+  MiniTitle
+};
