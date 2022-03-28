@@ -11,7 +11,7 @@ const ScriptItem = (props) => {
           history.replace(`/typing/${props.scriptId}`);
         }}
       >
-        <Bookmark/>
+        <Bookmark bookmark={props.scripts} script_id={props.scriptId}/>
         <div className='item-header'>
           <div className='item-category'>{props.scriptType}</div>
           <div className='item-hashtag'>
@@ -19,7 +19,6 @@ const ScriptItem = (props) => {
             {props.scriptTopic.map((a, i) => {
               return <div key={i}>#{a}</div>;
             })}
-            {/* <div>#{props.scriptTopic}</div> */}
           </div>
         </div>
         <div className='item-title'>{props.scriptTitle}</div>
