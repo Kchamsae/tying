@@ -12,7 +12,7 @@ const CardBox = styled.div`
 const BoxMeaning = styled.div`
   width: 374px;
   height: auto;
-  background: #3A3A3C !important;
+  background: #3a3a3c !important;
   color: white;
   padding-left: 10px;
 `;
@@ -27,4 +27,3 @@ const SaveMeaning = styled.h2`
   font-weight: 'Bold';
   font-size: 24px;
 `;
-

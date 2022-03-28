@@ -10,9 +10,9 @@ const MyAllDictList = () => {
     dispatch(wordActions.loadAllDictDB());
   }, []);
 
-  const saveDict = useSelector((state) => state.word.dict_list2);
-  console.log(saveDict);
+  const _saveDict = useSelector((state) => state.word.dict_list2);
 
+  const saveDict = [..._saveDict, ['', '', '', '', '']];
   return (
     <div>
       <MyAllDict saveDict={saveDict} />

@@ -12,7 +12,6 @@ export const nicknameCheck = (nickname) => {
 
 //비번: 8자 이상, 최소 하나의 문자, 하나의 숫자 및 하나의 특수 문자
 export const pwdCheck = (pwd) => {
-  let _reg =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+  let _reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   return _reg.test(pwd);
 };

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as wordActions } from '../../redux/modules/word';
 import MyDict from './MyDict';
@@ -12,16 +12,27 @@ const MyAllDict = ({ saveDict }) => {
   const columns = useMemo(
     () => [
       {
-        accessor: '2',
         Header: '단어',
+        accessor: '2',
+        className: 'word',
+        style: {
+          fontWeight: 'bold',
+          fontSize: '20px',
+        },
       },
       {
-        accessor: '0',
         Header: '뜻',
+        accessor: (row) => {
+          if (row[0] === row[1]) {
+            return row[0];
+          } else {
+            return row[0] + ', ' + row[1];
+          }
+        },
       },
       {
-        accessor: '3',
         Header: '예문',
+        accessor: '3',
       },
     ],
     []
@@ -46,7 +57,8 @@ const PrevPage = styled.p`
   font-weight: medium;
   font-size: 22px;
   color: #878889;
-  margin-left: 70px;
+  margin-left: 110px;
+  cursor: pointer;
 `;
 
 export default MyAllDict;
