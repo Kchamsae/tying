@@ -79,7 +79,7 @@ const recordLoadAllDB = (startdate, enddate) => {
     try {
       const record_loadall = await apis.recordLoadAll(startdate, enddate);
       // console.log(record_loadall);
-      dispatch(recordLoadAll(record_loadall));
+      dispatch(recordLoadAll(record_loadall.data.getrecord));
     } catch (err) {
       console.log(err);
     }

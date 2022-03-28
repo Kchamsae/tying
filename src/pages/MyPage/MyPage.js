@@ -42,7 +42,7 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       {is_login ? (
         <>
           <MyPageWrapper>
@@ -80,7 +80,7 @@ const MyPage = () => {
       ) : (
         '로그인이 필요합니다.'
       )}
-    </>
+    </React.Fragment>
   );
 };
 

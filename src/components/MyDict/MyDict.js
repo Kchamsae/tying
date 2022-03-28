@@ -3,13 +3,15 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as wordActions } from '../../redux/modules/word';
 
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const MyDict = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const dicts = props.saveDict;
   console.log(dicts);
   return (
-    <div style={{ display: 'flex', marginLeft: '60px' }}>
+    <div style={{ display: 'flex', marginLeft: '80px' }}>
       {dicts.map((dict, idx) => (
         <BoxDict key={idx}>
           <div style={{ height: '55%' }}>
@@ -31,6 +33,7 @@ const MyDict = (props) => {
                 viewBox='0 0 21 21'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
+                cursor='pointer'
                 onClick={() => {
                   dispatch(wordActions.deleteMyDictDB(dict[4], dict[2]));
                 }}
@@ -72,6 +75,10 @@ const MyDict = (props) => {
               viewBox='0 0 19 18'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
+              cursor='pointer'
+              onClick={() => {
+                history.push(`/typing/${dict[4]}`);
+              }}
             >
               <path
                 d='M16.1257 1.91225V10.5174H11.0864V15.298H2.01571V1.91225H16.1257ZM16.1257 0H2.01571C0.907068 0 0 0.860513 0 1.91225V15.298C0 16.3498 0.907068 17.2103 2.01571 17.2103H12.0942L18.1414 11.4735V1.91225C18.1414 0.860513 17.2343 0 16.1257 0ZM9.07068 10.5174H4.03141V8.60513H9.07068V10.5174ZM14.1099 6.69288H4.03141V4.78063H14.1099V6.69288Z'
@@ -93,7 +100,7 @@ const BoxDict = styled.div`
   border-radius: 10px;
   color: black;
   margin: 10px;
-  padding: 10px;
+  padding: 10px 10px 50px 10px;
 
   .bar-title {
     width: 11px;
@@ -147,6 +154,7 @@ const BoxDict = styled.div`
     margin-left: 5px;
     margin-top: 0px;
     width: 90%;
+    padding-left: 5px;
   }
 `;
 
