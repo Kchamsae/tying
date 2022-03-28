@@ -54,7 +54,7 @@ const MyAllDict = ({ saveDict }) => {
 
 const PrevPage = styled.p`
   font-family: Montserrat;
-  font-weight: medium
+  font-weight: medium;
   font-size: 22px;
   color: #878889;
   margin-left: 110px;

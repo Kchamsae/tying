@@ -14,6 +14,5 @@ export const nicknameCheck = (nickname) => {
 export const pwdCheck = (pwd) => {
   let _reg =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
-
   return _reg.test(pwd);
 };
