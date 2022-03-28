@@ -6,7 +6,6 @@ import { history } from '../../redux/configureStore';
 import MyDictList from '../../components/MyDict/MyDictList';
 import MyCertificateList from '../../components/MyCertificate/MyCertificateList';
 import Calendar from '../../components/MyStatistic/Calendar';
-import NicknameModal from '../../components/NicknameModal/NicknameModal';
 
 import {
   MyPageWrapper,
