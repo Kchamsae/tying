@@ -13,8 +13,8 @@ import {
   MyInfo,
   TabWrapper,
   TabMenu,
-  MyPageBody
-} from './style'
+  MyPageBody,
+} from './style';
 import { ModalBg } from '../Typing/style';
 
 const MyPage = () => {
@@ -44,7 +44,7 @@ const MyPage = () => {
   return (
     <React.Fragment>
       {is_login ? (
-        <>
+        <React.Fragment>
           <MyPageWrapper>
             <MyPageTop>
               <MyInfo>
@@ -53,30 +53,46 @@ const MyPage = () => {
                 <div onClick={logout}>로그아웃</div>
               </MyInfo>
               <TabWrapper>
-                <TabMenu id='myVoca' onClick={tabHandler} on={tab==='myVoca' && 'on'}>
+                <TabMenu
+                  id='myVoca'
+                  onClick={tabHandler}
+                  on={tab === 'myVoca' && 'on'}
+                >
                   나만의 단어장
                 </TabMenu>
-                <TabMenu id='verify' onClick={tabHandler} on={tab==='verify' && 'on'}>
+                <TabMenu
+                  id='verify'
+                  onClick={tabHandler}
+                  on={tab === 'verify' && 'on'}
+                >
                   타잉 인증서
                 </TabMenu>
-                <TabMenu id='statistics' onClick={tabHandler} on={tab==='statistics' && 'on'}>
+                <TabMenu
+                  id='statistics'
+                  onClick={tabHandler}
+                  on={tab === 'statistics' && 'on'}
+                >
                   통계
                 </TabMenu>
               </TabWrapper>
             </MyPageTop>
             <MyPageBody>
               {tab === 'myVoca' ? <MyDictList /> : ''}
-              {tab === 'verify' ? <MyCertificateList setModal={setModal}/> : ''}
+              {tab === 'verify' ? (
+                <MyCertificateList setModal={setModal} />
+              ) : (
+                ''
+              )}
               {tab === 'statistics' ? <Calendar /> : ''}
             </MyPageBody>
           </MyPageWrapper>
           {modal && (
-            <>
-              <ModalBg/>
+            <React.Fragment>
+              <ModalBg />
               {/* <CertificateModal/> */}
-            </>
+            </React.Fragment>
           )}
-        </>
+        </React.Fragment>
       ) : (
         '로그인이 필요합니다.'
       )}
