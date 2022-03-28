@@ -65,21 +65,22 @@ const setOneScriptDB = (script_id) => {
   };
 };
 
-const setFilterListDB = (category, topic, number, scroll) => {
+const setFilterListDB = (category, topic, number, my_script, scroll) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const list = await apis.filterScript(category, topic, number);
+      const list = await apis.filterScript(category, topic, number, my_script);
 
       console.log('list.data :', list.data);
-      if (list.data.ok && list.data.ok !== 'no') {
-        if (list.data.scripts?.length === 0) {
+      if (list.data.ok !== 'no') {
+        if (list.data.ok === false) {
           dispatch(setFilterList('no'));
         } else {
           if (scroll) {
             // 무한스크롤 관련
-            dispatch(addFilterList(list.data.scripts));
+              dispatch(addFilterList(list.data.scripts));              
           } else {
-            dispatch(setFilterList(list.data.scripts));
+              dispatch(setFilterList(list.data.scripts));
+
           }
         }
       } else if (list.data.ok === 'no') {

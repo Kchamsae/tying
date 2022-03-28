@@ -7,10 +7,12 @@ import { actionCreators as scriptActions } from '../redux/modules/script';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { useInView } from 'react-intersection-observer';
 import { history } from '../redux/configureStore';
+import { getCookie } from '../shared/Cookie';
 
 const ScriptFiltering = () => {
   const [filter, setFilter] = useState([]);
   const [topic, setTopic] = useState([]);
+  const [my_script, setMyScript] = useState(false);
 
   const [done, setDone] = useState(false);
   const [reset, setReset] = useState(false);
@@ -18,12 +20,13 @@ const ScriptFiltering = () => {
   // 무한 스크롤 구현부
   const [pageNumber, setPageNumber] = useState(1); //첫페이지 넘버값 1
 
-  const [ref, inView] = useInView();
+  const [ref, inView] = useInView(); 
 
   const is_login = useSelector(state => state.user.is_login);
+  const token = getCookie('token'); 
 
   useEffect(()=>{
-    if(!is_login){
+    if(!token){
       alert('로그인 후에 이용할 수 있습니다.');
       history.replace('/');
       dispatch(userActions.setLoginModal(true));
@@ -40,8 +43,9 @@ const ScriptFiltering = () => {
                 return a;
               }).join('');
       const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map((a) => (a === '&' ? '%26' : a)).join('');
+      const _my_script = my_script ? 'ok' : '';
       dispatch(
-        scriptActions.setFilterListDB(_category, _topic, pageNumber + 1, true)
+        scriptActions.setFilterListDB(_category, _topic, pageNumber + 1, _my_script, true)
       ).then((res) => {
         // 무한스크롤 불러오는 경우에 true
         if (res === 'no') {
@@ -97,28 +101,15 @@ const ScriptFiltering = () => {
     setDone(true);
     setReset(true);
     setPageNumber(1); // 첫페이지 넘버값 1로 설정한것 넣어줌
-    const _category =
-      filter.length === 0
-        ? 'all'
-        : filter
-            .join('|')
-            .split('')
-            .map((a) => {
+    const _category = filter.length === 0 ? 'all' : filter.join('|').split('').map((a) => {
               if (a === '&') return '%26';
               if (a === '/') return '%2F';
               return a;
-            })
-            .join('');
-    const _topic =
-      topic.length === 0
-        ? 'all'
-        : topic
-            .join('|')
-            .split('')
-            .map((a) => (a === '&' ? '%26' : a))
-            .join('');
+            }).join('');
+    const _topic = topic.length === 0 ? 'all' : topic.join('|').split('').map((a) => (a === '&' ? '%26' : a)).join('');
+    const _my_script = my_script ? 'ok' : '';
 
-    dispatch(scriptActions.setFilterListDB(_category, _topic, 1, false));
+    dispatch(scriptActions.setFilterListDB(_category, _topic, 1, _my_script, false));
     setDone(false);
     scrollRef.current.scrollTo(0, 0);
   };
@@ -128,6 +119,11 @@ const ScriptFiltering = () => {
     setTopic([]);
     setReset(false);
   };
+
+  const selectMyScript = () => {
+    setMyScript(!my_script);
+    setReset(false);
+  }
 
   return (
     <>
@@ -317,27 +313,16 @@ const ScriptFiltering = () => {
                 </li>
               </ul>
             </div>
-            <div className='filtering-box'>
-              <div className='filtering-saved-check'>
-                <div className='check-box'>
-                  <svg
-                    width='22'
-                    height='16'
-                    viewBox='0 0 22 16'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M2 5.66667L9.2 13L20 2'
-                      stroke='white'
-                      strokeWidth='4'
-                      strokeLinecap='round'
-                    />
+            <FilteringBox last>
+              <SavedCheck>
+                <CheckBox on={my_script && 'on'} onClick={selectMyScript}>
+                  <svg width='22' height='16'viewBox='0 0 22 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                    <path d='M2 5.66667L9.2 13L20 2' stroke='white' strokeWidth='4' strokeLinecap='round'/>
                   </svg>
-                </div>
+                </CheckBox>
                 <div>내가 저장한 스크립트만 보기</div>
-              </div>
-            </div>
+              </SavedCheck>
+            </FilteringBox>
           </div>
           {reset ? (
             <div className='filtering-reset-button' onClick={selectReset}>
@@ -661,4 +646,41 @@ const FilteringWrapper = styled.div`
   }
 `;
 
+const FilteringBox = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 19px;
+  flex-direction: column;
+
+  ${props=>props.last && 'margin-top: 36px'};
+`;
+const SavedCheck = styled.div`
+  display: flex;
+  align-items: center;
+
+  font-family: 'Noto Sans KR';
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  color: #878889;
+`;
+const CheckBox = styled.div`
+  width: 38px;
+  height: 38px;
+  background: #d2d2d2;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+  cursor: pointer;
+
+  >svg path{
+    transition: 0.3s;
+    stroke: ${props => props.on ? '#000' : '#fff'};
+  }
+`;
 export default ScriptFiltering;
