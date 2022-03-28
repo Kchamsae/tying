@@ -29,9 +29,9 @@ jobs:
             
       - name: Generate Environment Variables File for Production
         run: |
-          echo "REACT_APP_REST_API_KEY=${{ REACT_APP_REST_API_KEY" }} >> .env.production
-          echo "REACT_APP_REDIRECT_URI=${{ REACT_APP_REDIRECT_URI" }} >> .env.production
-          echo "REACT_APP_API_URL=${{ REACT_APP_API_URL" }} >> .env.production
+          echo "REACT_APP_REST_API_KEY=${{ REACT_APP_REST_API_KEY }}" >> .env.production
+          echo "REACT_APP_REDIRECT_URI=${{ REACT_APP_REDIRECT_URI }}" >> .env.production
+          echo "REACT_APP_API_URL=${{ REACT_APP_API_URL }}" >> .env.production
         env:
           REACT_APP_REST_API_KEY: ${{ secrets.REACT_APP_REST_API_KEY }}
           REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
