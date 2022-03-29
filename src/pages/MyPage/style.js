@@ -126,6 +126,7 @@ const MyPageTitleWord = styled.div`
     align-items: center;
     letter-spacing: -0.015em;
     color: #878889;
+    cursor: pointer;
 
     >svg{
       margin: 2px 0 0 7px ;

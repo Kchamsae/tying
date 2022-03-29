@@ -13,14 +13,17 @@ import {
   MyInfo,
   TabWrapper,
   TabMenu,
-  MyPageBody,
-} from './style';
+  MyPageBody
+} from './style'
 import { ModalBg } from '../Typing/style';
+import CertificateModal from './../../components/CertificateModal/CertificateModal';
 
 const MyPage = () => {
   const dispatch = useDispatch();
   const [tab, setTab] = useState('myVoca');
   const [modal, setModal] = useState(false);
+  const [script_id, setScriptId] = useState();
+  const [certificate_id, setCertificateId] = useState();
 
   const is_login = useSelector((state) => state.user.is_login);
   const user = useSelector((state) => state.user.user);
@@ -42,9 +45,9 @@ const MyPage = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       {is_login ? (
-        <React.Fragment>
+        <>
           <MyPageWrapper>
             <MyPageTop>
               <MyInfo>
@@ -53,50 +56,34 @@ const MyPage = () => {
                 <div onClick={logout}>로그아웃</div>
               </MyInfo>
               <TabWrapper>
-                <TabMenu
-                  id='myVoca'
-                  onClick={tabHandler}
-                  on={tab === 'myVoca' && 'on'}
-                >
+                <TabMenu id='myVoca' onClick={tabHandler} on={tab==='myVoca' && 'on'}>
                   나만의 단어장
                 </TabMenu>
-                <TabMenu
-                  id='verify'
-                  onClick={tabHandler}
-                  on={tab === 'verify' && 'on'}
-                >
+                <TabMenu id='verify' onClick={tabHandler} on={tab==='verify' && 'on'}>
                   타잉 인증서
                 </TabMenu>
-                <TabMenu
-                  id='statistics'
-                  onClick={tabHandler}
-                  on={tab === 'statistics' && 'on'}
-                >
+                <TabMenu id='statistics' onClick={tabHandler} on={tab==='statistics' && 'on'}>
                   통계
                 </TabMenu>
               </TabWrapper>
             </MyPageTop>
             <MyPageBody>
-              {tab === 'myVoca' ? <MyDictList /> : ''}
-              {tab === 'verify' ? (
-                <MyCertificateList setModal={setModal} />
-              ) : (
-                ''
-              )}
-              {tab === 'statistics' ? <Calendar /> : ''}
+              {tab === 'myVoca' && <MyDictList />}
+              {tab === 'verify' && <MyCertificateList setModal={setModal} setScriptId={setScriptId} setCertificateId={setCertificateId}/>}
+              {tab === 'statistics' && <Calendar />}
             </MyPageBody>
           </MyPageWrapper>
           {modal && (
-            <React.Fragment>
-              <ModalBg />
-              {/* <CertificateModal/> */}
-            </React.Fragment>
+            <>
+              <ModalBg/>
+              <CertificateModal my script_id={script_id} certificate_id={certificate_id} setModal={setModal}/>
+            </>
           )}
-        </React.Fragment>
+        </>
       ) : (
         '로그인이 필요합니다.'
       )}
-    </React.Fragment>
+    </>
   );
 };
 

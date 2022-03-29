@@ -16,6 +16,7 @@ import { actionCreators as wordActions } from '../redux/modules/word';
 import { actionCreators as scriptActions } from '../redux/modules/script';
 import DictModal from './DictModal';
 import Bookmark from './Bookmark';
+import _ from 'lodash';
 
 const Preview = memo(
   forwardRef(
@@ -86,8 +87,10 @@ const Preview = memo(
       );
 
       useEffect(()=>{
-        if(focus !== focus_in){
-          setFocusIn(!focus_in);
+        if(focus){
+          setFocusIn(true);
+        }else if(!focus){
+          setFocusIn(false);
         }
       },[focus])
 
@@ -173,14 +176,15 @@ const Preview = memo(
         },[userInput,text_num, current_divided]
       )
 
-      const openDict = (w, si) => {
-        if(focus_in){
-          console.log(focus);
-          setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+/).toString().toLowerCase());
-          setSentence(script_splitted_sentence[text_num][si].trim());
-          setWordModal(true);
-        }
-      };
+      const openDict = _.throttle(
+        (w, si) => {
+            console.log(focus,focus_in);
+          if(focus_in){
+            setWord(w.join('').trim().match(/^[a-zA-Z][a-zA-z-]+/).toString().toLowerCase());
+            setSentence(script_splitted_sentence[text_num][si].trim());
+            setWordModal(true);
+          }
+        },1000);
 
       const sentences = useMemo(() => {
         return script_splitted?.map((p, pi) => {

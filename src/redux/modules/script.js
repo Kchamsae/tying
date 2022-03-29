@@ -133,7 +133,6 @@ const getMyScriptDB = (script_id) => {
 };
 
 const addMyScriptDB = (script_id, detail) => {
-  console.log(2)
   return async function (dispatch, getState, { history }) {
     try {
       const my_script = await apis.addMyScript(script_id);
@@ -203,8 +202,8 @@ export default handleActions(
             return a;
           })
         } else if(draft.search_list.length > 0){
-          draft.filter_list = draft.filter_list.map((a)=>{
-            if(a.scriptId === action.payload.script_id){
+          draft.search_list = draft.search_list.map((a)=>{
+            if(a.scriptId[0] === action.payload.script_id[0]){
               a.scripts = ['ok'];
             }
             return a;
@@ -225,8 +224,8 @@ export default handleActions(
             return a;
           })
         } else if(draft.search_list.length > 0){
-          draft.filter_list = draft.filter_list.map((a)=>{
-            if(a.scriptId === action.payload.script_id){
+          draft.search_list = draft.search_list.map((a)=>{
+            if(a.scriptId[0] === action.payload.script_id[0]){
               a.scripts = [];
             }
             return a;

@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import Main from '../pages/Main';
 import Typing from './../pages/Typing/Typing';
 import MyPage from '../pages/MyPage/MyPage';
-import MyAllDict from '../components/MyDict/MyAllDict';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
 
 import styled from 'styled-components';

@@ -37,9 +37,15 @@ const MyCertificateList = (props) => {
       </MyPageTitleCertificate>
       <MyCertificateSlider>
         <Slider {...settings}>
-          {recordLoad.map((a,i)=>{
-            return <MyCertificate key={i} {...a} _onClick={()=>{props.setModal(true)}}/>
-          })}
+            {recordLoad.map((a,i)=>{
+              return <MyCertificate key={i} {...a} _onClick={()=>{props.setModal(true); props.setScriptId(a.scriptId); props.setCertificateId(a.certificateId)}}/>
+            })}
+          {(recordLoad.length === 1 || recordLoad.length === 2) && (
+              <EmptySlide/>
+          )}
+          {recordLoad.length === 1 && (
+            <EmptySlide/>
+          )}
         </Slider>
       </MyCertificateSlider>
     </>
@@ -54,5 +60,9 @@ const MyCertificateSlider = styled.div`
   .slick-slide{
     margin-right: 26px;
   }
+`;
+const EmptySlide = styled.div`
+  width: 579px;
+  height: 356px;
 `;
 export default MyCertificateList;

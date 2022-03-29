@@ -28,7 +28,7 @@ import {
   ModalButton,
 } from './style';
 
-const CertificateModal = (props, { a }) => {
+const CertificateModal = (props) => {
   const dispatch = useDispatch();
 
   const [write, setWrite] = useState(false);
@@ -36,16 +36,20 @@ const CertificateModal = (props, { a }) => {
   const is_login = useSelector((state) => state.user.is_login);
   const nickname = useSelector((state) => state.user.user?.nickname);
   const script_data = useSelector((state) => state.script.typing_script);
+  
+  const certificate_data = useSelector(state => state.record.my_certificate);
 
   const _time = dayjs().format('YYYY/MM/DD hh:mm A');
 
-  const time = _time.split(' ');
-
+  const time = props.my ? certificate_data.time?.split(' ') : _time.split(' ');
+  
+ 
   useEffect(() => {
+    console.log(props);
     if (!is_login) {
       setWrite(true);
     }
-    if (is_login) {
+    if (is_login && !props.my){
       dispatch(
         recordActions.recordTypingDB(
           script_data?.scriptId,
@@ -58,9 +62,13 @@ const CertificateModal = (props, { a }) => {
           props.progress
         )
       );
+    } else if(is_login && props.my){
+      dispatch(
+        recordActions.certificateLoadDB(props.certificate_id, props.script_id)
+      );
     }
-    console.log('실행')
   }, []);
+
 
   // 인증서 다운로드 ref
   const cardRef = useRef();
@@ -95,13 +103,17 @@ const CertificateModal = (props, { a }) => {
   };
 
   const Close = () => {
-    const again = window.confirm("계속 타이핑하시겠습니까?");
-    if(again){
-      dispatch(scriptActions.randomCategoryScriptDB('all', 'all', true)).then((res)=>[
-        window.location.replace(`/typing/${res}`)
-      ])
-    }else{
-      history.replace('/');
+    if(!props.my){
+      const again = window.confirm("계속 타이핑하시겠습니까?");
+      if(again){
+        dispatch(scriptActions.randomCategoryScriptDB('all', 'all', true)).then((res)=>[
+          window.location.replace(`/typing/${res}`)
+        ])
+      }else{
+        history.replace('/');
+      }
+    } else if(props.my){
+      props.setModal(false);
     }
   }
 
@@ -128,50 +140,50 @@ const CertificateModal = (props, { a }) => {
               <ModalTime>
                 <div>
                   <span>Date</span>
-                  <span>{time[0]}</span>
+                  <span>{time ? time[0] : ''}</span>
                 </div>
                 <div>
                   <span>Time</span>
-                  <span>{time[1] + ' ' + time[2]}</span>
+                  <span>{(time ? time[1] : '') + ' ' + (time ? time[2] : '')}</span>
                 </div>
               </ModalTime>
             </ModalTop>
-            <ModalTitle>{script_data?.scriptType}</ModalTitle>
+            <ModalTitle>{props.my ? certificate_data?.scriptType : script_data?.scriptType}</ModalTitle>
             <ModalBody>
               <ModalTag>
-                <ModalTagItem>#{script_data?.scriptCategory}</ModalTagItem>
-                {script_data?.scriptTopic.map((a, i) => {
+                <ModalTagItem>#{props.my ? certificate_data?.scriptCategory : script_data?.scriptCategory}</ModalTagItem>
+                {(props.my ? certificate_data : script_data).scriptTopic?.map((a, i) => {
                   if (i <= 1) {
                     return <ModalTagItem key={i}>#{a}</ModalTagItem>;
                   }
                 })}
               </ModalTag>
-              <ModalScriptTitle>{script_data?.scriptTitle}</ModalScriptTitle>
+              <ModalScriptTitle>{props.my ? certificate_data?.scriptTitle : script_data?.scriptTitle}</ModalScriptTitle>
               <ModalData>
                 <ModalDataItem timer>
                   <span>소요 시간</span>
                   <span>
-                    {Math.floor(Math.round(props.sec) / 60).toString().length < 2
-                      ? '0' + Math.floor(Math.round(props.sec) / 60)
-                      : Math.floor(Math.round(props.sec) / 60)}
+                    {Math.floor(Math.round(props.my ? certificate_data?.duration : props.sec) / 60).toString().length < 2
+                      ? '0' + Math.floor(Math.round(props.my ? certificate_data?.duration : props.sec) / 60)
+                      : Math.floor(Math.round(props.my ? certificate_data?.duration : props.sec) / 60)}
                     :
-                    {(Math.round(props.sec) % 60).toString().length < 2
-                      ? '0' + (Math.round(props.sec) % 60)
-                      : Math.round(props.sec) % 60}
+                    {(Math.round(props.my ? certificate_data?.duration : props.sec) % 60).toString().length < 2
+                      ? '0' + (Math.round(props.my ? certificate_data?.duration : props.sec) % 60)
+                      : Math.round(props.my ? certificate_data?.duration : props.sec) % 60}
                   </span>
                 </ModalDataItem>
                 <ModalDataItem>
                   <span>속도</span>
-                  <span>{props.cpm}</span>
+                  <span>{props.my ? certificate_data?.speed : props.cpm}</span>
                 </ModalDataItem>
                 <ModalDataItem>
                   <span>글자수</span>
-                  <span>{props.char_num}</span>
+                  <span>{props.my ? certificate_data?.typingCnt : props.char_num}</span>
                 </ModalDataItem>
                 <ModalDataItem progress>
                   <span>진행률</span>
                   <span>
-                    {Math.round(props.progress)} <span>%</span>
+                    {Math.round(props.my ? certificate_data?.progress : props.progress)} <span>%</span>
                   </span>
                 </ModalDataItem>
               </ModalData>
