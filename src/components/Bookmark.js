@@ -13,6 +13,7 @@ const Bookmark = (props) => {
     // const script_id = useSelector(state => state.script.typing_script?.scriptId);
     const dispatch = useDispatch();
 
+    // 상세페이지에서 데이터가져오기
     useEffect(()=>{
         if(props.detail)
         dispatch(scriptActions.getMyScript(false));
@@ -21,27 +22,42 @@ const Bookmark = (props) => {
         }
     },[is_login, props.script_id])
 
-    const addBookmark = () => {
-        if(!is_login){
-            alert('로그인 후 이용할 수 있습니다!');
-            dispatch(userActions.setLoginModal(true));
-        } else if(is_login){
-            dispatch(scriptActions.addMyScriptDB(props.script_id));
+    const addBookmark = (e) => {
+      e.stopPropagation();
+      if(!is_login){
+          alert('로그인 후 이용할 수 있습니다!');
+          dispatch(userActions.setLoginModal(true));
+      } else if(is_login){
+        if(props.detail){
+          dispatch(scriptActions.addMyScriptDB(props.script_id, true));
+        }else{
+          dispatch(scriptActions.addMyScriptDB(props.script_id, false));
         }
+      }
     }
 
-    const deleteBookmark = () => {
-        if(!is_login){
-            alert('로그인 후 이용할 수 있습니다!');
-            dispatch(userActions.setLoginModal(true));
-        } else if(is_login){
-            dispatch(scriptActions.deleteMyScriptDB(props.script_id));
+    const deleteBookmark = (e) => {
+      e.stopPropagation();
+      if(!is_login){
+          alert('로그인 후 이용할 수 있습니다!');
+          dispatch(userActions.setLoginModal(true));
+      } else if(is_login){
+        if(props.detail){
+          dispatch(scriptActions.deleteMyScriptDB(props.script_id, true));
+        }else{
+          dispatch(scriptActions.deleteMyScriptDB(props.script_id, false));
         }
+      }
     }
+    
+    useEffect(()=>{
+      console.log(props.bookmark);
+    },[props.bookmark])
 
     return (
         <>
-            <BookMarkButton on={( props.bookmark || bookmark_data )&& true} onClick={bookmark_data ? deleteBookmark : addBookmark}>
+            <BookMarkButton on={props.bookmark ? (props.bookmark.length === 1 && true) : (bookmark_data && true)} 
+            onClick={props.bookmark ? (props.bookmark.length === 1 ? deleteBookmark : addBookmark) : (bookmark_data ? deleteBookmark : addBookmark)}>
               <div className='bookmark-innershadow'></div>
               <svg
                 width='27'

@@ -510,6 +510,7 @@ const DictModalWrapper = styled.div`
               outline: none;
 
               &::placeholder {
+                font-family: 'Noto Sans KR';
                 color: #bdbdbd;
               }
             }

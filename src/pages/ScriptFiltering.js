@@ -117,6 +117,7 @@ const ScriptFiltering = () => {
   const selectReset = () => {
     setFilter([]);
     setTopic([]);
+    setMyScript(false);
     setReset(false);
   };
 

@@ -32,12 +32,9 @@ const TimeChart = ({ sDate, eDate, recordLoad }) => {
   };
 
   return (
-    <div>
-      <p>시간 차트</p>
-      <Container>
-        <Chart type='bar' data={recordTime} />
-      </Container>
-    </div>
+    <Container>
+      <Chart type='bar' data={recordTime} />
+    </Container>
   );
 };
 

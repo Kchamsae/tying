@@ -17,8 +17,8 @@ const setSearchList = createAction(SET_SEARCH_LIST, (list) => ({ list }));
 const addFilterList = createAction(ADD_FILTER_LIST, (list) => ({ list }));
 const addSearchList = createAction(ADD_SEARCH_LIST, (list) => ({ list }));
 const getMyScript = createAction(GET_MY_SCRIPT, (saved) => ({saved}));
-const addMyScript = createAction(ADD_MY_SCRIPT, () => ({}));
-const deleteMyScript = createAction(DELETE_MY_SCRIPT, () => ({}));
+const addMyScript = createAction(ADD_MY_SCRIPT, (script_id, detail) => ({script_id, detail}));
+const deleteMyScript = createAction(DELETE_MY_SCRIPT, (script_id, detail) => ({script_id, detail}));
 
 const initialState = {
   typing_script: {},
@@ -132,14 +132,14 @@ const getMyScriptDB = (script_id) => {
   };
 };
 
-const addMyScriptDB = (script_id) => {
+const addMyScriptDB = (script_id, detail) => {
   return async function (dispatch, getState, { history }) {
     try {
       const my_script = await apis.addMyScript(script_id);
-
+      console.log(3);
       console.log(my_script.data);
-      if(getState().script.typing_script.scriptId === script_id){
-        dispatch(addMyScript(my_script.data.saved));
+      if(my_script.data.ok){
+        dispatch(addMyScript(script_id, detail));
       }
       }catch (err) {
       console.log(err);
@@ -147,14 +147,14 @@ const addMyScriptDB = (script_id) => {
   };
 };
 
-const deleteMyScriptDB = (script_id) => {
+const deleteMyScriptDB = (script_id, detail) => {
   return async function (dispatch, getState, { history }) {
     try {
       const my_script = await apis.deleteMyScript(script_id);
 
       console.log(my_script.data);
-      if(getState().script.typing_script.scriptId === script_id){
-        dispatch(deleteMyScript(my_script.data.saved));
+      if(my_script.data.ok){
+        dispatch(deleteMyScript(script_id, detail));
       }
       }catch (err) {
       console.log(err);
@@ -191,11 +191,47 @@ export default handleActions(
     }),
     [ADD_MY_SCRIPT]: (state, action) =>
     produce(state, (draft) => {
-      draft.bookmark = true;
+      if(action.payload.detail){
+        draft.bookmark = true;
+      }else{
+        if(draft.filter_list.length > 0){
+          draft.filter_list = draft.filter_list.map((a)=>{
+            if(a.scriptId === action.payload.script_id){
+              a.scripts = ['ok'];
+            }
+            return a;
+          })
+        } else if(draft.search_list.length > 0){
+          draft.search_list = draft.search_list.map((a)=>{
+            if(a.scriptId[0] === action.payload.script_id[0]){
+              a.scripts = ['ok'];
+            }
+            return a;
+          })
+        }
+      }
     }),
     [DELETE_MY_SCRIPT]: (state, action) =>
     produce(state, (draft) => {
-      draft.bookmark = false;
+      if(action.payload.detail){
+        draft.bookmark = false;
+      }else{
+        if(draft.filter_list.length > 0){
+          draft.filter_list = draft.filter_list.map((a)=>{
+            if(a.scriptId === action.payload.script_id){
+              a.scripts = [];
+            }
+            return a;
+          })
+        } else if(draft.search_list.length > 0){
+          draft.search_list = draft.search_list.map((a)=>{
+            if(a.scriptId[0] === action.payload.script_id[0]){
+              a.scripts = [];
+            }
+            return a;
+          })
+        }
+      }
     }),
   },
   initialState
