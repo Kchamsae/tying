@@ -5,6 +5,7 @@ import { actionCreators as wordActions } from '../../redux/modules/word';
 import styled from 'styled-components';
 import { history } from './../../redux/configureStore';
 
+
 const MyDict = (props) => {
   const dispatch = useDispatch();
   const dicts = props.saveDict;

@@ -33,12 +33,14 @@ const Calendar = () => {
 
   const dateStart = startOfWeek(currentMonth, { weekStartsOn: 0 }); // 27 일 00 : 00 : 00
   const _dateStart = new Date(
-    dateStart.getTime() - dateStart.getTimezoneOffset() * 60000
+    dateStart.getTime() -
+      dateStart.getTimezoneOffset() * 60000 +
+      parseInt(86400000)
   ).toISOString();
 
   const dateEnd = lastDayOfWeek(currentMonth, { weekStartsOn: 1 }); // 4월 2일 00 : 00 : 00
   const _dateEnd = new Date(
-    dateEnd.getTime() - dateEnd.getTimezoneOffset() * 60000
+    dateEnd.getTime() - dateEnd.getTimezoneOffset() * 60000 + parseInt(86400000)
   ).toISOString();
 
   // useEffect(() => {
@@ -93,7 +95,7 @@ const Calendar = () => {
   const renderDays = () => {
     const dateFormat = 'EEE';
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 0 });
+    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className='col col-center' key={i}>
@@ -104,8 +106,8 @@ const Calendar = () => {
     return <div className='days row'>{days}</div>;
   };
   const renderCells = () => {
-    const startDate = startOfWeek(currentMonth, { weekStartsOn: 0 });
-    const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 0 });
+    const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+    const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 1 });
     const dateFormat = 'd';
     const rows = [];
     let days = [];
