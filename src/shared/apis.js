@@ -3,6 +3,7 @@ import { getCookie } from './Cookie';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  withCredentials: true,
 });
 
 // Alter defaults after instance has been created
