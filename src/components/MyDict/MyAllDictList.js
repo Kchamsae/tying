@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { history } from '../../redux/configureStore';
 import { actionCreators as wordActions } from '../../redux/modules/word';
-import MyAllDict from './MyAllDict';
 
 const MyAllDictList = () => {
   const dispatch = useDispatch();
