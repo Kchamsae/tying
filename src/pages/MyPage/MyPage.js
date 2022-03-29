@@ -16,11 +16,14 @@ import {
   MyPageBody
 } from './style'
 import { ModalBg } from '../Typing/style';
+import CertificateModal from './../../components/CertificateModal/CertificateModal';
 
 const MyPage = () => {
   const dispatch = useDispatch();
   const [tab, setTab] = useState('myVoca');
   const [modal, setModal] = useState(false);
+  const [script_id, setScriptId] = useState();
+  const [certificate_id, setCertificateId] = useState();
 
   const is_login = useSelector((state) => state.user.is_login);
   const user = useSelector((state) => state.user.user);
@@ -65,15 +68,15 @@ const MyPage = () => {
               </TabWrapper>
             </MyPageTop>
             <MyPageBody>
-              {tab === 'myVoca' ? <MyDictList /> : ''}
-              {tab === 'verify' ? <MyCertificateList setModal={setModal}/> : ''}
-              {tab === 'statistics' ? <Calendar /> : ''}
+              {tab === 'myVoca' && <MyDictList />}
+              {tab === 'verify' && <MyCertificateList setModal={setModal} setScriptId={setScriptId} setCertificateId={setCertificateId}/>}
+              {tab === 'statistics' && <Calendar />}
             </MyPageBody>
           </MyPageWrapper>
           {modal && (
             <>
               <ModalBg/>
-              {/* <CertificateModal/> */}
+              <CertificateModal my script_id={script_id} certificate_id={certificate_id} setModal={setModal}/>
             </>
           )}
         </>

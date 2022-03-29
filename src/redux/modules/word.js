@@ -106,6 +106,8 @@ const editDictDB = (script_id, word, word_id, meaning) => {
       console.log(word_data.data);
       if (word_data.data.ok) {
         dispatch(editDict(meaning, word_id));
+      } else {
+        alert(word_data.data.errorMessage);
       }
     } catch (err) {
       console.log(err);

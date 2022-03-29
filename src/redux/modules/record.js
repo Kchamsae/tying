@@ -18,14 +18,12 @@ const recordLoadAll = createAction(RECORD_LOADALL, (record_list2) => ({
   record_list2,
 }));
 
-const certificateLoad = createAction(CERTIFICATE_LOAD, (record_list3) => ({
-  record_list3,
-}));
+const certificateLoad = createAction(CERTIFICATE_LOAD, (certificate) => ({certificate}));
 
 const initialState = {
   record_list: [],
   record_list2: [],
-  record_list3: [],
+  my_certificate: {},
 };
 
 const recordTypingDB = (
@@ -103,7 +101,14 @@ const certificateLoadDB = (certificateId, scriptId) => {
       const load_certificates = load_certificate.data;
 
       console.log(load_certificates);
-      dispatch(certificateLoad(load_certificates));
+      if(load_certificates.ok){
+        const doc = {
+          ...load_certificates.getcertificatedetail,
+          scriptTopic: load_certificates.scriptTopic,
+          scriptType: load_certificates.scriptType,
+        }
+        dispatch(certificateLoad(doc));
+      }
     } catch (err) {
       console.log(err);
     }
@@ -124,14 +129,8 @@ export default handleActions(
       }),
 
     [CERTIFICATE_LOAD]: (state, action) =>
-      // console.log(
-      //   state,
-      //   'state 가 잘 전달되었습니다.',
-      //   action,
-      //   'action 이 잘 전달되었습니다.'
-      // ),
       produce(state, (draft) => {
-        draft.record_list3 = action.payload.record_list3;
+        draft.my_certificate = action.payload.certificate;
       }),
   },
   initialState

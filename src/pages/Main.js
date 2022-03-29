@@ -16,7 +16,7 @@ const Main = (props) => {
 
   const toefl_category = [
     'Agree / Disagree',
-    'Paired choice',
+    'Paired Choice',
     'Multiple Choice',
     'Good Idea',
     'ALL',
