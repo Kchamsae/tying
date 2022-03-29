@@ -42,7 +42,7 @@ jobs:
           REACT_APP_REDIRECT_URI: ${{ secrets.REACT_APP_REDIRECT_URI }}
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
       
-      - name: Install Dependencies   
+      - name: yarn install 
         run: yarn install
 
       - name: Build                   
