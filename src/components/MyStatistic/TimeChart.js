@@ -1,30 +1,49 @@
 import React from 'react';
 import { Chart } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
+import styled from 'styled-components';
 
-const TimeChart = () => {
+const TimeChart = ({ sDate, eDate, recordLoad }) => {
+  const labels = ['월', '화', '수', '목', '금', '토', '일'];
+
+  const fakeData = [0, 0, 0, 0, 0, 0, 0];
+
   const recordTime = {
-    labels: ['월', '화', '수', '목', '금', '토', '일'],
+    labels,
     datasets: [
       {
         type: 'bar',
-        // label: '릴리즈되는 한국 컨텐츠 수',
-        borderColor: 'white',
-        borderWidth: 5,
-        backgroundColor: '#BDBDBD',
-        data: [1, 5, 3, 2, 3, 1, 1],
+        label: 'dataset2',
+        data: fakeData.map((a, i) => {
+          const target = recordLoad.find((b, j) => {
+            const num =
+              new Date(b._id).getDay() === 0 ? 6 : new Date(b._id).getDay() - 1;
+            if (num === i) {
+              return b;
+            }
+          });
+          if (target) {
+            return target.total_duration;
+          }
+          return a;
+        }),
       },
     ],
   };
 
   return (
     <div>
-      <h1>시간 차트</h1>
-      <div className='chart3Container'>
+      <p>시간 차트</p>
+      <Container>
         <Chart type='bar' data={recordTime} />
-      </div>
+      </Container>
     </div>
   );
 };
+
+const Container = styled.div`
+  width: 90vw;
+  max-width: 900px;
+`;
 
 export default TimeChart;
