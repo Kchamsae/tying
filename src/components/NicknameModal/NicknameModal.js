@@ -249,7 +249,7 @@ const NicknameModal = (props) => {
                 </div>
               </div>
               <EditNicknameButton onClick={editNickname}>
-              수정완료
+              완료
               </EditNicknameButton>
             </div>
           </div>
