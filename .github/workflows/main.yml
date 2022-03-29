@@ -22,15 +22,9 @@ jobs:
     steps:
       - name: Checkout source code.  
         uses: actions/checkout@v2
-
-      - name: Cache node modules      
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+        
+      - name: Check Node v # Node v 확인
+        run: node -v
             
       - name: Generate Environment Variables File for Production
         run: |
