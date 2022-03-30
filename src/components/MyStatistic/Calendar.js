@@ -9,35 +9,25 @@ import {
   addWeeks,
   subWeeks,
 } from 'date-fns';
-import DataList from './DataList';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as recordActions } from '../../redux/modules/record';
 import './styles.css';
 import styled from 'styled-components';
+import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 
 const Calendar = () => {
+  const dispatch = useDispatch();
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [isShow, setIsShow] = useState(false);
 
-  const dispatch = useDispatch();
   const [date, setDate] = useState(null);
 
-  // 달력 컨트롤 상태, 핸들러
   const [tab, setTab] = useState('');
-
-  //
-
-  // 월, 일 두자리수 표현
-  // let month = new String(date.getMonth() + 1);
-  // month = month >= 10 ? month : '0' + month;
-  // let day = new String(date.getDate());
-  // day = day >= 10 ? day: '0' + day;
-  // console.log(month, day)
-  //
 
   const dateStart = startOfWeek(currentMonth, { weekStartsOn: 0 }); // 27 일 00 : 00 : 00
   const _dateStart = new Date(
@@ -56,11 +46,9 @@ const Calendar = () => {
       dateStart.getTimezoneOffset() * 60000 +
       parseInt(86400000)
   );
-  console.log(aTest);
 
   //
 
-  // 몇주차인지 구하는 식
   const todayTest = aTest;
 
   const baseDate = startOfWeek(todayTest, { weekStartsOn: 0 });
@@ -68,13 +56,6 @@ const Calendar = () => {
   const baseDays = baseDate.getDate() + 1;
 
   const weekOfMonth = Math.ceil(baseDays / 7);
-
-  console.log(
-    `${format(
-      todayTest,
-      'yyyy년 MM월 dd일'
-    )}은 ${baseMonth}월 ${weekOfMonth}주차 입니다.`
-  );
 
   const y = format(todayTest, 'yyyy');
   const month = format(todayTest, `${baseMonth}`);
@@ -92,7 +73,6 @@ const Calendar = () => {
     setDate(dayStr);
   };
 
-  // 차트 컨트롤 상태 핸들러
   const [chartTab, setChartTab] = useState('');
   const chartHandler = (e) => {
     console.log(e);
@@ -100,27 +80,11 @@ const Calendar = () => {
     setChartTab(activeChartTab);
   };
 
-  console.log(chartTab);
-
-  // record_list2에 저장된 데이터 불러오기
   useEffect(() => {
     dispatch(recordActions.recordLoadAllDB(_dateStart, _dateEnd));
   }, []);
 
   const recordLoad = useSelector((state) => state.record.record_list2);
-
-  console.log(recordLoad);
-
-  console.log(selectedDate);
-
-  // const selectDate = new Date(
-  //   selectedDate.getTime() - selectedDate.getTimezoneOffset() * 6000
-  // );
-
-  // const _selectDate = selectDate.toISOString().split('T');
-  // console.log(_selectDate);
-
-  // console.log(selectedDate);
 
   const _selectedDate = new Date(
     selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
@@ -134,17 +98,9 @@ const Calendar = () => {
 
   let _idx = recordLoad.findIndex(findIdx);
 
-  console.log(_dateStart);
-
-  console.log(
-    `${format(
-      todayTest,
-      'yyyy년 MM월 dd일'
-    )}은 ${baseMonth}월 ${weekOfMonth}주차 입니다.`
-  );
-
   const confirmHandler = () => {
     dispatch(recordActions.recordLoadAllDB(_dateStart, _dateEnd));
+    setIsShow(false);
   };
 
   const renderHeader = () => {
@@ -639,27 +595,6 @@ const Calendar = () => {
 const Container = styled.div`
   width: 90vw;
   max-width: 900px;
-`;
-
-const Number = styled.p`
-  font-family: Montserrat;
-  font-size: 80px;
-  margin: 0px;
-`;
-
-const Typing = styled.p`
-  positon: absolute;
-  font-size: 20px;
-  margin: 0px;
-  bottom: 0;
-  color: #bdbdbd;
-`;
-
-const WeeklyButton = styled.p`
-  font-size: 30px;
-  color: #878889;
-  cursor: pointer;
-  margin: 0px;
 `;
 
 export default Calendar;
