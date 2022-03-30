@@ -8,7 +8,6 @@ const CertificateMini= styled.div`
   border-radius: 20px;
   padding: 27px 33px;
   box-sizing: border-box;
-  cursor: pointer;
 `;
 
 const MiniTop = styled.div`

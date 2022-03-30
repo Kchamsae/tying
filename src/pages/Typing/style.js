@@ -646,6 +646,7 @@ const HelpBtn = styled(FinishBtn)`
 `;
 
 export {
+  opacityIn,
   TypingWrap,
   SectionSide,
   CategoryWrapper,

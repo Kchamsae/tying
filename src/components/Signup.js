@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { apis } from '../shared/apis';
 import { idCheck, nicknameCheck, pwdCheck } from '../shared/signupRegex';
+import { alertNew } from '../shared/alert';
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Signup = (props) => {
   const idCheckF = () => {
     console.log('아이디 확인 : ', id);
     if (!idCheck(id)) {
-      alert('아이디 형식이 올바르지 않습니다!');
+      alertNew('아이디 형식이 올바르지 않습니다!');
       return;
     }
 
@@ -44,16 +45,16 @@ const Signup = (props) => {
           setIdCheck(res.data.ok);
           //사용 가능한 아이디인 경우 체크 아이콘으로 변경
           setIdChecker(1);
-          window.alert('사용 가능한 아이디입니다!');
+          alertNew('사용 가능한 아이디입니다!');
         } else if (res.data.ok === false) {
           //사용 불가능한 아이디인 경우 엑스 아이콘으로 변경
           setIdChecker(2);
-          window.alert('이미 사용 중인 아이디입니다!');
+          alertNew('이미 사용 중인 아이디입니다!');
         }
       })
       .catch((err) => {
         console.log('아이디 중복', err);
-        window.alert('아이디 중복확인에 문제가 생겼습니다!');
+        alertNew('아이디 중복확인에 문제가 생겼습니다!');
       });
   };
 
@@ -61,7 +62,7 @@ const Signup = (props) => {
   const nicknameCheckF = () => {
     console.log('닉네임 확인 :', nickname);
     if (!nicknameCheck(nickname)) {
-      alert('닉네임 형식이 올바르지 않습니다!');
+      alertNew('닉네임 형식이 올바르지 않습니다!');
       return;
     }
 
@@ -75,58 +76,59 @@ const Signup = (props) => {
           setNicknameCheck(res.data.ok);
           //사용 가능한 닉네임인 경우 체크 아이콘으로 변경
           setNicknameChecker(4);
-          window.alert('사용 가능한 닉네임입니다!');
+          alertNew('사용 가능한 닉네임입니다!');
         } else if (res.data.ok === false) {
           //사용 불가능한 닉네임인 경우 엑스 아이콘으로 변경
           setNicknameChecker(5);
-          window.alert('이미 사용 중인 닉네임입니다!');
+          alertNew('이미 사용 중인 닉네임입니다!');
         }
       })
       .catch((err) => {
         console.log('닉네임 중복', err);
-        window.alert('닉네임 중복확인에 문제가 생겼습니다!');
+        alertNew('닉네임 중복확인에 문제가 생겼습니다!');
       });
   };
 
   //회원가입 시 입력 누락된 내역 있을 시 alert 띄워줌
   const signup = () => {
     if (id === '' || nickname === '' || pwd === '' || pwd_Check === '') {
-      window.alert('입력하지 않은 칸이 있습니다!');
+      alertNew('입력하지 않은 칸이 있습니다!');
       return;
     }
 
     //아이디, 닉네임 중복검사 통과 실패 시 alert 띄워줌
     if (!id_check || !nickname_check) {
-      window.alert('아이디나 닉네임의 중복검사가 통과되지 않았습니다!');
+      alertNew('아이디나 닉네임의 중복검사가 통과되지 않았습니다!');
       return;
     }
 
     //회원가입 시 아이디, 닉네임, 비밀번호, 비밀번호 확인 유효성 검사
     if (!idCheck(id)) {
-      window.alert('아이디 형식이 맞지 않습니다!');
+      alertNew('아이디 형식이 맞지 않습니다!');
       return;
     }
 
     if (!nicknameCheck(nickname)) {
-      window.alert('닉네임 형식이 맞지 않습니다!');
+      alertNew('닉네임 형식이 맞지 않습니다!');
       return;
     }
 
     if (!pwdCheck(pwd)) {
-      window.alert('비밀번호 형식이 맞지 않습니다!');
+      alertNew('비밀번호 형식이 맞지 않습니다!');
       return;
     }
 
     if (pwd !== pwd_Check) {
-      window.alert('비밀번호와 비밀번호 확인이 일치하지 않습니다!');
+      alertNew('비밀번호와 비밀번호 확인이 일치하지 않습니다!');
       return;
     }
 
     //signupDB에 회원가입 시 입력한 내역들을 보내주기
     dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check)).then((res)=>{
       if(res === 'ok'){
-        alert('성공적으로 회원가입되었습니다.');
-        props.setModalState('login');
+        alertNew('성공적으로 회원가입되었습니다.',()=>{
+          props.setModalState('login');
+        });
       }
     })
   };
