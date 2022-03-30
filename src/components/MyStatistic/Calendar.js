@@ -57,13 +57,6 @@ const Calendar = () => {
 
   const weekOfMonth = Math.ceil(baseDays / 7);
 
-  const y = format(todayTest, 'yyyy');
-  const month = format(todayTest, `${baseMonth}`);
-  const d = format(todayTest, `${weekOfMonth}`);
-  console.log(y, month, d);
-
-  //
-
   const tabHandler = (e) => {
     const activeTab = e.target.id;
     setTab(activeTab);
@@ -199,7 +192,7 @@ const Calendar = () => {
             alignItems: 'center',
           }}
         >
-          <div style={{ display: 'flex', width: '50%' }}>
+          <div style={{ display: 'flex', width: '70%' }}>
             <p className='weekly-number'>
               {recordLoad[_idx]?.total_typingCnt
                 ? recordLoad[_idx]?.total_typingCnt
@@ -243,10 +236,10 @@ const Calendar = () => {
             alignItems: 'center',
           }}
         >
-          <div style={{ display: 'flex', width: '50%' }}>
+          <div style={{ display: 'flex', width: '70%' }}>
             <p className='weekly-number'>
               {recordLoad[_idx]?.total_duration
-                ? (recordLoad[_idx]?.total_duration / 60).toFixed(1)
+                ? Math.round(recordLoad[_idx]?.total_duration / 60)
                 : 0}
             </p>
             <p style={{ alignSelf: 'flex-end' }} className='weekly-typing'>
@@ -278,7 +271,6 @@ const Calendar = () => {
   };
 
   const changeWeekHandle = (btnType) => {
-    console.log('current week', currentWeek);
     if (btnType === 'prev') {
       setCurrentMonth(subWeeks(currentMonth, 1));
       setCurrentWeek(getWeek(subWeeks(currentMonth, 1)));
@@ -584,8 +576,20 @@ const Calendar = () => {
       </div>
       <div style={{ width: '100%', height: '100%', marginLeft: '50px' }}>
         <div>
-          {chartTab === 'b' ? <div id='b'>{renderCntChart()}</div> : ''}
-          {chartTab === 'c' ? <div id='c'>{renderTimeChart()}</div> : ''}
+          {chartTab === 'b' ? (
+            <div id='b' className='chart-box'>
+              {renderCntChart()}
+            </div>
+          ) : (
+            ''
+          )}
+          {chartTab === 'c' ? (
+            <div id='c' className='chart-box'>
+              {renderTimeChart()}
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     </div>
