@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { history } from "../redux/configureStore";
 import { KAKAO_AUTH_URL } from '../shared/social/Kakao';
 import Signup from './Signup';
+
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const Login = (props) => {
 
   const login = () => {
     if (id === '' || pwd === '') {
-      window.alert('아이디와 비밀번호를 입력해주세요.');
+      alert('아이디와 비밀번호를 입력해주세요.')
       // 아이디와 비밀번호를 입력하지 않을 경우 alert 띄움
       return;
     }
