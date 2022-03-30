@@ -231,16 +231,22 @@ main {
   display: flex;
   width: 203px;
   height: 37px;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   cursor: pointer;
+}
+
+.weekly-box > svg{
+  width: 12px;
+  height: 19.5px;
+  margin: 5px 0 0 10px;
 }
 
 .weekly-typing {
   font-family: 'Noto Sans KR';
   font-size: 16px;
   font-weight: 500;
-  margin: 0px;
+  margin: 0 0 15px 10px;
   color: #bdbdbd;
   width: max-content;
 }
@@ -292,4 +298,8 @@ main {
 .down-btn {
   margin-left: 20px;
   cursor: pointer;
+}
+
+.chart-box {
+  margin-left: 100px;
 }

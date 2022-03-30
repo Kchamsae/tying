@@ -628,8 +628,8 @@ const Calendar = () => {
       </div>
       <div style={{ width: '100%', height: '100%', marginLeft: '50px' }}>
         <div>
-          {chartTab === 'b' ? <div id='b'>{renderCntChart()}</div> : ''}
-          {chartTab === 'c' ? <div id='c'>{renderTimeChart()}</div> : ''}
+          {chartTab === 'b' ? <div id='b' className='chart-box'>{renderCntChart()}</div> : ''}
+          {chartTab === 'c' ? <div id='c' className='chart-box'>{renderTimeChart()}</div> : ''}
         </div>
       </div>
     </div>
