@@ -71,10 +71,12 @@ const MyDict = (props) => {
               />
             </svg>
             <div>
-              {(dict[3].split(dict[2]).length >= 2
-                ? dict[3].split(dict[2])
-                : dict[3].split(dict[2].replace(/^./, dict[2][0].toUpperCase()))
-              ).map((a, i, arr) => {
+              {(dict[3]?.split(dict[2]).length >= 2
+                ? dict[3]?.split(dict[2])
+                : dict[3]?.split(
+                    dict[2].replace(/^./, dict[2][0].toUpperCase())
+                  )
+              )?.map((a, i, arr) => {
                 if (i + 1 !== arr.length) {
                   return (
                     <span key={i}>
