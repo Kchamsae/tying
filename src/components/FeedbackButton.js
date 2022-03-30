@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const FeedbackButton = (props) => {
   return (
-    <FeedbackBtn>
+    <FeedbackBtn href='https://docs.google.com/forms/d/e/1FAIpQLSeR3ohxnyR_1sGIVmpMhkkXTt3gy2MFbMdR4ZTzMgNCp17DYw/viewform' target='_blank'>
       <svg
         width='30'
         height='24'
@@ -20,8 +20,9 @@ const FeedbackButton = (props) => {
   );
 };
 
-const FeedbackBtn = styled.div`
+const FeedbackBtn = styled.a`
   position: fixed;
+  display: block;
   width: 2.92vw;
   height: 2.92vw;
   right: 4.43vw;

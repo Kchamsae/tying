@@ -5,6 +5,9 @@ import Login from "./Login";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 import NicknameModal from "./NicknameModal/NicknameModal";
+import Swal from "sweetalert2";
+import '../shared/alert.css';
+import { alert, alertNew } from "../shared/alert";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -96,8 +99,7 @@ const Header = (props) => {
               <span
                 onClick={() => {
                   if (!is_login) {
-                    window.alert("로그인 후에 이용할 수 있습니다.");
-                    dispatch(userActions.setLoginModal(true));
+                    alertNew('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});     
                   } else {
                     history.push("/filtering");
                   }
@@ -111,8 +113,7 @@ const Header = (props) => {
               className="header-nav-icon"
               onClick={() => {
                 if (!is_login) {
-                  window.alert("로그인 후에 이용할 수 있습니다.");
-                  dispatch(userActions.setLoginModal(true));
+                  alertNew('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});
                 } else {
                   history.push("/search");
                 }

@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import { apis } from '../../shared/apis';
+import { alertNew } from '../../shared/alert';
 
 const SET_ONE_SCRIPT = 'SET_ONE_SCRIPT';
 const SET_FILTER_LIST = 'SET_FILTER_LIST';
@@ -60,7 +61,7 @@ const setOneScriptDB = (script_id) => {
       };
     } catch (err) {
       console.log(err);
-      alert('스크립트를 불러오지 못했습니다!');
+      alertNew('스크립트를 불러오지 못했습니다!');
     }
   };
 };
@@ -88,7 +89,7 @@ const setFilterListDB = (category, topic, number, my_script, scroll) => {
       }
     } catch (err) {
       console.log(err);
-      alert('스크립트를 필터링 하지 못했습니다!');
+      alertNew('스크립트를 필터링 하지 못했습니다!');
     }
   };
 };
@@ -114,7 +115,7 @@ const setSearchListDB = (number, word, scroll) => {
       }
     } catch (err) {
       console.log(err);
-      alert('검색결과를 가져오지 못했습니다!');
+      alertNew('검색결과를 가져오지 못했습니다!');
     }
   };
 };

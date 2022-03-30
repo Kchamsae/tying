@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as wordActions } from '../redux/modules/word';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { alertNew, alertNewWhite, confirmNewWhite } from '../shared/alert';
 
 const DictModal = (props) => {
   const dispatch = useDispatch();
@@ -26,8 +27,7 @@ const DictModal = (props) => {
 
   const typeMeaning = () => {
     if (!is_login) {
-      alert('로그인 후 이용할 수 있습니다!');
-      dispatch(userActions.setLoginModal(true));
+      alertNewWhite('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});
       return;
     }
     if (is_login) {
@@ -37,19 +37,19 @@ const DictModal = (props) => {
 
   const addMeaning = () => {
     if (!is_login) {
-      alert('로그인 후 이용할 수 있습니다!');
-      dispatch(userActions.setLoginModal(true));
-      setTypeMean(false);
+      alertNewWhite('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true)); setTypeMean(false);});
+      
     }
     const second = dict_list?.filter((a) => a.nickname === user.nickname);
     if (second.length > 0) {
-      alert('이미 뜻을 작성했습니다!');
-      setTypeMean(false);
-      meaningRef.current.value = '';
+      alertNewWhite('로그인 후에 이용할 수 있습니다.', ()=>{
+        setTypeMean(false);
+        meaningRef.current.value = '';
+      });
       return;
     }
     if (meaningRef.current.value === '') {
-      alert('단어 뜻을 입력해주세요!');
+      alertNewWhite('단어 뜻을 입력해주세요!');
       return;
     }
     dispatch(
@@ -61,13 +61,15 @@ const DictModal = (props) => {
 
   const saveDict = () => {
     if(!is_login) {
-      alert('로그인 후 이용할 수 있습니다!');
-      dispatch(userActions.setLoginModal(true));
+      alertNewWhite('로그인 후 이용할 수 있습니다!',()=>{
+        dispatch(userActions.setLoginModal(true));
+      });
       return;
     }
     if(dict_list?.length === 0){
-      alert('작성된 뜻이 없습니다. 먼저 뜻을 작성해주세요.')
-      setTypeMean(true);
+      alertNewWhite('작성된 뜻이 없습니다. 먼저 뜻을 작성해주세요.',()=>{
+        setTypeMean(true);
+      })
     }
     dispatch(wordActions.saveDictDB(script_id, props.word, props.sentence));
   };
@@ -134,7 +136,7 @@ const DictItem = (props) => {
 
   const editMeaning = () => {
     if (editMeaningRef.current.value === '') {
-      alert('단어 뜻을 입력해주세요!');
+      alertNew('단어 뜻을 입력해주세요!');
       return;
     }
     dispatch(
@@ -149,19 +151,19 @@ const DictItem = (props) => {
   };
 
   const deleteMeaning = () => {
-    const confirm = window.confirm('단어의 뜻을 삭제하시겠습니까?');
-    if (confirm) {
-      dispatch(wordActions.deleteDictDB(script_id, props.wordId));
-    }
+    confirmNewWhite('단어의 뜻을 삭제하시겠습니까?',()=>{
+      dispatch(wordActions.deleteDictDB(script_id, props.wordId)); 
+    });
   };
   const pushLike = (is_like) => {
     if (!is_login) {
-      alert('로그인 후 이용할 수 있습니다!');
-      dispatch(userActions.setLoginModal(true));
+      alertNew('로그인 후 이용할 수 있습니다!',()=>{
+        dispatch(userActions.setLoginModal(true));
+      });
       return;
     }
     if (props.nickname === user.nickname) {
-      alert('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
+      alertNew('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
       return;
     }
 
@@ -173,12 +175,13 @@ const DictItem = (props) => {
   };
   const pushDislike = (is_dislike) => {
     if (!is_login) {
-      alert('로그인 후 이용할 수 있습니다!');
-      dispatch(userActions.setLoginModal(true));
+      alertNew('로그인 후 이용할 수 있습니다!',()=>{
+        dispatch(userActions.setLoginModal(true));
+      });
       return;
     }
     if (props.nickname === user.nickname) {
-      alert('본인이 추가한 뜻에는 싫어요를 누를 수 없습니다!');
+      alertNew('본인이 추가한 뜻에는 싫어요를 누를 수 없습니다!');
       return;
     }
     if (!is_dislike) {

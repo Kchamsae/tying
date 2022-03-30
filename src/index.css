@@ -104,7 +104,93 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::-webkit-scrollbar {
+  width: 6px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #000;
+  border-radius: 3px;
+}
+body::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.alert-container{
+  background-color: transparent!important;
+  z-index: 1000000!important;
+}
+
+.alert-container > .alert-popup{
+  background: rgba(75, 75, 75, 0.75);;
+  width: 500px;
+  height: 220px;
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  color: #fff;
+  margin-bottom: 100px;
+  display: flex!important;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Noto Sans KR';
+}
+
+.alert-container > .alert-popup-white{
+  background: rgba(255, 255, 255, 0.75);;
+  width: 500px;
+  height: 220px;
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  color: #000;
+  margin-bottom: 100px;
+  display: flex!important;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Noto Sans KR';
+}
+
+
+.alert-container > .alert-popup-white > .alert-content, .alert-container > .alert-popup > .alert-content{
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 33px;
+  flex: 60% 0 1;
+  display: flex!important;
+  align-items: center;
+}
+
+.alert-container > .alert-popup .alert-confirm, .alert-container > .alert-popup .alert-cancel{
+  padding: 0 50px;
+  height: 45px;
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  font-size: 20px;
+  background: #000000;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  outline: none;
+}
+
+.alert-container > .alert-popup .alert-confirm:focus{
+  box-shadow: none;
+}
+
+.alert-container > .alert-popup-white .alert-confirm, .alert-container > .alert-popup-white .alert-cancel{
+  padding: 0 50px;
+  height: 45px;
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  font-size: 20px;
+  background: #000000;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  outline: none;
+}
+
+.alert-container > .alert-popup-white .alert-confirm:focus{
+  box-shadow: none;
 }
