@@ -45,7 +45,7 @@ const DataList = ({ selectedDate, sDate, eDate }) => {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex' }}>
+              <div style={{ display: 'flex'}}>
                 <Number>{recordLoad[_idx]?.total_typingCnt}</Number>
                 <Typing>타이핑한 글자 수</Typing>
               </div>
@@ -89,8 +89,7 @@ const Number = styled.p`
 `;
 
 const Typing = styled.p`
-  positon: absolute;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0px;
   bottom: 0;
   color: #bdbdbd;
