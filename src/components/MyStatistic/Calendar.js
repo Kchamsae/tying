@@ -253,10 +253,24 @@ const Calendar = () => {
               타이핑한 글자 수
             </p>
           </div>
-          <div onClick={chartHandler} style={{ float: 'right' }}>
+          <div className='weekly-box' onClick={chartHandler}>
             <p id='b' className='weekly-button'>
-              주간 상세 분석 &#62;
+              주간 상세 분석
             </p>
+            <svg
+              width='16'
+              height='26'
+              viewBox='0 0 16 26'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M2 2L13 13L2 24'
+                stroke='#878889'
+                stroke-width='3'
+                stroke-linecap='round'
+              />
+            </svg>
           </div>
         </div>
         <div
@@ -283,10 +297,24 @@ const Calendar = () => {
               타이핑한 시간
             </p>
           </div>
-          <div onClick={chartHandler}>
+          <div className='weekly-box' onClick={chartHandler}>
             <p id='c' className='weekly-button'>
-              주간 상세 분석 &#62;
+              주간 상세 분석
             </p>
+            <svg
+              width='16'
+              height='26'
+              viewBox='0 0 16 26'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M2 2L13 13L2 24'
+                stroke='#878889'
+                stroke-width='3'
+                stroke-linecap='round'
+              />
+            </svg>
           </div>
         </div>
       </div>
@@ -578,10 +606,14 @@ const Calendar = () => {
       <div style={{ width: '50%' }}>
         <div className='calendar'>
           {renderHeader()}
-          <div className='weekly-calendar'>
-            {renderDays()}
-            {renderCells()}
-          </div>
+          {isShow ? (
+            ''
+          ) : (
+            <div className='weekly-calendar'>
+              {renderDays()}
+              {renderCells()}
+            </div>
+          )}
         </div>
         <div
           style={{
