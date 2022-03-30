@@ -383,12 +383,12 @@ const DictModalBg = styled.div`
   z-index: 850;
 `;
 const DictModalClose = styled.div`
-  width: 17px;
-  height: 17px;
+  width: 0.89vw;
+  height: 0.89vw;
   border-radius: 50%;
   position: absolute;
-  right: 34px;
-  top: 22px;
+  right: 1.77vw;
+  top: 1.15vw;
   cursor: pointer;
   z-index: 10001;
 
@@ -405,8 +405,8 @@ const Wrapper = styled.div`
 const UpDownButtonBox = styled.div`
   position: absolute;
   bottom: 0;
-  right: -63px;
-  height: 97px;
+  right: -3.28vw;
+  height: 5.05vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -418,6 +418,10 @@ const UpDownButtonBox = styled.div`
     border: 0;
     cursor: pointer;
     outline: none;
+    >svg{
+      width: 0.99vw;
+      height: 0.89vw;
+    }
     > svg > path {
       transition: 0.3s;
     }
@@ -429,9 +433,9 @@ const UpDownButtonBox = styled.div`
     transform: rotate(180deg);
   }
   .paragraph-now {
-    margin-top: -1px;
+    margin-top: -0.05vw;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 0.83vw;
     letter-spacing: -0.015em;
     color: #878889;
     text-align: center;
@@ -440,23 +444,23 @@ const UpDownButtonBox = styled.div`
 
 const PreviewBox = styled.div`
   width: 100%;
-  height: 313px;
-  font-size: 25px;
+  height: 16.3vw;
+  font-size: 1.3vw;
   color: #878889;
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
+  border-radius: 0.26vw;
   letter-spacing: 0.02em;
-  line-height: 40px;
+  line-height: 2.08vw;
   overflow: hidden;
 
   .paragraph-wrap {
-    width: calc(100% - 50px);
-    height: 120px;
-    padding-left: 2px;
+    width: calc(100% - 2.6vw);
+    height: 6.25vw;
+    padding-left: 2Wpx;
     box-sizing: border-box;
     overflow: hidden;
-    margin: 96.5px 25px;
+    margin: 5.03vw 1.3vw;
   }
 
   .paragraph-box {
@@ -499,7 +503,7 @@ const PreviewBox = styled.div`
   }
 
   .space {
-    width: 10px;
+    width: 0.52vw;
   }
 
   .is-next {
@@ -508,17 +512,17 @@ const PreviewBox = styled.div`
       content: '';
       display: block;
       position: absolute;
-      top: calc(50% - 15px);
+      top: calc(50% - 0.78vw);
       left: -0.0625rem;
-      height: 30px;
-      border-left: 3px solid #ff6442;
+      height: 1.56vw;
+      border-left: 0.16vw solid #ff6442;
       animation: 1000ms ease 0ms 1 normal forwards running blinking;
       animation-iteration-count: infinite;
       z-index: 0;
 
       @keyframes blinking {
         0% {
-          border-left: 3px solid #ff6442;
+          border-left: 0.16vw solid #ff6442;
         }
         100% {
           border-left: 0px solid #ff6442;
@@ -534,19 +538,19 @@ const PreviewBox = styled.div`
       content: '';
       display: block;
       position: absolute;
-      bottom: 7px;
+      bottom: 0.36vw;
       left: 0;
       width: 100%;
-      border-bottom: 3px solid #ff2e00;
+      border-bottom: 0.16vw solid #ff2e00;
       animation: 1000ms ease 0ms 1 normal forwards running blinking_s;
       animation-iteration-count: infinite;
 
       @keyframes blinking_s {
         0% {
-          border-bottom: 3px solid #ff2e00;
+          border-bottom: 0.16vw solid #ff2e00;
         }
         100% {
-          border-bottom: 3px solid #ff2e00;
+          border-bottom: 0px solid #ff2e00;
           border-bottom: none;
         }
       }

@@ -202,7 +202,7 @@ const NicknameModal = (props) => {
                         d="M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812"
                         stroke="#2190FE"
                         strokeWidth="2"
-                        stroke-linecap="round"
+                        strokeLinecap="round"
                       />
                     </svg>
                   )}
@@ -227,13 +227,13 @@ const NicknameModal = (props) => {
                         d="M8 17L17 8"
                         stroke="#FF2E00"
                         strokeWidth="2"
-                        stroke-linecap="round"
+                        strokeLinecap="round"
                       />
                       <path
                         d="M8 8L17 17"
                         stroke="#FF2E00"
                         strokeWidth="2"
-                        stroke-linecap="round"
+                        strokeLinecap="round"
                       />
                     </svg>
                   )}

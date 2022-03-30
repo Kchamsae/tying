@@ -174,7 +174,7 @@ const Header = (props) => {
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  height: 105px;
+  height: 5.47vw;
   background-color: #f9f9f9;
   display: flex;
   justify-content: center;
@@ -187,7 +187,7 @@ const HeaderWrapper = styled.div`
     align-items: center;
 
     .tying-logo svg {
-      width: 112px;
+      width: 5.83vw;
       margin-left: 1.41vw;
       cursor: pointer;
     }
@@ -195,20 +195,20 @@ const HeaderWrapper = styled.div`
     .header-nav {
       display: flex;
       align-items: center;
-      margin-right: 26px;
+      margin-right: 1.35vw;
 
       .header-nav-login-menu {
         width: max-content;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0 15px;
-        height: 30px;
-        border-radius: 15px;
+        padding: 0 0.78vw;
+        height: 1.56vw;
+        border-radius: 0.78vw;
 
         font-family: "Noto Sans KR";
         font-weight: 600;
-        font-size: 14px;
+        font-size: 0.73vw;
         letter-spacing: -0.015em;
 
         cursor: pointer;
@@ -224,14 +224,14 @@ const HeaderWrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0 15px;
-        height: 30px;
-        border-radius: 15px;
-        margin-left: 3px;
+        padding: 0 0.78vw;
+        height: 1.56vw;
+        border-radius: 0.78vw;
+        margin-left: 0.16vw;
 
         font-family: "Noto Sans KR";
         font-weight: 600;
-        font-size: 14px;
+        font-size: 0.73vw;
         letter-spacing: -0.015em;
 
         cursor: pointer;
@@ -243,12 +243,12 @@ const HeaderWrapper = styled.div`
       }
 
       .header-nav-icon {
-        width: 39px;
-        height: 39px;
+        width: 2.03vw;
+        height: 2.03vw;
         border-radius: 50%;
         background: #fefefe;
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
-        margin-left: 17px;
+        margin-left: 0.89vw;
 
         display: flex;
         justify-content: center;
@@ -267,8 +267,8 @@ const HeaderWrapper = styled.div`
 
         span {
           font-weight: 700;
-          font-size: 12px;
-          line-height: 16px;
+          font-size: 0.63vw;
+          line-height: 0.83vw;
           letter-spacing: -0.015em;
         }
       }

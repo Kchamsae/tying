@@ -42,7 +42,7 @@ const DictModal = (props) => {
     }
     const second = dict_list?.filter((a) => a.nickname === user.nickname);
     if (second.length > 0) {
-      alertNewWhite('로그인 후에 이용할 수 있습니다.', ()=>{
+      alertNewWhite('단어 뜻은 한 번만 등록할 수 있습니다', ()=>{
         setTypeMean(false);
         meaningRef.current.value = '';
       });
@@ -100,6 +100,11 @@ const DictModal = (props) => {
                         type='text'
                         placeholder='뜻을 입력하세요.'
                         ref={meaningRef}
+                        onKeyDown={(e)=>{
+                          if(e.key === 'Enter'){
+                            addMeaning();
+                          }
+                        }}
                       />
                     </div>
                     <div>by. {user.nickname}</div>

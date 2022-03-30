@@ -53,16 +53,16 @@ const MyCertificateList = (props) => {
 };
 
 const MyCertificateSlider = styled.div`
-  margin-top: 28px;
+  margin-top: 1.46vw;
   .slick-list{
-    padding-left: 60px;
+    padding-left: 3.13vw;
   }
   .slick-slide{
-    margin-right: 26px;
+    margin-right: 1.35vw;
   }
 `;
 const EmptySlide = styled.div`
-  width: 579px;
-  height: 356px;
+  width: 30.16vw;
+  height: 18.54vw;
 `;
 export default MyCertificateList;

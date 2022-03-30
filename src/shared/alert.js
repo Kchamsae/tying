@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const alertNew = (text, callback) => {
+export const alertNew = (text, callback=()=>{}) => {
     Swal.fire({
         text: text,
         confirmButtonText: '확인',    
@@ -25,7 +25,7 @@ export const alertNew = (text, callback) => {
       })
   };
   
-  export const alertNewWhite = (text, callback) => {
+  export const alertNewWhite = (text, callback=()=>{}) => {
     Swal.fire({
         text: text,
         confirmButtonText: '확인',    
@@ -50,7 +50,7 @@ export const alertNew = (text, callback) => {
       })
   };
 
-  export const confirmNew = (text, callback, secondCallback) => {
+  export const confirmNew = (text, callback=()=>{}, secondCallback=()=>{}) => {
     Swal.fire({
         text: text,
         confirmButtonText: '확인',
@@ -84,7 +84,7 @@ export const alertNew = (text, callback) => {
       })
   };
 
-  export const confirmNewWhite = (text, callback, secondCallback) => {
+  export const confirmNewWhite = (text, callback=()=>{}, secondCallback=()=>{}) => {
     Swal.fire({
         text: text,
         confirmButtonText: '확인',
