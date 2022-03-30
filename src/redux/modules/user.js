@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import { setCookie, deleteCookie } from "../../shared/Cookie";
 import { apis } from "../../shared/apis";
+import { alertNew } from "../../shared/alert";
 // import { history } from "../redux/configureStore";
 
 // actions
@@ -35,7 +36,7 @@ const signupDB = (id, nickname, pwd) => {
       if (signup.data.ok) {
         return "ok";
       } else if (signup.data.ok === false) {
-        window.alert(signup.data.errorMessage);
+        alertNew(signup.data.errorMessage);
       }
     } catch (err) {
       console.log(err);
@@ -60,7 +61,7 @@ const loginDB = (id, pwd) => {
         );
         return "ok";
       } else if (login.data.ok === false) {
-        window.alert("아이디와 비밀번호를 다시 확인해주세요.");
+        alertNew("아이디와 비밀번호를 다시 확인해주세요.");
       }
     } catch (err) {
       console.log(err);
@@ -114,9 +115,10 @@ const kakaoLoginDB = (code) => {
         }
       })
       .then(() => {
-        window.alert("카카오 로그인이 완료 되었습니다!");
-        history.push("/");
-        // 로그인 성공 시 메인으로 이동
+        alertNew("카카오 로그인이 완료 되었습니다!",()=>{
+          history.push("/");
+          // 로그인 성공 시 메인으로 이동
+        });
       })
       .catch((err) => {
         console.log("카카오 로그인실패", err);
@@ -132,10 +134,10 @@ const editUserDB = (nickname) => {
       const nick = await apis.editUserNickname({ nickname })
       if (nick.data.ok) {
         dispatch(editUser(nickname));
-        window.alert("닉네임 수정이 완료 되었습니다!");
+        alertNew("닉네임 수정이 완료 되었습니다!");
         return 'ok';
       } else if (!nick.data.ok) {
-        window.alert("닉네임을 수정할 수 없습니다!");
+        alertNew("닉네임을 수정할 수 없습니다!");
       }
     } catch(err) {
       console.log("닉네임 수정 실패", err);

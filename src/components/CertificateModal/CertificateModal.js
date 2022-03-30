@@ -27,6 +27,7 @@ import {
   ModalNickname,
   ModalButton,
 } from './style';
+import { alertNew, confirmNew } from '../../shared/alert';
 
 const CertificateModal = (props) => {
   const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const CertificateModal = (props) => {
   const download = () => {
     // 비회원인 경우 닉네임 입력 요청
     if (write & (nick === '')) {
-      alert('닉네임을 입력해주세요!');
+      alertNew('닉네임을 입력해주세요!');
       return;
     }
     if (write) {
@@ -104,14 +105,13 @@ const CertificateModal = (props) => {
 
   const Close = () => {
     if(!props.my){
-      const again = window.confirm("계속 타이핑하시겠습니까?");
-      if(again){
-        dispatch(scriptActions.randomCategoryScriptDB('all', 'all', true)).then((res)=>[
+      confirmNew("계속 타이핑하시겠습니까?",()=>{
+        dispatch(scriptActions.randomCategoryScriptDB('all', 'all', true)).then((res)=>{
           window.location.replace(`/typing/${res}`)
-        ])
-      }else{
+        })
+      },()=>{
         history.replace('/');
-      }
+      });
     } else if(props.my){
       props.setModal(false);
     }

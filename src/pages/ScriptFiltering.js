@@ -8,6 +8,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { useInView } from 'react-intersection-observer';
 import { history } from '../redux/configureStore';
 import { getCookie } from '../shared/Cookie';
+import { alertNew } from '../shared/alert';
 
 const ScriptFiltering = () => {
   const [filter, setFilter] = useState([]);
@@ -27,9 +28,10 @@ const ScriptFiltering = () => {
 
   useEffect(()=>{
     if(!token){
-      alert('로그인 후에 이용할 수 있습니다.');
-      history.replace('/');
-      dispatch(userActions.setLoginModal(true));
+      alertNew('로그인 후에 이용할 수 있습니다.',()=>{
+        history.replace('/');
+        dispatch(userActions.setLoginModal(true));
+      });
     }
   },[is_login])
 
@@ -77,16 +79,16 @@ const ScriptFiltering = () => {
       setFilter((list) => list.filter((a) => a !== e.target.innerText));
     }
   };
-  const addFilterOverlap = (e) => {
-    if (reset) setReset(false);
-    if (filter.indexOf('1Agree / Disagree') === -1) {
-      setFilter((list) => list.concat('1Agree / Disagree'));
-      return;
-    } else {
-      setFilter((list) => list.filter((a) => a !== '1Agree / Disagree'));
-      return;
-    }
-  };
+  // const addFilterOverlap = (e) => {
+  //   if (reset) setReset(false);
+  //   if (filter.indexOf('1Agree / Disagree') === -1) {
+  //     setFilter((list) => list.concat('1Agree / Disagree'));
+  //     return;
+  //   } else {
+  //     setFilter((list) => list.filter((a) => a !== '1Agree / Disagree'));
+  //     return;
+  //   }
+  // };
   const addTopic = (e) => {
     if (reset) setReset(false);
     const idx = topic.indexOf(e.target.innerText);
@@ -180,12 +182,12 @@ const ScriptFiltering = () => {
                 <ul>
                   <li
                     className={
-                      filter.indexOf('1Agree / Disagree') !== -1
+                      filter.indexOf('Agree / Disagree') !== -1
                         ? 'filter-checked'
                         : ''
                     }
                   >
-                    <span onClick={addFilterOverlap}>Agree / Disagree</span>
+                    <span onClick={addFilter}>Agree / Disagree</span>
                   </li>
                   <li
                     className={

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { apis } from "../../shared/apis";
 import { nicknameCheck } from "../../shared/signupRegex";
+import { alertNew } from "../../shared/alert";
 
 const NicknameModal = (props) => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const NicknameModal = (props) => {
   const nicknameCheckF = () => {
     console.log("닉네임 확인 :", nickname);
     if (!nicknameCheck(nickname)) {
-      alert("닉네임 형식이 올바르지 않습니다!");
+      alertNew("닉네임 형식이 올바르지 않습니다!");
       return;
     }
 
@@ -52,16 +53,16 @@ const NicknameModal = (props) => {
           setNicknameCheck(res.data.ok);
           //사용 가능한 닉네임인 경우 체크 아이콘으로 변경
           setNicknameChecker(4);
-          window.alert("사용 가능한 닉네임입니다!");
+          alertNew("사용 가능한 닉네임입니다!");
         } else if (res.data.ok === false) {
           //사용 불가능한 닉네임인 경우 엑스 아이콘으로 변경
           setNicknameChecker(5);
-          window.alert("이미 사용 중인 닉네임입니다!");
+          alertNew("이미 사용 중인 닉네임입니다!");
         }
       })
       .catch((err) => {
         console.log("닉네임 중복", err);
-        window.alert("닉네임 중복확인에 문제가 생겼습니다!");
+        alertNew("닉네임 중복확인에 문제가 생겼습니다!");
       });
   };
 

@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
 import axios from 'axios';
 import { apis } from '../../shared/apis';
+import { alertNewWhite } from '../../shared/alert';
 
 const SET_DICT = 'SET_DICT';
 const ADD_DICT = 'ADD_DICT';
@@ -91,7 +92,7 @@ const addDictDB = (script_id, word, meaning) => {
 
         dispatch(addDict(doc));
       } else {
-        alert(word_data.data.errorMessage);
+        alertNewWhite(word_data.data.errorMessage);
       }
     } catch (err) {
       console.log(err);
@@ -107,7 +108,7 @@ const editDictDB = (script_id, word, word_id, meaning) => {
       if (word_data.data.ok) {
         dispatch(editDict(meaning, word_id));
       } else {
-        alert(word_data.data.errorMessage);
+        alertNewWhite(word_data.data.errorMessage);
       }
     } catch (err) {
       console.log(err);

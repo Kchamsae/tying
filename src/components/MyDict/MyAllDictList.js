@@ -3,9 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { history } from '../../redux/configureStore';
 import { actionCreators as wordActions } from '../../redux/modules/word';
+import { actionCreators as userActions } from '../../redux/modules/user';
+import { getCookie } from '../../shared/Cookie';
+import { alertNew, confirmNew } from '../../shared/alert';
 
 const MyAllDictList = () => {
   const dispatch = useDispatch();
+
+  const is_login = useSelector((state) => state.user.is_login);
+  const token = getCookie('token');
+
+  useEffect(() => {
+    if (!token) {
+      alertNew('로그인 후에 이용할 수 있습니다.', () => {
+        history.replace('/');
+        dispatch(userActions.setLoginModal(true));
+      });
+    }
+  }, [is_login]);
 
   useEffect(() => {
     dispatch(wordActions.loadAllDictDB());
@@ -62,6 +77,9 @@ const MyAllDictItem = (props) => {
       dispatch(wordActions.deleteMyDictDB(script_id, word));
       // dispatch(wordActions.loadDictDB());
     }
+    confirmNew('이 단어를 나만의 단어장에서 삭제하시겠습니까?', () => {
+      dispatch(wordActions.deleteMyDictDB(script_id, word));
+    });
   };
 
   return (
@@ -134,12 +152,14 @@ const AllDictList = styled.div`
   width: 1659px;
   margin: 40px auto;
   position: relative;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
 
   &:before {
     content: '';
     display: block;
     height: calc(100% - 100px);
+    border-right: 2px solid #d2d2d2;
+    height: calc(100% - 40px);
     border-right: 2px solid #d2d2d2;
     position: absolute;
     left: calc(11.93% - 2px);
