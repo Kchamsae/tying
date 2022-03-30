@@ -227,6 +227,15 @@ main {
   margin: 0px;
 }
 
+.weekly-box {
+  display: flex;
+  width: 203px;
+  height: 37px;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
 .weekly-typing {
   font-family: 'Montserrat';
   font-size: 20px;
@@ -241,7 +250,6 @@ main {
   font-weight: bolder;
   margin: 0px;
   color: #878889;
-  cursor: pointer;
 }
 
 .renderheader-top {
