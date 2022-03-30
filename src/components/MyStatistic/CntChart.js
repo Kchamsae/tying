@@ -1,32 +1,51 @@
 import React from 'react';
 import { Chart } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto';
+import styled from 'styled-components';
 
-const CntChart = ({ sDate, eDate }) => {
-  console.log(sDate, eDate);
+const CntChart = ({ sDate, eDate, recordLoad }) => {
+  const labels = ['월', '화', '수', '목', '금', '토', '일'];
+
+  const fakeData = [0, 0, 0, 0, 0, 0, 0];
 
   const recordTyping = {
-    labels: ['월', '화', '수', '목', '금', '토', '일'],
+    labels,
     datasets: [
       {
         type: 'bar',
-        // label: '릴리즈되는 한국 컨텐츠 수',
-        borderColor: 'white',
-        borderWidth: 5,
-        backgroundColor: '#BDBDBD',
-        data: [700, 600, 807, 432, 234, 453, 2],
+        label: 'Dataset 1',
+        backgroundColor: 'rgb(255, 99, 132)',
+        data: fakeData.map((a, i) => {
+          const target = recordLoad.find((b, j) => {
+            const num =
+              new Date(b._id).getDay() === 0 ? 6 : new Date(b._id).getDay() - 1;
+            if (num === i) {
+              return b;
+            }
+          });
+          if (target) {
+            return target.total_typingCnt;
+          }
+          return a;
+        }),
+        // borderColor: 'white',
+        // borderWidth: 2,
       },
     ],
   };
 
   return (
     <div>
-      <h1>타이핑 수 차트</h1>
-      <div className='chart3Container'>
+      <p>타이핑 수 차트</p>
+      <Container>
         <Chart type='bar' data={recordTyping} />
-      </div>
+      </Container>
     </div>
   );
 };
+
+const Container = styled.div`
+  width: 90vw;
+  max-width: 900px;
+`;
 
 export default CntChart;
