@@ -243,10 +243,10 @@ const Calendar = () => {
             alignItems: 'center',
           }}
         >
-          <div style={{ display: 'flex', width: '50%' }}>
+          <div style={{ display: 'flex', width: '70%' }}>
             <p className='weekly-number'>
               {recordLoad[_idx]?.total_typingCnt
-                ? recordLoad[_idx]?.total_typingCnt / 100
+                ? recordLoad[_idx]?.total_typingCnt
                 : 0}
             </p>
             <p style={{ alignSelf: 'flex-end' }} className='weekly-typing'>
@@ -273,10 +273,10 @@ const Calendar = () => {
             alignItems: 'center',
           }}
         >
-          <div style={{ display: 'flex', width: '50%' }}>
+          <div style={{ display: 'flex', width: '70%' }}>
             <p className='weekly-number'>
               {recordLoad[_idx]?.total_duration
-                ? (recordLoad[_idx]?.total_duration / 60).toFixed(1)
+                ? Math.round(recordLoad[_idx]?.total_duration / 60)
                 : 0}
             </p>
             <p style={{ alignSelf: 'flex-end' }} className='weekly-typing'>

@@ -12,15 +12,15 @@ body {
   position: relative;
 } */
 
-header {
+/* header {
   display: block;
   width: 50%;
   padding: 1.75em 0;
   border-bottom: 1px solid var(--border-color);
   background: var(--neutral-color);
-}
+} */
 
-header #logo {
+/* header #logo {
   font-size: 175%;
   text-align: center;
   color: var(--main-color);
@@ -36,7 +36,7 @@ main {
   margin: 0 auto;
   margin-top: 5em;
   max-width: 50em;
-}
+} */
 
 /* GRID */
 
@@ -223,22 +223,23 @@ main {
 .weekly-number {
   font-family: 'Montserrat';
   font-size: 80px;
-  font-weight: bolder;
+  font-weight: 500;
   margin: 0px;
 }
 
 .weekly-typing {
-  font-family: 'Montserrat';
-  font-size: 20px;
-  font-weight: bolder;
+  font-family: 'Noto Sans KR';
+  font-size: 16px;
+  font-weight: 500;
   margin: 0px;
   color: #bdbdbd;
+  width: max-content;
 }
 
 .weekly-button {
-  font-family: 'Montserrat';
-  font-size: 30px;
-  font-weight: bolder;
+  font-family: 'Noto Sans KR';
+  font-size: 22px;
+  font-weight: 500;
   margin: 0px;
   color: #878889;
   cursor: pointer;
