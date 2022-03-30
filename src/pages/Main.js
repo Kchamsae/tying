@@ -22,7 +22,7 @@ const Main = (props) => {
     'ALL',
   ];
   const ielts_category = [
-    'Agree / Disagree',
+    'Agree / Disagree',
     'Both views',
     'Advantage / Disadvantage',
     'Problem & Solution',
@@ -301,7 +301,7 @@ const Main = (props) => {
         <div className='main-start-button' onClick={randomStart}>
           {category === 'random' ? '랜덤 타이핑' : '시작하기'}
         </div>
-        <div className='main-introduce'>
+        <a className='main-introduce' href='https://power-tilapia-e1d.notion.site/TYING-bdd299c585d849d0a6e07a98e0d350d4' target='_blank' rel='noreferrer'>
           <div className='main-introduce-logo'></div>
           <svg
             viewBox='0 0 122 104'
@@ -357,7 +357,7 @@ const Main = (props) => {
               fill='white'
             />
           </svg>
-        </div>
+        </a>
       </MainWrapper>
     </>
   );
@@ -563,6 +563,7 @@ const MainWrapper = styled.div`
   }
 
   .main-introduce {
+    display: block;
     width: 10.26vw;
     height: 10.26vw;
     position: absolute;

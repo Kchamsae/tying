@@ -8,8 +8,6 @@ const RECORD_LOAD = 'RECORD_LOAD';
 const RECORD_LOADALL = 'RECORD_LOADALL';
 const CERTIFICATE_LOAD = 'CERTIFICATE_LOAD';
 
-const recordTyping = createAction(RECORD_TYPING, (record) => ({ record }));
-
 const recordLoad = createAction(RECORD_LOAD, (record_list) => ({
   record_list,
 }));
@@ -105,7 +103,7 @@ const certificateLoadDB = (certificateId, scriptId) => {
         const doc = {
           ...load_certificates.getcertificatedetail,
           scriptTopic: load_certificates.scriptTopic,
-          scriptType: load_certificates.scriptType,
+          scriptCategory: load_certificates.scriptCategory,
         }
         dispatch(certificateLoad(doc));
       }

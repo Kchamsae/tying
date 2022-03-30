@@ -8,6 +8,7 @@ import ScriptItemLoading from "../components/ScriptItemLoading";
 import { useInView } from "react-intersection-observer";
 import { history } from "../redux/configureStore";
 import { getCookie } from "../shared/Cookie";
+import { alertNew } from "../shared/alert";
 
 const Search = () => {
   const searchRef = useRef();
@@ -26,9 +27,10 @@ const Search = () => {
 
   useEffect(()=>{
     if(!token){
-      alert('로그인 후에 이용할 수 있습니다.');
-      history.replace('/');
-      dispatch(userActions.setLoginModal(true));
+      alertNew('로그인 후에 이용할 수 있습니다.',()=>{
+        history.replace('/');
+        dispatch(userActions.setLoginModal(true));
+      });
     }
   },[is_login])
 
@@ -68,7 +70,7 @@ const Search = () => {
       dispatch(scriptActions.setSearchListDB(1, v, false));
       // 새로 검색할 시 검색결과 바꿔줘야 함으로 false
     } else if (!ok) {
-      alert("두글자 이상의 영문으로만 검색하실 수 있습니다.");
+      alertNew("두글자 이상의 영문으로만 검색하실 수 있습니다.");
     }
     setDone(false);
   };
@@ -184,6 +186,7 @@ const SearchWrapper = styled.div`
   .search-result {
     width: 1144px;
     margin: 72px auto;
+    padding-bottom: 50px;
 
     .filtering-result-none {
       width: max-content;

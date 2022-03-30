@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../../redux/modules/user';
@@ -17,6 +17,8 @@ import {
 } from './style';
 import { ModalBg } from '../Typing/style';
 import CertificateModal from './../../components/CertificateModal/CertificateModal';
+import { getCookie } from '../../shared/Cookie';
+import { alertNew } from '../../shared/alert';
 
 const MyPage = () => {
   const dispatch = useDispatch();
@@ -27,11 +29,23 @@ const MyPage = () => {
 
   const is_login = useSelector((state) => state.user.is_login);
   const user = useSelector((state) => state.user.user);
+  const token = getCookie('token'); 
+
+  useEffect(()=>{
+    if(!token){
+      alertNew('로그인 후에 이용할 수 있습니다.',()=>{
+        history.replace('/');
+        dispatch(userActions.setLoginModal(true));
+      });
+    }
+  },[is_login])
+
 
   const logout = () => {
     dispatch(userActions.outUser());
-    window.alert('로그아웃 되었습니다.');
-    history.replace('/');
+    alertNew('로그아웃 되었습니다.',()=>{
+      history.replace('/');
+    });
   };
 
   // 닉네임 모달 열기

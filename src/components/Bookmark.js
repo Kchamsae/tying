@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { alertNew } from '../shared/alert';
 
 const Bookmark = (props) => {
 
@@ -25,8 +26,7 @@ const Bookmark = (props) => {
     const addBookmark = (e) => {
       e.stopPropagation();
       if(!is_login){
-          alert('로그인 후 이용할 수 있습니다!');
-          dispatch(userActions.setLoginModal(true));
+        alertNew('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});
       } else if(is_login){
         if(props.detail){
           dispatch(scriptActions.addMyScriptDB(props.script_id, true));
@@ -39,8 +39,7 @@ const Bookmark = (props) => {
     const deleteBookmark = (e) => {
       e.stopPropagation();
       if(!is_login){
-          alert('로그인 후 이용할 수 있습니다!');
-          dispatch(userActions.setLoginModal(true));
+        alertNew('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});
       } else if(is_login){
         if(props.detail){
           dispatch(scriptActions.deleteMyScriptDB(props.script_id, true));
