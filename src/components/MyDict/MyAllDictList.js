@@ -11,16 +11,16 @@ const MyAllDictList = () => {
   const dispatch = useDispatch();
 
   const is_login = useSelector((state) => state.user.is_login);
-  const token = getCookie('token'); 
+  const token = getCookie('token');
 
-  useEffect(()=>{
-    if(!token){
-      alertNew('로그인 후에 이용할 수 있습니다.',()=>{
+  useEffect(() => {
+    if (!token) {
+      alertNew('로그인 후에 이용할 수 있습니다.', () => {
         history.replace('/');
         dispatch(userActions.setLoginModal(true));
       });
     }
-  },[is_login])
+  }, [is_login]);
 
   useEffect(() => {
     dispatch(wordActions.loadAllDictDB());
@@ -30,23 +30,32 @@ const MyAllDictList = () => {
 
   return (
     <>
-      <PrevPage onClick={() => {history.goBack()}}>
-        <svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 2L8 8L2 14" stroke="#878889" strokeWidth="3" strokeLinecap="round"/>
+      <PrevPage
+        onClick={() => {
+          history.goBack();
+        }}
+      >
+        <svg
+          width='11'
+          height='16'
+          viewBox='0 0 11 16'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M2 2L8 8L2 14'
+            stroke='#878889'
+            strokeWidth='3'
+            strokeLinecap='round'
+          />
         </svg>
         이전 페이지
       </PrevPage>
       <AllDictList>
         <ListHeader>
-          <WordSection header>
-            단어
-          </WordSection>
-          <MeaningSection header>
-            뜻
-          </MeaningSection>
-          <SentenceSection header>
-            예문
-          </SentenceSection>
+          <WordSection header>단어</WordSection>
+          <MeaningSection header>뜻</MeaningSection>
+          <SentenceSection header>예문</SentenceSection>
         </ListHeader>
         {
           saveDict?.map((a,i)=>{
@@ -61,49 +70,61 @@ const MyAllDictList = () => {
   );
 };
 
-
-
-
 const MyAllDictItem = (props) => {
-
   const dispatch = useDispatch();
 
   const deleteDict = (script_id, word) => {
-    confirmNew('이 단어를 나만의 단어장에서 삭제하시겠습니까?',()=>{
+    const check = window.confirm(
+      '이 단어를 나만의 단어장에서 삭제하시겠습니까?'
+    );
+    if (check) {
       dispatch(wordActions.deleteMyDictDB(script_id, word));
-    })
-  }
+      // dispatch(wordActions.loadDictDB());
+    }
+    confirmNew('이 단어를 나만의 단어장에서 삭제하시겠습니까?', () => {
+      dispatch(wordActions.deleteMyDictDB(script_id, word));
+    });
+  };
 
   return (
     <ListItem>
       <WordSection>
         {props[2]}
         <div>
-          <div onClick={() => { deleteDict(props[4], props[2]) }}>+</div>
+          <div
+            onClick={() => {
+              deleteDict(props[4], props[2]);
+            }}
+          >
+            +
+          </div>
         </div>
       </WordSection>
       <MeaningSection>
         <div>{props[0]}</div>
-        {props[0]!==props[1] && (
-          <div>{props[1]}</div>
-        )}
+        {props[0] !== props[1] && <div>{props[1]}</div>}
       </MeaningSection>
       <SentenceSection>
-        <div onClick={()=>{history.push(`/typing/${props[4]}`)}}>
-          {
-            (props[3].split(props[2]).length >=2 ? props[3].split(props[2]) : props[3].split(props[2].replace(/^./, props[2][0].toUpperCase()))).map((a,i,arr)=>{
-              if(i+1 !== arr.length){
-                return(
-                  <React.Fragment key={i}>
-                    {a}
-                    <span style={{color: '#FF2E00'}}>{props[2]}</span>  
-                  </React.Fragment>
-                )
-              }
-              return <React.Fragment key={i}>{a}</React.Fragment>
-            })
-          }
-        </div>    
+        <div
+          onClick={() => {
+            history.push(`/typing/${props[4]}`);
+          }}
+        >
+          {(props[3].split(props[2]).length >= 2
+            ? props[3].split(props[2])
+            : props[3].split(props[2].replace(/^./, props[2][0].toUpperCase()))
+          ).map((a, i, arr) => {
+            if (i + 1 !== arr.length) {
+              return (
+                <React.Fragment key={i}>
+                  {a}
+                  <span style={{ color: '#FF2E00' }}>{props[2]}</span>
+                </React.Fragment>
+              );
+            }
+            return <React.Fragment key={i}>{a}</React.Fragment>;
+          })}
+        </div>
       </SentenceSection>
     </ListItem>
   );
@@ -123,7 +144,7 @@ const PrevPage = styled.div`
 
   cursor: pointer;
 
-  >svg{
+  > svg {
     transform: rotate(180deg);
     width: 0.57vw;
     height: 0.83vw;
@@ -137,7 +158,7 @@ const AllDictList = styled.div`
   position: relative;
   padding-bottom: 2.08vw;
 
-  &:before{
+  &:before {
     content: '';
     display: block;
     height: calc(100% - 2.08vw);
@@ -147,9 +168,10 @@ const AllDictList = styled.div`
     top: 0;
   }
 
-  &:after{
+  &:after {
     content: '';
     display: block;
+
     height: calc(100% - 2.08vw);
     border-right: 0.105vw solid #D2D2D2;
     position: absolute;
@@ -168,16 +190,17 @@ const WordSection = styled.div`
   display: flex;
   padding-left: 1.15vw;
   box-sizing: border-box;
+
   
   padding-top: 1.15vw;
   font-weight: 700;
   font-size: 1.04vw;
   letter-spacing: -0.015em;
-  
-  ${props=>{
-    if(props.header){
+
+  ${(props) => {
+    if (props.header) {
       return css`
-        &{
+        & {
           padding-top: 0;
           align-items: center;
           font-family: 'Noto Sans KR';
@@ -189,11 +212,12 @@ const WordSection = styled.div`
     }
   }}
 
+
   > div{
     margin-left: 0.26vw;
   }
 
-  >div>div{
+  > div > div {
     color: #878889;
     font-weight: 300;
     transform: rotate(45deg);
