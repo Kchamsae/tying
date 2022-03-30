@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { history } from "../redux/configureStore";
 import { KAKAO_AUTH_URL } from '../shared/social/Kakao';
 import Signup from './Signup';
 import { alertNew } from '../shared/alert';
+
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -216,25 +216,30 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalBox = styled.div`
-  width: 478px;
+  width: 24.9vw;
   /* height: 478px; */
   background-color: #f9f9f9;
-  border-radius: 20px;
+  border-radius: 1.04vw;
   /* display: flex;
   justify-content: center; */
-  padding: 75px;
+  padding: 3.91vw;
   box-sizing: border-box;
   position: relative;
   transition: 0.5s;
 
   .close-button {
     position: absolute;
-    width: 24px;
-    height: 24px;
-    left: 431px;
-    top: 21px;
+    width: 1.25vw;
+    height: 1.25vw;
+    left: 22.45vw;
+    top: 1.09vw;
     z-index: 10001;
     cursor: pointer;
+
+    >svg{
+      width: 1.25vw;
+      height: 1.25vw;
+    }
 
     svg path{
       transition: 0.3s;
@@ -250,19 +255,23 @@ const ModalBox = styled.div`
   .tying-logo {
     display: block;
     margin: auto;
-    width: 144px;
-    height: 50px;
+    width: 7.5vw;
+    height: 2.6vw;
+    >svg{
+      width: 5.89vw;
+      height: 2.19vw;
+    }
   }
 
   .info-title {
     justify-content: center;
-    margin: 25px auto;
+    margin: 1.3vw auto;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 27px;
+    font-size: 1.04vw;
+    line-height: 1.41vw;
     letter-spacing: -0.015em;
 
     > p {
@@ -273,21 +282,21 @@ const ModalBox = styled.div`
 
   .login-button {
     width: 70%;
-    height: 50px;
+    height: 2.6vw;
     justify-content: center;
-    margin: 45px auto 0;
-    padding: 3px;
+    margin: 2.34vw auto 0;
+    padding: 0.16vw;
 
     button {
       display: block;
       width: 100%;
-      height: 48px;
+      height: 2.5vw;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 17px;
-      line-height: 25px;
+      font-size: 0.89vw;
+      line-height: 1.3vw;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -297,9 +306,9 @@ const ModalBox = styled.div`
       color: #ffffff;
 
       background: #ff2e00;
-      border: 3px solid #ff2e00;
+      border: 0.16vw solid #ff2e00;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 1.04vw;
       outline: none;
 
       cursor: pointer;
@@ -314,21 +323,21 @@ const ModalBox = styled.div`
 
   .kakao-button {
     width: 70%;
-    height: 50px;
+    height: 2.6vw;
     justify-content: center;
     margin: 0 auto;
-    padding-top: 4px;
+    padding-top: 0.21vw;
 
     button {
       display: block;
       width: 100%;
-      height: 48px;
+      height: 2.5vw;
       position: relative;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 17px;
+      font-size: 0.89vw;
       /* line-height: 25px; */
       /* display: flex; */
       justify-content: center;
@@ -338,7 +347,7 @@ const ModalBox = styled.div`
 
       background: #fee500;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 1.04vw;
       border: none;
       outline: none;
 
@@ -351,9 +360,11 @@ const ModalBox = styled.div`
       }
 
       > svg {
+        width: 0.99vw;
+        height: 0.94vw;
         position: absolute;
-        top: calc(50% - 9px);
-        left: 19px;
+        top: calc(50% - 0.47vw);
+        left: 0.99vw;
       }
     }
   }
@@ -361,12 +372,12 @@ const ModalBox = styled.div`
   .no-signup {
     justify-content: center;
     margin: auto;
-    margin-top: 25px;
+    margin-top: 1.3vw;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 0.83vw;
     text-align: center;
     letter-spacing: -0.015em;
     color: #878889;
@@ -379,23 +390,26 @@ const ModalBox = styled.div`
 
   .tying-welcome-logo {
     display: flex;
-    /* justify-content: center;
-    margin: auto; */
+    
+    >svg{
+      width: 19.17vw;
+      height: 2.71vw;
+    }
   }
 
   .login-title {
-    width: 223px;
-    height: 35px;
-    left: 127px;
-    top: 98px;
+    width: 11.61vw;
+    height: 1.82vw;
+    left: 6.61vw;
+    top: 5.1vw;
     justify-content: center;
     margin: auto;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 600;
-    font-size: 19px;
-    line-height: 27px;
+    font-size: 0.99vw;
+    line-height: 1.41vw;
     display: flex;
     align-items: center;
     text-align: center;
@@ -405,43 +419,43 @@ const ModalBox = styled.div`
   }
 
   .login-form {
-    margin-top: 50px;
+    margin-top: 2.6vw;
     text-align: right;
     input {
       display: block;
       margin: auto;
       width: 70%;
-      height: 3rem;
-      font-size: 1rem;
-      margin-top: 8px;
+      height: 2.5vw;
+      font-size: 0.83vw;
+      margin-top: 0.42vw;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       color: #212529;
 
-      border: 1px solid rgb(222, 226, 230);
-      border-radius: 20px;
+      border: 0.05vw solid rgb(222, 226, 230);
+      border-radius: 1.04vw;
       flex: 1 1 0%;
       box-sizing: border-box;
-      padding: 1rem;
+      padding: 0.83vw;
       background: #fff;
       outline: none;
 
       &:focus {
-        border: 1px solid #212529;
+        border: 0.05vw solid #212529;
       }
     }
     button {
       display: block;
-      margin: 20px auto 24px;
+      margin: 1.04vw auto 1.25vw;
       width: 70%;
-      height: 48px;
+      height: 2.5vw;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 17px;
-      line-height: 25px;
+      font-size: 0.89vw;
+      line-height: 1.3vw;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -451,9 +465,9 @@ const ModalBox = styled.div`
       color: #ffffff;
 
       background: #ff2e00;
-      border: 3px solid #ff2e00;
+      border: 0.16vw solid #ff2e00;
       box-sizing: border-box;
-      border-radius: 20px;
+      border-radius: 1.04vw;
       outline: none;
       transition: 0.3s;
       cursor: pointer;

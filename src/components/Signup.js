@@ -216,7 +216,7 @@ const Signup = (props) => {
                         d='M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812'
                         stroke='#2190FE'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                     </svg>
                   )}
@@ -242,13 +242,13 @@ const Signup = (props) => {
                         d='M8 17L17 8'
                         stroke='#FF2E00'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                       <path
                         d='M8 8L17 17'
                         stroke='#FF2E00'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                     </svg>
                   )}
@@ -321,7 +321,7 @@ const Signup = (props) => {
                         d='M6.54688 11.9317L11.0727 16.6615L19.0469 8.32812'
                         stroke='#2190FE'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                     </svg>
                   )}
@@ -346,13 +346,13 @@ const Signup = (props) => {
                         d='M8 17L17 8'
                         stroke='#FF2E00'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                       <path
                         d='M8 8L17 17'
                         stroke='#FF2E00'
                         strokeWidth='2'
-                        stroke-linecap='round'
+                        strokeLinecap='round'
                       />
                     </svg>
                   )}
@@ -422,40 +422,29 @@ const Signup = (props) => {
   );
 };
 
-const ModalsBox = styled.div`
-  width: 478px;
-  height: 616px;
-  position: fixed;
-  top: calc(50% - 239px);
-  left: calc(50% - 239px);
-  z-index: 10000;
-  background-color: #f9f9f9;
-  border-radius: 20px;
-  /* display: flex; */
-  justify-content: center;
-  padding: 75px;
-  box-sizing: border-box;
-
-  `;
 
 const SignupWrapper = styled.div`
   .tying-welcome-logo {
     display: flex;
+    >svg{
+      width: 19.17vw;
+      height: 2.71vw;
+    }
   }
 
   .signup-title {
-    width: 223px;
-    height: 35px;
-    left: 127px;
-    top: 98px;
+    width: 11.61vw;
+    height: 1.82vw;
+    left: 6.61vw;
+    top: 5.1vw;
     justify-content: center;
     margin: auto;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 600;
-    font-size: 19px;
-    line-height: 27px;
+    font-size: 0.99vw;
+    line-height: 1.41vw;
     display: flex;
     align-items: center;
     text-align: center;
@@ -471,45 +460,45 @@ const SignupWrapper = styled.div`
 
     .signup-form {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 2.08vw;
 
       input {
         display: block;
         margin: auto;
-        width: 278px;
-        height: 48px;
-        font-size: 16px;
-        margin-top: 8px;
+        width: 14.48vw;
+        height: 2.5vw;
+        font-size: 0.83vw;
+        margin-top: 0.42vw;
 
         font-family: 'Noto Sans KR';
         font-style: normal;
         color: #212529;
 
         border: 1px solid rgb(222, 226, 230);
-        border-radius: 20px;
+        border-radius: 1.04vw;
         flex: 1 1 0%;
         box-sizing: border-box;
-        padding: 1rem;
+        padding: 0.83vw;
         background: #fff;
         outline: none;
 
         &:focus {
-          border: 1px solid #212529;
+          border: 0.05vw solid #212529;
         }
       }
       > p {
         position: absolute;
         width: max-content;
-        padding-left: 10px;
+        padding-left: 0.52vw;
         font-family: 'Noto Sans KR';
         font-style: normal;
-        font-size: 12px;
+        font-size: 0.63vw;
         &.incorrect-id {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #ff2e00;
         }
         &.correct-id {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #2190fe;
         }
       }
@@ -519,17 +508,24 @@ const SignupWrapper = styled.div`
       top: 20%;
       right: -24.5%;
       text-align: left;
-      width: 60px;
-      height: 32px;
+      width: 3.13vw;
+      height: 1.67vw;
+
+      >svg{
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+
       button {
-        width: 60px;
-        height: 32px;
-        left: 30px;
+        width: 3.13vw;
+        height: 1.67vw;
+        left: 1.56vw;
+        display: block;
 
         font-family: 'Noto Sans KR';
         font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
+        font-weight: 500;
+        font-size: 0.63vw;
         text-align: center;
         letter-spacing: -0.015em;
 
@@ -538,7 +534,7 @@ const SignupWrapper = styled.div`
         background: #bdbdbd;
         border: none #bdbdbd;
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 0.26vw;
         outline: none;
 
         cursor: pointer;
@@ -559,45 +555,45 @@ const SignupWrapper = styled.div`
 
     .nickname-form {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 0.78vw;
 
       input {
         display: block;
         margin: auto;
-        width: 278px;
-        height: 48px;
-        font-size: 16px;
-        margin-top: 27px;
+        width: 14.48vw;
+        height: 2.5vw;
+        font-size: 0.83vw;
+        margin-top: 1.41vw;
 
         font-family: 'Noto Sans KR';
         font-style: normal;
         color: #212529;
 
-        border: 1px solid rgb(222, 226, 230);
-        border-radius: 20px;
+        border: 0.05vw solid rgb(222, 226, 230);
+        border-radius: 1.04vw;
         flex: 1 1 0%;
         box-sizing: border-box;
-        padding: 1rem;
+        padding: 0.83vw;
         background: #fff;
         outline: none;
 
         &:focus {
-          border: 1px solid #212529;
+          border: 0.05vw solid #212529;
         }
       }
       > p {
         position: absolute;
         width: max-content;
-        padding-left: 10px;
+        padding-left: 0.52vw;
         font-family: 'Noto Sans KR';
         font-style: normal;
-        font-size: 12px;
+        font-size: 0.63vw;
         &.incorrect-nickname {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #ff2e00;
         }
         &.correct-nickname {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #2190fe;
         }
       }
@@ -607,17 +603,23 @@ const SignupWrapper = styled.div`
       top: 20%;
       right: -24.5%;
       text-align: left;
-      width: 60px;
-      height: 32px;
+      width: 3.13vw;
+      height: 1.67vw;
+
+      >svg{
+        width: 1.3vw;
+        height: 1.3vw;
+      }
+
       button {
-        width: 60px;
-        height: 32px;
-        left: 30px;
+        width: 3.13vw;
+        height: 1.67vw;
+        left: 1.56vw;
 
         font-family: 'Noto Sans KR';
         font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
+        font-weight: 500;
+        font-size: 0.63vw;
         text-align: center;
         letter-spacing: -0.015em;
 
@@ -626,7 +628,7 @@ const SignupWrapper = styled.div`
         background: #bdbdbd;
         border: none #bdbdbd;
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 0.26vw;
         outline: none;
         
         cursor: pointer;
@@ -641,46 +643,46 @@ const SignupWrapper = styled.div`
   }
   .pwd-form {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 0.78vw;
 
     input {
       display: block;
       margin: auto;
-      width: 278px;
-      height: 48px;
-      font-size: 16px;
-      margin-top: 27px;
+      width: 14.48vw;
+      height: 2.5vw;
+      font-size: 0.83vw;
+      margin-top: 1.41vw;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       color: #212529;
 
-      border: 1px solid rgb(222, 226, 230);
-      border-radius: 20px;
+      border: 0.05vw solid rgb(222, 226, 230);
+      border-radius: 1.04vw;
       flex: 1 1 0%;
       box-sizing: border-box;
-      padding: 1rem;
+      padding: 0.83vw;
       background: #fff;
       outline: none;
 
       &:focus {
-        border: 1px solid #212529;
+        border: 0.05vw solid #212529;
       }
     }
     > p {
       position: absolute;
-      margin-left: 26px;
+      margin-left: 1.35vw;
       width: max-content;
-      padding-left: 10px;
+      padding-left: 0.52vw;
       font-family: 'Noto Sans KR';
       font-style: normal;
-      font-size: 12px;
+      font-size: 0.63vw;
       &.incorrect-pwd {
-        margin-top: 5px;
+        margin-top: 0.26vw;
         color: #ff2e00;
       }
       &.correct-pwd {
-        margin-top: 5px;
+        margin-top: 0.26vw;
         color: #2190fe;
       }
     }
@@ -688,46 +690,46 @@ const SignupWrapper = styled.div`
 
   .pwd-check-form {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 0.78vw;
 
     input {
       display: block;
       margin: auto;
-      width: 278px;
-      height: 48px;
-      font-size: 16px;
-      margin-top: 27px;
+      width: 14.48vw;
+      height: 2.5vw;
+      font-size: 0.83vw;
+      margin-top: 1.41vw;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       color: #212529;
 
-      border: 1px solid rgb(222, 226, 230);
-      border-radius: 20px;
+      border: 0.05vw solid rgb(222, 226, 230);
+      border-radius: 1.04vw;
       flex: 1 1 0%;
       box-sizing: border-box;
-      padding: 1rem;
+      padding: 0.83vw;
       background: #fff;
       outline: none;
 
       &:focus {
-        border: 1px solid #212529;
+        border: 0.05vw solid #212529;
       }
     }
     > p {
       position: absolute;
-      margin-left: 26px;
+      margin-left: 1.35vw;
       width: max-content;
-      padding-left: 10px;
+      padding-left: 0.52vw;
       font-family: 'Noto Sans KR';
       font-style: normal;
-      font-size: 12px;
+      font-size: 0.63vw;
       &.incorrect-pwd-check {
-        margin-top: 5px;
+        margin-top: 0.26vw;
         color: #ff2e00;
       }
       &.correct-pwd-check {
-        margin-top: 5px;
+        margin-top: 0.26vw;
         color: #2190fe;
       }
     }
@@ -735,15 +737,15 @@ const SignupWrapper = styled.div`
   .signup-button {
     display: block;
     margin: auto;
-    width: 268px;
-    height: 48px;
-    margin-top: 27px;
+    width: 13.96vw;
+    height: 2.5vw;
+    margin-top: 1.41vw;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 25px;
+    font-size: 0.89vw;
+    line-height: 1.3vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -753,9 +755,9 @@ const SignupWrapper = styled.div`
     color: #ffffff;
 
     background: #ff2e00;
-    border: 3px solid #ff2e00;
+    border: 0.16vw solid #ff2e00;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 1.04vw;
     outline: none;
 
     cursor: pointer;

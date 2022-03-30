@@ -38,13 +38,13 @@ const MyPage = () => {
         dispatch(userActions.setLoginModal(true));
       });
     }
-  },[is_login])
+  },[])
 
 
   const logout = () => {
+    history.replace('/');
     dispatch(userActions.outUser());
     alertNew('로그아웃 되었습니다.',()=>{
-      history.replace('/');
     });
   };
 
@@ -60,42 +60,36 @@ const MyPage = () => {
 
   return (
     <>
-      {is_login ? (
+      <MyPageWrapper>
+        <MyPageTop>
+          <MyInfo>
+            <h3>{user?.nickname}</h3>
+            <div onClick={editProfile}>이름수정</div>
+            <div onClick={logout}>로그아웃</div>
+          </MyInfo>
+          <TabWrapper>
+            <TabMenu id='myVoca' onClick={tabHandler} on={tab==='myVoca' && 'on'}>
+              나만의 단어장
+            </TabMenu>
+            <TabMenu id='verify' onClick={tabHandler} on={tab==='verify' && 'on'}>
+              타잉 인증서
+            </TabMenu>
+            <TabMenu id='statistics' onClick={tabHandler} on={tab==='statistics' && 'on'}>
+              통계
+            </TabMenu> 
+          </TabWrapper>
+        </MyPageTop>
+        <MyPageBody>
+          {tab === 'myVoca' && <MyDictList />}
+          {tab === 'verify' && <MyCertificateList setModal={setModal} setScriptId={setScriptId} setCertificateId={setCertificateId}/>}
+          {tab === 'statistics' && <Calendar />}
+        </MyPageBody>
+      </MyPageWrapper>
+      {modal && (
         <>
-          <MyPageWrapper>
-            <MyPageTop>
-              <MyInfo>
-                <h3>{user.nickname}</h3>
-                <div onClick={editProfile}>이름수정</div>
-                <div onClick={logout}>로그아웃</div>
-              </MyInfo>
-              <TabWrapper>
-                <TabMenu id='myVoca' onClick={tabHandler} on={tab==='myVoca' && 'on'}>
-                  나만의 단어장
-                </TabMenu>
-                <TabMenu id='verify' onClick={tabHandler} on={tab==='verify' && 'on'}>
-                  타잉 인증서
-                </TabMenu>
-                <TabMenu id='statistics' onClick={tabHandler} on={tab==='statistics' && 'on'}>
-                  통계
-                </TabMenu>
-              </TabWrapper>
-            </MyPageTop>
-            <MyPageBody>
-              {tab === 'myVoca' && <MyDictList />}
-              {tab === 'verify' && <MyCertificateList setModal={setModal} setScriptId={setScriptId} setCertificateId={setCertificateId}/>}
-              {tab === 'statistics' && <Calendar />}
-            </MyPageBody>
-          </MyPageWrapper>
-          {modal && (
-            <>
-              <ModalBg/>
-              <CertificateModal my script_id={script_id} certificate_id={certificate_id} setModal={setModal}/>
-            </>
-          )}
+          <ModalBg/>
+          <CertificateModal my script_id={script_id} certificate_id={certificate_id} setModal={setModal}/>
         </>
-      ) : (
-        '로그인이 필요합니다.'
       )}
     </>
   );

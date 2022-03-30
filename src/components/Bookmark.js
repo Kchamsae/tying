@@ -77,23 +77,25 @@ const Bookmark = (props) => {
 
 const BookMarkButton = styled.div`
     position: absolute;
-    top: -17px;
-    right: 30px;
+    top: -0.89vw;
+    right: 1.56vw;
     height: min-content;
     cursor: pointer;
 
     svg {
       fill: ${props => props.on ? '#FF2E00' : '#d8d8d8'};
       transition: 0.3s;
+      width: 1.41vw;
+      height: 1.82vw;
     }
 
     .bookmark-innershadow {
       position: absolute;
       top: 0px;
       left: 0px;
-      width: 27px;
-      height: 35px;
-      border-radius: 4px;
+      width: 1.41vw;
+      height: 1.82vw;
+      border-radius: 0.21vw;
       box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
     }
 `;

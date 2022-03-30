@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const MyPageWrapper = styled.div`
 width: 100%;
-height: calc(100vh - 105px);
+height: calc(100vh - 5.47vw);
 overflow: hidden;
 display: flex;
 flex-direction: column;
 `;
 
 const MyPageTop = styled.div`
-padding-left: 80px;
+padding-left: 4.17vw;
 box-sizing: border-box;
 flex: 22.47% 0 0;
 display: flex;
@@ -22,10 +22,10 @@ display: flex;
 align-items: center;
 
 >h3{
-  padding-left: 34px;
+  padding-left: 1.77vw;
   font-family: 'Noto Sans KR';
   font-weight: 500;
-  font-size: 32px;
+  font-size: 1.67vw;
   letter-spacing: -0.015em;
   margin: 0;
   position: relative;
@@ -34,21 +34,21 @@ align-items: center;
     content: '';
     display: block;
     position: absolute;
-    width: 11px;
-    height: 48px;
+    width: 0.57vw;
+    height: 2.5vw;
     left: 0;
-    top: calc(50% - 22px);
+    top: calc(50% - 1.15vw);
 
     background: #FF2E00;
-    border-radius: 2px;
+    border-radius: 0.105vw;
   }
 }
 
 >div{
-  margin-left: 38px;
+  margin-left: 1.98vw;
 
   font-family: 'Noto Sans KR';
-  font-size: 20px;
+  font-size: 1.04vw;
   font-weight: 500;
   letter-spacing: -0.015em;
   color: #878889;
@@ -65,11 +65,11 @@ align-items: center;
     display: block;
     position: absolute;
     width: 0;
-    height: 20px;
-    left: -20px;
-    top: calc(50% - 9px);
+    height: 1.04vw;
+    left: -1.04vw;
+    top: calc(50% - 0.47vw);
 
-    border-right: 2px solid #636366;
+    border-right: 0.105vw solid #636366;
   }
 }
 
@@ -82,46 +82,46 @@ align-items: center;
 `;
 
 const TabMenu = styled.div`
-height: 50px;
-padding: 0 16px;
-border: 2px solid ${props => props.on ? '#000' : '#878889'};
-border-radius: 63px;
+height: 2.6vw;
+padding: 0 0.83vw;
+border: 0.105vw solid ${props => props.on ? '#000' : '#878889'};
+border-radius: 3.28vw;
 display: flex;
 align-items: center;
 transition: 0.3s;
 
 font-family: 'Noto Sans KR';
 font-weight: ${props => props.on ? '600' : '500'};
-font-size: 22px;
+font-size: 1.15vw;
 letter-spacing: -0.015em;
 
 color: ${props => props.on ? '#000' : '#878889'};
-margin-right: 12px;
+margin-right: 0.63vw;
 cursor: pointer;
 `;
 
 const MyPageBody = styled.div`
-padding-top: 49px;
+padding-top: 2.55vw;
 box-sizing: border-box;
 flex: 77.53% 0 0;
 `;
 
 const MyPageTitleWord = styled.div`
   display: flex;
-  padding-left: 77px;
+  padding-left: 4.01vw;
   > h3{
     margin: 0;
     font-family: 'Noto Sans KR';
     font-weight: 600;
-    font-size: 30px;
+    font-size: 1.56vw;
     letter-spacing: -0.015em;
   }
 
   > div{
-    margin: 5px 0 0 20px;
+    margin: 0.26vw 0 0 1.04vw;
     font-family: 'Noto Sans KR';
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.04vw;
     display: flex;
     align-items: center;
     letter-spacing: -0.015em;
@@ -129,9 +129,9 @@ const MyPageTitleWord = styled.div`
     cursor: pointer;
 
     >svg{
-      margin: 2px 0 0 7px ;
-      width: 11px;
-      height: 16px
+      margin: 0.105vw 0 0 0.36vw ;
+      width: 0.57vw;
+      height: 0.83vw
     }
   }
 `;
@@ -139,21 +139,21 @@ const MyPageTitleWord = styled.div`
 const MyPageTitleCertificate = styled(MyPageTitleWord)`
     >div{
         font-weight: 600;
-        font-size: 30px;
+        font-size: 1.56vw;
         letter-spacing: -0.015em;
         color: #000;
-        margin : 0 0 0 40px;
+        margin : 0 0 0 2.08vw;
         position: relative;
 
         &::before{
             content: '';
             display: block;
-            width: 2px;
-            height: 34px;
+            width: 0.105vw;
+            height: 1.77vw;
             position: absolute;
-            left: -20px;
-            top: calc(50% - 15px);
-            border-radius: 1px;
+            left: -1.04vw;
+            top: calc(50% - 0.78vw);
+            border-radius: 0.05vw;
             background-color: #636366;
         }
     }

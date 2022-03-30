@@ -2,11 +2,11 @@ import styled, { css } from 'styled-components';
 import { ModalScriptTitle } from '../CertificateModal/style';
 
 const CertificateMini= styled.div`
-  width: 579px;
-  height: 356px;
+  width: 30.16vw;
+  height: 18.54vw;
   background: #E2E2E2;
-  border-radius: 20px;
-  padding: 27px 33px;
+  border-radius: 1.04vw;
+  padding: 1.41vw 1.72vw;
   box-sizing: border-box;
 `;
 
@@ -17,15 +17,15 @@ const MiniTop = styled.div`
 
 const MiniTitle = styled(ModalScriptTitle)`
   -webkit-line-clamp: 1;
-  width: 360px;
-  margin-top: 7px;
+  width: 18.75vw;
+  margin-top: 0.36vw;
 `;
 
 const MiniType = styled.h2`
-  margin: -5px 0 0 22px;
+  margin: -0.26vw 0 0 1.15vw;
   font-weight: 400;
   font-family: 'Paytone One';
-  font-size: 60px;
+  font-size: 3.13vw;
   letter-spacing: -0.015em;
   position: relative;
 
@@ -33,24 +33,24 @@ const MiniType = styled.h2`
     content: '';
     display: block;
     position: absolute;
-    width: 11px;
-    height: 41px;
-    left: -22px;
-    top: calc(50% - 25px);
+    width: 0.57vw;
+    height: 2.14vw;
+    left: -1.15vw;
+    top: calc(50% - 1.3vw);
 
     background: #FF2E00;
-    border-radius: 2px;
+    border-radius: 0.1vw;
   }
 `;
 
 const MiniBody = styled.div`
-  margin: 2px 0 0 10px;
-  padding-left: 28px;
+  margin: 2px 0 0 0.52vw;
+  padding-left: 1.46vw;
   box-sizing: border-box;
-  width: 409px;
-  height: 106px;
+  width: 21.3vw;
+  height: 5.52vw;
   background: #EEEEEE;
-  border-radius: 20px;
+  border-radius: 1.04vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +58,7 @@ const MiniBody = styled.div`
 
   >p{
     margin: 0;
-    font-size: 16px;
+    font-size: 0.83vw;
     letter-spacing: -0.015em;
     color: #878889;
   }
@@ -66,26 +66,26 @@ const MiniBody = styled.div`
     margin: 0;
     /* font-family: 'Noto Sans KR'; */
     font-weight: 700;
-    font-size: 27px;
+    font-size: 1.41vw;
     letter-spacing: -0.015em;
   }
 `;
 const MiniGraphic = styled.div`
-  width: 149px;
-  height: 212px;
+  width: 7.76vw;
+  height: 11.04vw;
   background-image: url('/static/certificate_mini.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: absolute;
-  top: -36px;
-  right: -63px;
+  top: -1.88vw;
+  right: -3.28vw;
 `;
 
 const MiniDownload = styled.p`
-  margin: 35px 0 0 0;
+  margin: 1.82vw 0 0 0;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.04vw;
   letter-spacing: -0.015em;
   color: #707070;
   display: flex;
@@ -94,8 +94,8 @@ const MiniDownload = styled.p`
 
   >svg{
     width: 10px;
-    height: 15px;
-    margin-left: 7px;
+    height: 0.78vw;
+    margin-left: 0.36vw;
   }
 `;
 

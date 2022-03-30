@@ -380,9 +380,9 @@ const ScriptFiltering = () => {
 };
 
 const FilteringWrapper = styled.div`
-  width: 1775px;
-  height: 745px;
-  margin: 26px auto 0;
+  width: 92.45vw;
+  height: 38.8vw;
+  margin: 1.35vw auto 0;
   display: flex;
   justify-content: space-between;
 
@@ -390,31 +390,31 @@ const FilteringWrapper = styled.div`
     flex: 33.1% 0 0;
     background-color: #f0f0f0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.13);
-    border-radius: 46px;
+    border-radius: 2.4vw;
     position: relative;
 
     .filtering-title {
       position: absolute;
-      top: -26.5px;
-      left: calc(50% - 235px);
-      width: 470px;
-      height: 53px;
+      top: -1.38vw;
+      left: calc(50% - 12.24vw);
+      width: 24.48vw;
+      height: 2.76vw;
       background: #000000;
       box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.1);
-      border-radius: 30px;
+      border-radius: 1.56vw;
       color: #ffffff;
       display: flex;
       align-items: center;
 
       > h2 {
-        margin: 0 0 5px 0;
+        margin: 0 0 0.26vw 0;
         flex: 43.8% 0 0;
         display: flex;
         justify-content: center;
         align-items: center;
         width: max-content;
         font-family: 'Paytone One';
-        font-size: 30px;
+        font-size: 1.56vw;
         font-weight: 400;
         letter-spacing: -0.015em;
         position: relative;
@@ -422,21 +422,21 @@ const FilteringWrapper = styled.div`
         &:before {
           content: '';
           display: block;
-          height: 20px;
-          border-right: 1px solid #f1f1f1;
+          height: 1.04vw;
+          border-right: 0.05vw solid #f1f1f1;
           position: absolute;
           right: 0;
-          top: calc(50% - 6px);
+          top: calc(50% - 0.31vw);
         }
       }
       > p {
-        padding-left: 10px;
+        padding-left: 0.52vw;
         box-sizing: border-box;
         flex: 56.2% 0 0;
         width: max-content;
         font-family: 'Noto Sans KR';
         font-weight: 500;
-        font-size: 16px;
+        font-size: 0.83vw;
         letter-spacing: -0.015em;
         color: #f1f1f1;
       }
@@ -445,19 +445,19 @@ const FilteringWrapper = styled.div`
     .filtering-left-inner {
       display: flex;
       flex-direction: column;
-      padding: 67px 52px 0;
+      padding: 3.49vw 2.71vw 0;
       box-sizing: border-box;
       ul {
         list-style: none;
-        margin: 6px 0 0 0;
+        margin: 0.31vw 0 0 0;
         padding: 0;
         li {
           font-weight: 500;
-          font-size: 18px;
-          line-height: 25px;
+          font-size: 0.94vw;
+          line-height: 1.3vw;
           letter-spacing: -0.015em;
           color: #878889;
-          padding: 5.5px 0;
+          padding: 0.29vw 0;
           &.filter-checked span {
             color: #ff2e00;
           }
@@ -470,13 +470,13 @@ const FilteringWrapper = styled.div`
       .filtering-box {
         width: 100%;
         display: flex;
-        margin-bottom: 19px;
+        margin-bottom: 0.99vw;
         flex-direction: column;
 
         .filtering-box-title {
-          padding-left: 3px;
+          padding-left: 0.16vw;
           font-weight: 700;
-          font-size: 20px;
+          font-size: 1.04vw;
           letter-spacing: -0.015em;
           color: #242424;
         }
@@ -487,9 +487,9 @@ const FilteringWrapper = styled.div`
           > div {
             width: 50%;
             > div {
-              padding-left: 3px;
+              padding-left: 0.16vw;
               font-weight: 700;
-              font-size: 20px;
+              font-size: 1.04vw;
               letter-spacing: -0.015em;
               color: #242424;
             }
@@ -497,13 +497,13 @@ const FilteringWrapper = styled.div`
           &:before {
             content: '';
             display: block;
-            width: 488px;
-            height: 2px;
+            width: 25.42vw;
+            height: 0.1vw;
             background-color: #c4c4c4;
-            border-radius: 1px;
+            border-radius: 0.05vw;
             position: absolute;
-            bottom: -7px;
-            left: calc(50% - 244px);
+            bottom: -0.36vw;
+            left: calc(50% - 12.71vw);
           }
         }
 
@@ -523,39 +523,39 @@ const FilteringWrapper = styled.div`
           &:before {
             content: '';
             display: block;
-            width: 488px;
-            height: 2px;
-            border-radius: 1px;
+            width: 25.42vw;
+            height: 0.105vw;
+            border-radius: 0.05vw;
             background-color: #c4c4c4;
             position: absolute;
-            top: -14px;
-            left: calc(50% - 244px);
+            top: -0.73vw;
+            left: calc(50% - 12.71vw);
           }
         }
         &:last-of-type {
-          margin-top: 36px;
+          margin-top: 1.88vw;
           .filtering-saved-check {
             display: flex;
             align-items: center;
 
             font-family: 'Noto Sans KR';
             font-weight: 600;
-            font-size: 20px;
-            line-height: 27px;
+            font-size: 1.04vw;
+            line-height: 1.41vw;
             display: flex;
             align-items: center;
             letter-spacing: -0.015em;
             color: #878889;
 
             .check-box {
-              width: 38px;
-              height: 38px;
+              width: 1.98vw;
+              height: 1.98vw;
               background: #d2d2d2;
-              border-radius: 5px;
+              border-radius: 0.26vw;
               display: flex;
               justify-content: center;
               align-items: center;
-              margin-right: 12px;
+              margin-right: 0.63vw;
               cursor: pointer;
             }
           }
@@ -564,20 +564,20 @@ const FilteringWrapper = styled.div`
     }
     .filtering-complete-button {
       font-weight: 600;
-      font-size: 20px;
+      font-size: 1.04vw;
       display: flex;
       align-items: center;
       justify-content: center;
       letter-spacing: -0.015em;
       color: #878889;
 
-      width: 105px;
-      height: 47px;
-      border: 2px solid #878889;
-      border-radius: 63px;
+      width: 5.47vw;
+      height: 2.45vw;
+      border: 0.105vw solid #878889;
+      border-radius: 3.28vw;
       position: absolute;
-      bottom: 35px;
-      right: 35px;
+      bottom: 1.82vw;
+      right: 1.82vw;
       cursor: pointer;
       transition: 0.3s;
 
@@ -589,26 +589,26 @@ const FilteringWrapper = styled.div`
 
     .filtering-reset-button {
       font-weight: 600;
-      font-size: 20px;
+      font-size: 1.04vw;
       display: flex;
       align-items: center;
       justify-content: center;
       letter-spacing: -0.015em;
       color: #fff;
 
-      width: 105px;
-      height: 47px;
+      width: 5.47vw;
+      height: 2.45vw;
       background-color: #636366;
-      border-radius: 63px;
+      border-radius: 3.28vw;
       position: absolute;
-      bottom: 35px;
-      right: 35px;
+      bottom: 1.82vw;
+      right: 1.82vw;
       cursor: pointer;
       transition: 0.3s;
 
       > svg {
-        width: 16px;
-        height: 19px;
+        width: 0.83vw;
+        height: 0.99vw;
       }
 
       &:hover {
@@ -618,15 +618,15 @@ const FilteringWrapper = styled.div`
   }
 
   .filtering-right {
-    width: 1158px;
+    width: 60.31vw;
     overflow: auto;
 
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 0.31vw;
     }
     &::-webkit-scrollbar-thumb {
       background-color: #000;
-      border-radius: 3px;
+      border-radius: 0.16vw;
     }
     &::-webkit-scrollbar-track {
       background-color: transparent;
@@ -634,16 +634,16 @@ const FilteringWrapper = styled.div`
 
     .filtering-result-none {
       width: max-content;
-      margin: 20px auto;
+      margin: 1.04vw auto;
       font-family: 'Noto Sans KR';
-      font-size: 20px;
+      font-size: 1.04vw;
       font-weight: 600;
     }
     .filtering-result-sentence {
       width: max-content;
       margin: 0 auto;
       font-family: 'Noto Sans KR';
-      font-size: 14px;
+      font-size: 0.73vw;
       font-weight: 300;
     }
   }
@@ -652,10 +652,10 @@ const FilteringWrapper = styled.div`
 const FilteringBox = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 19px;
+  margin-bottom: 0.99vw;
   flex-direction: column;
 
-  ${props=>props.last && 'margin-top: 36px'};
+  ${props=>props.last && 'margin-top: 1.88vw'};
 `;
 const SavedCheck = styled.div`
   display: flex;
@@ -663,24 +663,27 @@ const SavedCheck = styled.div`
 
   font-family: 'Noto Sans KR';
   font-weight: 600;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: 1.04vw;
+  line-height: 1.41vw;
   display: flex;
   align-items: center;
   letter-spacing: -0.015em;
   color: #878889;
 `;
 const CheckBox = styled.div`
-  width: 38px;
-  height: 38px;
+  width: 1.98vw;
+  height: 1.98vw;
   background: #d2d2d2;
-  border-radius: 5px;
+  border-radius: 0.26vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 12px;
+  margin-right: 0.63vw;
   cursor: pointer;
-
+  >svg{
+    width: 1.15vw;
+    height: 0.83vw;
+  }
   >svg path{
     transition: 0.3s;
     stroke: ${props => props.on ? '#000' : '#fff'};
