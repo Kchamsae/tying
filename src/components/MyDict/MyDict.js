@@ -4,10 +4,6 @@ import { actionCreators as wordActions } from '../../redux/modules/word';
 
 import styled from 'styled-components';
 import { history } from './../../redux/configureStore';
-<<<<<<< HEAD
-
-=======
->>>>>>> c1407dc7152db5561e86e66a099461f9ea37a0c9
 
 const MyDict = (props) => {
   const dispatch = useDispatch();
