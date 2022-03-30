@@ -172,7 +172,7 @@ const Calendar = () => {
                 d='M2 2L13 13L24 2'
                 stroke='black'
                 stroke-width='3'
-                stroke-linecap='round'
+                strokeLinecap='round'
               />
             </svg>
           </div>

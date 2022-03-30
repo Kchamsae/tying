@@ -49,7 +49,7 @@ const MyAllDictList = () => {
           </SentenceSection>
         </ListHeader>
         {
-          saveDict.map((a,i)=>{
+          saveDict?.map((a,i)=>{
             return(
               <MyAllDictItem key={i} {...a}/>
             )
@@ -112,10 +112,10 @@ const MyAllDictItem = (props) => {
 const PrevPage = styled.div`
   font-family: 'Noto Sans KR';
   font-weight: 400;
-  font-size: 22px;
+  font-size: 1.15vw;
   color: #878889;
-  margin-left: 70px;
-  width: 127px;
+  margin-left: 3.65vw;
+  width: 6.61vw;
 
   display: flex;
   justify-content: space-between;
@@ -125,53 +125,53 @@ const PrevPage = styled.div`
 
   >svg{
     transform: rotate(180deg);
-    width: 11px;
-    height: 16px;
-    margin-left: 5px;
+    width: 0.57vw;
+    height: 0.83vw;
+    margin-left: 0.26vw;
   }
 `;
 
 const AllDictList = styled.div`
-  width: 1659px;
-  margin: 40px auto;
+  width: 86.41vw;
+  margin: 2.08vw auto;
   position: relative;
-  padding-bottom: 40px;
+  padding-bottom: 2.08vw;
 
   &:before{
     content: '';
     display: block;
-    height: calc(100% - 40px);
-    border-right: 2px solid #D2D2D2;
+    height: calc(100% - 2.08vw);
+    border-right: 0.105vw solid #D2D2D2;
     position: absolute;
-    left: calc(11.93% - 2px);
+    left: calc(11.93% - 0.105vw);
     top: 0;
   }
 
   &:after{
     content: '';
     display: block;
-    height: calc(100% - 40px);
-    border-right: 2px solid #D2D2D2;
+    height: calc(100% - 2.08vw);
+    border-right: 0.105vw solid #D2D2D2;
     position: absolute;
-    left: calc(11.93% + 15.61% - 2px);
+    left: calc(11.93% + 15.61% - 0.1vw);
     top: 0;
   }
 `;
 
 const ListHeader = styled.div`
   display: flex;
-  height: 56px;
-  border-bottom: 2px solid #D2D2D2;
+  height: 2.92vw;
+  border-bottom: 0.105vw solid #D2D2D2;
 `;
 const WordSection = styled.div`
   flex: 11.93% 0 1;
   display: flex;
-  padding-left: 22px;
+  padding-left: 1.15vw;
   box-sizing: border-box;
   
-  padding-top: 22px;
+  padding-top: 1.15vw;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.04vw;
   letter-spacing: -0.015em;
   
   ${props=>{
@@ -182,7 +182,7 @@ const WordSection = styled.div`
           align-items: center;
           font-family: 'Noto Sans KR';
           font-weight: 500;
-          font-size: 20px;
+          font-size: 1.04vw;
           color: #878889;
         }
       `;
@@ -190,7 +190,7 @@ const WordSection = styled.div`
   }}
 
   > div{
-    margin-left: 5px;
+    margin-left: 0.26vw;
   }
 
   >div>div{
@@ -204,14 +204,14 @@ const MeaningSection = styled(WordSection)`
   flex: 15.61% 0 1;
   font-family: 'Noto Sans KR';
   font-weight: 500;
-  font-size: 18px;
+  font-size: 0.94vw;
   flex-direction: ${props => props.header ? 'row' : 'column'};
 `;
 const SentenceSection = styled(WordSection)`
   flex: 72.46% 0 1;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: 1.04vw;
+  line-height: 1.41vw;
   
   ${props => !props.header && 'padding-right: 30px; padding-bottom: 22px; display: block;'};
   >div{
@@ -225,10 +225,10 @@ const SentenceSection = styled(WordSection)`
 `;
 
 const ListItem = styled(ListHeader)`
-  height: 99px;
+  height: 5.16vw;
 `;
 const ListFooter = styled(ListHeader)`
-  height: 51px;
+  height: 2.66vw;
   border: 0;
 `;
 export default MyAllDictList;

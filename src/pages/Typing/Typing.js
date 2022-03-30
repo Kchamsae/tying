@@ -300,33 +300,48 @@ function Typing() {
     'Paired Choice',
     'Multiple Choice',
     'Good Idea',
+    'All'
   ];
   const ielts_small = [
-    'Agree / Disagree',
+    'Agree / Disagree',
     'Both views',
     'Advantage / Disadvantage',
     'Problem & Solution',
+    'All'
   ];
   const article_small = [
     'The New York Times',
     'National Geographic',
     'The Korea Times',
+    'All'
   ];
 
   const moveScript = (e) => {
-    const _small_category = e.target.innerText
-      .split('')
-      .map((a) => (a === '/' ? (a = '%2F') : a))
-      .join('');
-    dispatch(
-      scriptActions.randomCategoryScriptDB(
-        script_data?.scriptType,
-        _small_category
-      )
-    ).then((res) => {
-      onRestart();
-      history.replace(`/typing/${res.script_id}`);
-    });
+    if(e.target.innerText === 'All'){
+      dispatch(
+        scriptActions.randomCategoryScriptDB(
+          script_data?.scriptType,
+          'all',
+          true
+        )
+      ).then((res) => {
+        window.location.replace(`/typing/${res}`);
+      });
+    } else{
+      const _small_category = e.target.innerText
+        .split('')
+        .map((a) => (a === '/' ? (a = '%2F') : a))
+        .join('');
+      dispatch(
+        scriptActions.randomCategoryScriptDB(
+          script_data?.scriptType,
+          _small_category,
+          true
+        )
+      ).then((res) => {
+        window.location.replace(`/typing/${res}`);
+      });
+    }
   };
 
   const finishScript = () => {

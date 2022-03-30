@@ -65,14 +65,14 @@ const SliderWrapper = styled.div`
         display: flex;
         justify-content: space-between;
         width: 100%;
-        padding: 0 70px;
+        padding: 0 3.65vw;
         box-sizing: border-box;
         position: fixed;
         left: 0;
-        top: calc(50% - 23px);
+        top: calc(50% - 1.2vw);
         > svg{
-            width: 47px;
-            height: 46px;
+            width: 2.45vw;
+            height: 2.4vw;
             cursor: pointer;
         }
         > svg:first-of-type{
@@ -85,11 +85,11 @@ const SliderOff = styled.div`
     cursor: pointer;
     position: fixed;
     z-index: 11;
-    top: 44px;
-    right: 44px;
+    top: 2.29vw;
+    right: 2.29vw;
     >svg{
-        width: 30px;
-        height: 30px;
+        width: 1.56vw;
+        height: 1.56vw;
     }
 `;
 
