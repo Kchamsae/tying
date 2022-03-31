@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
 import { apis } from '../shared/apis';
 import { idCheck, nicknameCheck, pwdCheck } from '../shared/signupRegex';
 import { alertNew } from '../shared/alert';
+import ReactGA from "react-ga";
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -131,6 +131,11 @@ const Signup = (props) => {
         });
       }
     })
+    ReactGA.event({
+      category: "Button",
+      action: "User Signup",
+      label: "Login",
+    });
   };
 
   return (
