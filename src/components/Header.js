@@ -8,6 +8,7 @@ import NicknameModal from "./NicknameModal/NicknameModal";
 import Swal from "sweetalert2";
 import '../shared/alert.css';
 import { alert, alertNew } from "../shared/alert";
+import ReactGA from "react-ga";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -103,6 +104,11 @@ const Header = (props) => {
                   } else {
                     history.push("/filtering");
                   }
+                  ReactGA.event({
+                    category: "Button",
+                    action: "Script Filtering",
+                    label: "Script Filtering",
+                  });
                 }}
               >
                 스크립트 선택
@@ -117,6 +123,11 @@ const Header = (props) => {
                 } else {
                   history.push("/search");
                 }
+                ReactGA.event({
+                  category: "Button",
+                  action: "Script Search",
+                  label: "Search",
+                });
               }}
             >
               <svg

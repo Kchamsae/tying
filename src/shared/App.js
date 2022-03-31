@@ -1,31 +1,33 @@
 import React from 'react';
 import './App.css';
-
-import Header from '../components/Header';
-import Main from '../pages/Main';
-import Typing from './../pages/Typing/Typing';
-import MyPage from '../pages/MyPage/MyPage';
-import MyAllDictList from '../components/MyDict/MyAllDictList';
-
 import styled from 'styled-components';
+
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import { history } from '../redux/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+
 import { getCookie } from './Cookie';
-import KakaoRedirect from '../pages/Kakaoredirect';
 import FeedbackButton from '../components/FeedbackButton';
+import ScrollToTop from '../components/ScrollToTop';
+import Header from '../components/Header';
+import MyAllDictList from '../components/MyDict/MyAllDictList';
+import Analytics from '../components/Analytics';
+import KakaoRedirect from '../pages/Kakaoredirect';
 import ScriptFiltering from '../pages/ScriptFiltering';
 import Search from '../pages/Search';
-import ScrollToTop from '../components/ScrollToTop';
 import NotFound from '../pages/NotFound';
+import Main from '../pages/Main';
+import Typing from './../pages/Typing/Typing';
+import MyPage from '../pages/MyPage/MyPage';
 
 function App() {
   const dispatch = useDispatch();
   const token = getCookie('token');
   const is_login = useSelector((state) => state.user.is_login);
   console.log('is_login : ', is_login);
+
 
   React.useEffect(() => {
     // if (!token) {
@@ -42,6 +44,7 @@ function App() {
         <AppWrapper>
           <Header />
           <ScrollToTop />
+          <Analytics />
           <Switch>
             <Route exact path='/' component={Main} />
             <Route exact path='/api/kakao/callback' component={KakaoRedirect} />

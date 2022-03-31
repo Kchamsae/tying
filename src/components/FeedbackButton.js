@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import ReactGA from "react-ga";
 
 const FeedbackButton = (props) => {
   return (
-    <FeedbackBtn href='https://docs.google.com/forms/d/e/1FAIpQLSeR3ohxnyR_1sGIVmpMhkkXTt3gy2MFbMdR4ZTzMgNCp17DYw/viewform' target='_blank'>
+    <FeedbackBtn href='https://docs.google.com/forms/d/e/1FAIpQLSeR3ohxnyR_1sGIVmpMhkkXTt3gy2MFbMdR4ZTzMgNCp17DYw/viewform' target='_blank'
+    onClick={() => {
+      ReactGA.event({
+        category: "Button",
+        action: "Feedback",
+        label: "Feedback",
+      });
+    }}>
       <svg
         width='30'
         height='24'
