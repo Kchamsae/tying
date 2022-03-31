@@ -141,7 +141,7 @@ const DictItem = (props) => {
 
   const editMeaning = () => {
     if (editMeaningRef.current.value === '') {
-      alertNew('단어 뜻을 입력해주세요!');
+      alertNewWhite('단어 뜻을 입력해주세요!');
       return;
     }
     dispatch(
@@ -162,13 +162,13 @@ const DictItem = (props) => {
   };
   const pushLike = (is_like) => {
     if (!is_login) {
-      alertNew('로그인 후 이용할 수 있습니다!',()=>{
+      alertNewWhite('로그인 후 이용할 수 있습니다!',()=>{
         dispatch(userActions.setLoginModal(true));
       });
       return;
     }
     if (props.nickname === user.nickname) {
-      alertNew('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
+      alertNewWhite('본인이 추가한 뜻에는 좋아요를 누를 수 없습니다!');
       return;
     }
 
@@ -180,13 +180,13 @@ const DictItem = (props) => {
   };
   const pushDislike = (is_dislike) => {
     if (!is_login) {
-      alertNew('로그인 후 이용할 수 있습니다!',()=>{
+      alertNewWhite('로그인 후 이용할 수 있습니다!',()=>{
         dispatch(userActions.setLoginModal(true));
       });
       return;
     }
     if (props.nickname === user.nickname) {
-      alertNew('본인이 추가한 뜻에는 싫어요를 누를 수 없습니다!');
+      alertNewWhite('본인이 추가한 뜻에는 싫어요를 누를 수 없습니다!');
       return;
     }
     if (!is_dislike) {
