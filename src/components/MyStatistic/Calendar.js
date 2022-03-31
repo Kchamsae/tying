@@ -21,7 +21,7 @@ const Calendar = () => {
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [isShow, setIsShow] = useState(false);
 
@@ -79,14 +79,14 @@ const Calendar = () => {
 
   const recordLoad = useSelector((state) => state.record.record_list2);
 
-  const _selectedDate = new Date(
+  const _selectedDate = selectedDate !== null ? new Date(
     selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
-  )
-    .toISOString()
-    .split('T');
+  ).toISOString().split('T') : '';
 
   function findIdx(el) {
-    if (el._id === _selectedDate[0].toString()) return true;
+    if (selectedDate !== null){
+      if (el._id === _selectedDate[0].toString()) return true;
+    }
   }
 
   let _idx = recordLoad.findIndex(findIdx);
@@ -102,7 +102,7 @@ const Calendar = () => {
       <div>
         <div className='renderheader-top'>
           {format(currentMonth, dateFormat) +
-            '년' +
+            '년' + " " +
             `${baseMonth}월 ${weekOfMonth}주차`}
           <div
             className='down-btn'
@@ -132,10 +132,9 @@ const Calendar = () => {
             <div>
               <div>
                 {format(currentMonth, dateFormat) +
-                  ' ' +
                   '년' +
                   ' ' +
-                  `${baseMonth}월 ${weekOfMonth} 주차`}
+                  `${baseMonth}월 ${weekOfMonth}주차`}
               </div>
             </div>
             <div>
@@ -224,9 +223,9 @@ const Calendar = () => {
         </div>
         <div
           style={{
-            width: '565px',
+            width: '29.43vw',
             borderBottom: '2px solid #D2D2D2',
-            margin: '20px 0px',
+            margin: '1.04vw 0px',
           }}
         ></div>
         <div
@@ -313,9 +312,7 @@ const Calendar = () => {
         const cloneDay = day;
         days.push(
           <div
-            className={`col cell ${
-              isSameDay(day, selectedDate) ? 'selected' : ''
-            }`}
+            className={`col cell ${selectedDate===null ? '' : (isSameDay(day, selectedDate) ? 'selected' : '')}`}
             key={day}
             onClick={() => {
               const dayStr = format(cloneDay, 'ccc dd MM yy');
@@ -347,7 +344,7 @@ const Calendar = () => {
 
     const options = {
       backgroundColor: 'black',
-      maxBarThickness: 20,
+      barPercentage: '0.2',
       plugins: {
         legend: {
           display: false,
@@ -378,6 +375,15 @@ const Calendar = () => {
             tickLength: 4,
           },
           axis: 'x',
+          ticks: {
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 75);
+              return {
+                  size: size
+              };
+            },
+          },
         },
         y: {
           grid: {
@@ -387,15 +393,29 @@ const Calendar = () => {
             scale.max = scale.max * 1.2;
           },
           axis: 'y',
+          ticks: {
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 75);
+              return {
+                  size: size
+              };
+            },
+          },
           display: true,
           position: 'right',
           title: {
             display: true,
             color: 'black',
-            font: {
-              size: 16,
-              family: "'Noto Sans KR",
-              weight: 300,
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 52);
+
+              return {
+                  family: "'Noto Sans KR",
+                  weight: 300,
+                  size: size
+              };
             },
             text: '글자 수(백)',
           },
@@ -421,20 +441,26 @@ const Calendar = () => {
         {
           type: 'bar',
           label: '주간 타이핑 수',
-          backgroundColor: '#BDBDBD',
           plugins: [plugin],
           data: fakeData.map((a, i) => {
             const target = recordLoad.find((b, j) => {
               const num =
-                new Date(b._id).getDay() === 0
-                  ? 6
-                  : new Date(b._id).getDay() - 1;
+              new Date(b._id).getDay() === 0
+              ? 6
+              : new Date(b._id).getDay() - 1;
               if (num === i) {
                 return b;
               }
             });
             if (target) {
               return target.total_typingCnt / 100;
+            }
+            return a;
+          }),
+          backgroundColor: new Array(7).fill('#BDBDBD').map((a,i)=>{
+            const day_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(date.split(' ')[0]);
+            if(i === day_en){
+              return '#FF2E00';
             }
             return a;
           }),
@@ -445,11 +471,13 @@ const Calendar = () => {
     return (
       <Container>
         <div>
-          <Chart type='bar' data={recordTyping} options={options} />
+          <Chart type='bar' data={recordTyping} options={options}/>
         </div>
       </Container>
     );
   };
+
+  
 
   const renderTimeChart = () => {
     const labels = ['월', '화', '수', '목', '금', '토', '일'];
@@ -457,6 +485,7 @@ const Calendar = () => {
     const fakeData = [0, 0, 0, 0, 0, 0, 0];
 
     const options = {
+      barPercentage: '0.2',
       backgroundColor: 'black',
       maxBarThickness: 20,
       plugins: {
@@ -489,6 +518,15 @@ const Calendar = () => {
             tickLength: 4,
           },
           axis: 'x',
+          ticks: {
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 75);
+              return {
+                  size: size
+              };
+            },
+          },
         },
         y: {
           grid: {
@@ -498,15 +536,29 @@ const Calendar = () => {
             scale.max = scale.max * 1.2;
           },
           axis: 'y',
+          ticks: {
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 75);
+              return {
+                  size: size
+              };
+            },
+          },
           display: true,
           position: 'right',
           title: {
             display: true,
             color: 'black',
-            font: {
-              size: 16,
-              family: "'Noto Sans KR",
-              weight: 300,
+            font: function(context) {
+              let width = context.chart.width;
+              let size = Math.round(width / 52);
+
+              return {
+                  family: "'Noto Sans KR",
+                  weight: 300,
+                  size: size
+              };
             },
             text: '시간(분)',
           },
@@ -520,19 +572,25 @@ const Calendar = () => {
         {
           type: 'bar',
           label: '주간 타이핑 시간',
-          backgroundColor: '#BDBDBD',
           data: fakeData.map((a, i) => {
             const target = recordLoad.find((b, j) => {
               const num =
-                new Date(b._id).getDay() === 0
-                  ? 6
-                  : new Date(b._id).getDay() - 1;
+              new Date(b._id).getDay() === 0
+              ? 6
+              : new Date(b._id).getDay() - 1;
               if (num === i) {
                 return b;
               }
             });
             if (target) {
               return (target.total_duration / 60).toFixed(1);
+            }
+            return a;
+          }),
+          backgroundColor: new Array(7).fill('#BDBDBD').map((a,i)=>{
+            const day_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(date.split(' ')[0]);
+            if(i === day_en){
+              return '#FF2E00';
             }
             return a;
           }),
@@ -550,7 +608,7 @@ const Calendar = () => {
   };
 
   return (
-    <div style={{ display: 'flex', marginLeft: '100px' }}>
+    <div style={{ display: 'flex', marginLeft: '4.01vw' }}>
       <div style={{ width: '50%' }}>
         <div className='calendar'>
           {renderHeader()}
@@ -565,16 +623,16 @@ const Calendar = () => {
         </div>
         <div
           style={{
-            width: '565px',
-            borderBottom: '5px solid #D2D2D2',
-            margin: '20px 0px',
+            width: '29.43vw',
+            borderBottom: '0.26vw solid #D2D2D2',
+            margin: '1.04vw 0px',
           }}
         ></div>
         <div className='weekly-statics'>
           {tab === 'a' ? <React.Fragment>{renderData()}</React.Fragment> : ''}
         </div>
       </div>
-      <div style={{ width: '100%', height: '100%', marginLeft: '50px' }}>
+      <div style={{ width: '100%', height: '100%', marginLeft: '2.6vw' }}>
         <div>
           {chartTab === 'b' ? (
             <div id='b' className='chart-box'>
@@ -598,7 +656,7 @@ const Calendar = () => {
 
 const Container = styled.div`
   width: 90vw;
-  max-width: 900px;
+  max-width: 46.88vw;
 `;
 
 export default Calendar;
