@@ -6,6 +6,7 @@ import { history } from "../redux/configureStore";
 import { KAKAO_AUTH_URL } from '../shared/social/Kakao';
 import Signup from './Signup';
 import { alertNew } from '../shared/alert';
+import ReactGA from "react-ga";
 
 
 const Login = (props) => {
@@ -39,6 +40,11 @@ const Login = (props) => {
         dispatch(userActions.setLoginModal(false));
       }
     })
+    ReactGA.event({
+      category: "Button",
+      action: "User login",
+      label: "Login",
+    });
   };
 
   return (

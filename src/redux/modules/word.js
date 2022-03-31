@@ -200,7 +200,7 @@ const saveDictDB = (script_id, word, sentence) => {
         };
         console.log(doc);
         dispatch(saveDict(doc));
-        alert('나만의 단어장에 단어가 등록되었습니다.');
+        alertNewWhite('나만의 단어장에 단어가 등록되었습니다.');
       }
     } catch (err) {
       console.log(err);

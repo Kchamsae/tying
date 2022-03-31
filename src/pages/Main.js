@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
+import ReactGA from "react-ga";
 
 const Main = (props) => {
   const { history } = props;
@@ -117,6 +118,11 @@ const Main = (props) => {
       dispatch(scriptActions.randomCategoryScriptDB(category, 'all'));
       return;
     }
+    ReactGA.event({
+      category: "Button",
+      action: "User Random Start",
+      label: "Random Start",
+    });
   };
 
   return (

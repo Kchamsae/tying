@@ -1,5 +1,4 @@
 // 카카오 리다이렉트될 화면
-
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';

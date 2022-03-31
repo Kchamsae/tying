@@ -58,8 +58,8 @@ function Typing() {
 
   const [list_on, setListOn] = useState(false); // 카테고리 리스트 열기
   const [list_arrow_on, setListArrowOn] = useState(false); // 카테고리 리스트 아이콘
-  const [state_on, setStateOn] = useState(false); // 상태박스 리스트 열기
-  const [state_button_on, setStateButtonOn] = useState(false); // 상태박스 버튼
+  const [state_on, setStateOn] = useState(true); // 상태박스 리스트 열기
+  const [state_button_on, setStateButtonOn] = useState(true); // 상태박스 버튼
   const [save_phrase, setSavePhrase] = useState(true);
   const [save_phrase_ani, setSavePhraseAni] = useState(true);
 
