@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import {
-  format,
-  startOfWeek,
-  addDays,
-  isSameDay,
-  lastDayOfWeek,
-  getWeek,
-  addWeeks,
-  subWeeks,
-} from 'date-fns';
+// import {
+//   format,
+//   startOfWeek,
+//   addDays,
+//   isSameDay,
+//   lastDayOfWeek,
+//   getWeek,
+//   addWeeks,
+//   subWeeks,
+// } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as recordActions } from '../../redux/modules/record';
 import './styles.css';
 import styled from 'styled-components';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
+import dayjs from 'dayjs';
+
+var isoWeek = require('dayjs/plugin/isoWeek');
+dayjs.extend(isoWeek);
 
 const Calendar = () => {
   const dispatch = useDispatch();
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [currentWeek, setCurrentWeek] = useState(getWeek(currentMonth));
+  const [currentWeek, setCurrentWeek] = useState(
+    dayjs(currentMonth).isoWeek() + 1
+  );
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [isShow, setIsShow] = useState(false);
@@ -29,14 +35,14 @@ const Calendar = () => {
 
   const [tab, setTab] = useState('');
 
-  const dateStart = startOfWeek(currentMonth, { weekStartsOn: 0 }); // 27 일 00 : 00 : 00
+  const dateStart = dayjs(currentMonth).isoWeekday(1).$d; // startOfWeek 수정 27 일 00 : 00 : 00
   const _dateStart = new Date(
     dateStart.getTime() -
       dateStart.getTimezoneOffset() * 60000 +
       parseInt(86400000)
   ).toISOString();
 
-  const dateEnd = lastDayOfWeek(currentMonth, { weekStartsOn: 1 }); // 4월 2일 00 : 00 : 00
+  const dateEnd = dayjs(currentMonth).isoWeekday(7).$d; // 수정 4월 2일 00 : 00 : 00
   const _dateEnd = new Date(
     dateEnd.getTime() - dateEnd.getTimezoneOffset() * 60000 + parseInt(86400000)
   ).toISOString();
@@ -51,7 +57,8 @@ const Calendar = () => {
 
   const todayTest = aTest;
 
-  const baseDate = startOfWeek(todayTest, { weekStartsOn: 0 });
+  // const baseDate = startOfWeek(todayTest, { weekStartsOn: 0 });
+  const baseDate = dayjs(todayTest).isoWeekday(1).$d;
   const baseMonth = baseDate.getMonth() + 1;
   const baseDays = baseDate.getDate() + 1;
 
@@ -97,11 +104,11 @@ const Calendar = () => {
   };
 
   const renderHeader = () => {
-    const dateFormat = 'yyyy';
+    const dateFormat = 'YYYY';
     return (
       <div>
         <div className='renderheader-top'>
-          {format(currentMonth, dateFormat) +
+          {dayjs(currentMonth).format(dateFormat) +
             '년' +
             `${baseMonth}월 ${weekOfMonth}주차`}
           <div
@@ -131,7 +138,7 @@ const Calendar = () => {
           <div className='renderheader-box'>
             <div>
               <div>
-                {format(currentMonth, dateFormat) +
+                {dayjs(currentMonth).format(dateFormat) +
                   ' ' +
                   '년' +
                   ' ' +
@@ -272,12 +279,16 @@ const Calendar = () => {
 
   const changeWeekHandle = (btnType) => {
     if (btnType === 'prev') {
-      setCurrentMonth(subWeeks(currentMonth, 1));
-      setCurrentWeek(getWeek(subWeeks(currentMonth, 1)));
+      setCurrentMonth(dayjs(currentMonth).subtract(1, 'week').$d);
+      setCurrentWeek(
+        dayjs(dayjs(currentMonth).subtract(1, 'week').$d).isoWeek() + 1
+      );
     }
     if (btnType === 'next') {
-      setCurrentMonth(addWeeks(currentMonth, 1));
-      setCurrentWeek(getWeek(addWeeks(currentMonth, 1)));
+      setCurrentMonth(dayjs(currentMonth).add(1, 'week').$d);
+      setCurrentWeek(
+        dayjs(dayjs(currentMonth).add(1, 'week').$d).isoWeek() + 1
+      );
     }
   };
 
@@ -287,38 +298,38 @@ const Calendar = () => {
   };
 
   const renderDays = () => {
-    const dateFormat = 'EEE';
+    const dateFormat = 'ddd';
     const days = [];
-    let startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
+    let startDate = dayjs(currentMonth).isoWeekday(1).$d;
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className='col col-center' key={i}>
-          {format(addDays(startDate, i), dateFormat)}
+          {dayjs(startDate, i).add(7, 'day').format(dateFormat)}
         </div>
       );
     }
     return <div className='days row'>{days}</div>;
   };
   const renderCells = () => {
-    const startDate = startOfWeek(currentMonth, { weekStartsOn: 1 });
-    const endDate = lastDayOfWeek(currentMonth, { weekStartsOn: 1 });
-    const dateFormat = 'd';
+    const startDate = dayjs(currentMonth).isoWeekday(1).$d;
+    const endDate = dayjs(currentMonth).isoWeekday(7).$d;
+    const dateFormat = 'DD';
     const rows = [];
     let days = [];
     let day = startDate;
     let formattedDate = '';
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = format(day, dateFormat);
+        formattedDate = dayjs(day).format(dateFormat);
         const cloneDay = day;
         days.push(
           <div
             className={`col cell ${
-              isSameDay(day, selectedDate) ? 'selected' : ''
+              dayjs(day).isSame(selectedDate, 'd') ? 'selected' : ''
             }`}
             key={day}
             onClick={() => {
-              const dayStr = format(cloneDay, 'ccc dd MM yy');
+              const dayStr = dayjs(cloneDay).format('ddd DD MM YY');
               onDateClickHandle(cloneDay, dayStr);
             }}
           >
@@ -327,7 +338,8 @@ const Calendar = () => {
             </span>
           </div>
         );
-        day = addDays(day, 1);
+        day = dayjs(day).add(1, 'd').$d;
+        console.log(day);
       }
 
       rows.push(
