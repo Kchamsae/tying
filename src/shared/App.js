@@ -22,16 +22,6 @@ import Main from '../pages/Main';
 import Typing from './../pages/Typing/Typing';
 import MyPage from '../pages/MyPage/MyPage';
 
-// ReactGA.initialize("UA-12341234-1");
-// ReactGA.event({
-//   category: 'User',
-//   action: 'Created an Account'
-// });
-// ReactGA.exception({
-//   description: 'An error ocurred',
-//   fatal: true
-// });
-
 function App() {
   const dispatch = useDispatch();
   const token = getCookie('token');
