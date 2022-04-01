@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import Login from "./Login";
+import Login from "./Login/Login";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 import NicknameModal from "./NicknameModal/NicknameModal";
@@ -198,7 +198,8 @@ const HeaderWrapper = styled.div`
     align-items: center;
 
     .tying-logo svg {
-      width: 5.83vw;
+      width: 5.89vw;
+      height: 2.19vw;
       margin-left: 1.41vw;
       cursor: pointer;
     }

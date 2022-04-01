@@ -1,11 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { actionCreators as userActions } from '../redux/modules/user';
-import { apis } from '../shared/apis';
-import { idCheck, nicknameCheck, pwdCheck } from '../shared/signupRegex';
-import { alertNew } from '../shared/alert';
+import { actionCreators as userActions } from '../../redux/modules/user';
+import { apis } from '../../shared/apis';
+import { idCheck, nicknameCheck, pwdCheck } from '../../shared/signupRegex';
+import { alertNew } from '../../shared/alert';
 import ReactGA from "react-ga";
+import { 
+  SignupWrapper,
+  SignupTitle,
+  SignupFormWrapper,
+  SignupForm,
+  IdCheckers,
+  IdCheckersButton,
+  NicknameFormWrapper,
+  NicknameForm,
+  NicknameCheckers,
+  NicknameCheckersButton,
+  PwdForm,
+  PwdCheckForm,
+  SignupButton,
+} from './style';
 
 const Signup = (props) => {
   const dispatch = useDispatch();
@@ -141,7 +156,6 @@ const Signup = (props) => {
   return (
     <React.Fragment>
       {modals_state === 'signup' && (
-        // <ModalsBox>
           <SignupWrapper>
             <div className='white_block'>
               <div className='tying-welcome-logo'>
@@ -160,12 +174,12 @@ const Signup = (props) => {
                 </svg>
               </div>
 
-              <div className='signup-title'>
+              <SignupTitle>
                 <span>회원가입</span>
-              </div>
+              </SignupTitle>
 
-              <div className='signup-form-wrapper'>
-                <div className='signup-form'>
+              <SignupFormWrapper>
+                <SignupForm>
                   <input
                     type='id'
                     placeholder='아이디를 입력하세요.'
@@ -198,9 +212,9 @@ const Signup = (props) => {
                     사용할 수 있는 아이디입니다.
                   </p>
                   )}
-                </div>
+                </SignupForm>
 
-                <div className='id-checkers'>
+                <IdCheckers>
                   {id_checker === 1 && (
                     //사용 가능한 아이디인 경우 체크 아이콘으로 변경
                     <svg
@@ -260,18 +274,18 @@ const Signup = (props) => {
 
                   {id_checker === 3 && (
                     //중복확인 버튼
-                    <button
+                    <IdCheckersButton
                       disabled={id_check ? true : false}
                       onClick={idCheckF}
                     >
                       중복확인
-                    </button>
+                    </IdCheckersButton>
                   )}
-                </div>
-              </div>
+                </IdCheckers>
+              </SignupFormWrapper>
 
-              <div className='nickname-form-wrapper'>
-                <div className='nickname-form'>
+              <NicknameFormWrapper>
+                <NicknameForm>
                   <input
                     type='nickname'
                     placeholder='닉네임을 입력하세요.'
@@ -303,9 +317,9 @@ const Signup = (props) => {
                       사용할 수 있는 닉네임입니다.
                     </p>
                   )}
-                </div>
+                </NicknameForm>
 
-                <div className='nickname-checkers'>
+                <NicknameCheckers>
                   {nickname_checker === 4 && (
                     //사용 가능한 닉네임인 경우 체크 아이콘으로 변경
                     <svg
@@ -364,17 +378,17 @@ const Signup = (props) => {
 
                   {nickname_checker === 6 && (
                     //중복확인 버튼
-                    <button
+                    <NicknameCheckersButton
                       disabled={nickname_check ? true : false}
                       onClick={nicknameCheckF}
                     >
                       중복확인
-                    </button>
+                    </NicknameCheckersButton>
                   )}
-                </div>
-              </div>
+                </NicknameCheckers>
+              </NicknameFormWrapper>
 
-              <div className='pwd-form'>
+              <PwdForm>
                 <input
                   type='password'
                   placeholder='비밀번호를 입력하세요.'
@@ -391,9 +405,9 @@ const Signup = (props) => {
                 {pwd !== '' && pwdCheck(pwd) && (
                   <p className='correct-pwd'>올바른 비밀번호 형식입니다.</p>
                 )}
-              </div>
+              </PwdForm>
 
-              <div className='pwd-check-form'>
+              <PwdCheckForm>
                 <input
                   type='password'
                   placeholder='비밀번호를 다시 입력하세요.'
@@ -414,368 +428,17 @@ const Signup = (props) => {
                 {pwd_Check !== '' && pwdCheck(pwd_Check) && (
                   <p className='correct-pwd-check'>비밀번호가 일치합니다.</p>
                 )}
-              </div>
+              </PwdCheckForm>
 
-              <button className='signup-button' onClick={signup}>
+              <SignupButton className='signup-button' onClick={signup}>
                 회원가입
-              </button>
+              </SignupButton>
             </div>
           </SignupWrapper>
-        // </ModalsBox>
       )}
     </React.Fragment>
   );
 };
-
-
-const SignupWrapper = styled.div`
-  .tying-welcome-logo {
-    display: flex;
-    >svg{
-      width: 19.17vw;
-      height: 2.71vw;
-    }
-  }
-
-  .signup-title {
-    width: 11.61vw;
-    height: 1.82vw;
-    left: 6.61vw;
-    top: 5.1vw;
-    justify-content: center;
-    margin: auto;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 0.99vw;
-    line-height: 1.41vw;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.015em;
-
-    color: #878889;
-  }
-
-  .signup-form-wrapper {
-    position: relative;
-    width: min-content;
-    margin: auto;
-
-    .signup-form {
-      text-align: center;
-      margin-top: 2.08vw;
-
-      input {
-        display: block;
-        margin: auto;
-        width: 14.48vw;
-        height: 2.5vw;
-        font-size: 0.83vw;
-        margin-top: 0.42vw;
-
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        color: #212529;
-
-        border: 1px solid rgb(222, 226, 230);
-        border-radius: 1.04vw;
-        flex: 1 1 0%;
-        box-sizing: border-box;
-        padding: 0.83vw;
-        background: #fff;
-        outline: none;
-
-        &:focus {
-          border: 0.05vw solid #212529;
-        }
-      }
-      > p {
-        position: absolute;
-        width: max-content;
-        padding-left: 0.52vw;
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-size: 0.63vw;
-        &.incorrect-id {
-          margin-top: 0.26vw;
-          color: #ff2e00;
-        }
-        &.correct-id {
-          margin-top: 0.26vw;
-          color: #2190fe;
-        }
-      }
-    }
-    .id-checkers {
-      position: absolute;
-      top: 20%;
-      right: -24.5%;
-      text-align: left;
-      width: 3.13vw;
-      height: 1.67vw;
-
-      >svg{
-        width: 1.3vw;
-        height: 1.3vw;
-      }
-
-      button {
-        width: 3.13vw;
-        height: 1.67vw;
-        left: 1.56vw;
-        display: block;
-
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 0.63vw;
-        text-align: center;
-        letter-spacing: -0.015em;
-
-        color: #ffffff;
-
-        background: #bdbdbd;
-        border: none #bdbdbd;
-        box-sizing: border-box;
-        border-radius: 0.26vw;
-        outline: none;
-
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: #e6e7e8;
-          border: none;
-        }
-      }
-    }
-  }
-
-  .nickname-form-wrapper {
-    position: relative;
-    width: min-content;
-    margin: auto;
-
-    .nickname-form {
-      text-align: center;
-      margin-top: 0.78vw;
-
-      input {
-        display: block;
-        margin: auto;
-        width: 14.48vw;
-        height: 2.5vw;
-        font-size: 0.83vw;
-        margin-top: 1.41vw;
-
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        color: #212529;
-
-        border: 0.05vw solid rgb(222, 226, 230);
-        border-radius: 1.04vw;
-        flex: 1 1 0%;
-        box-sizing: border-box;
-        padding: 0.83vw;
-        background: #fff;
-        outline: none;
-
-        &:focus {
-          border: 0.05vw solid #212529;
-        }
-      }
-      > p {
-        position: absolute;
-        width: max-content;
-        padding-left: 0.52vw;
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-size: 0.63vw;
-        &.incorrect-nickname {
-          margin-top: 0.26vw;
-          color: #ff2e00;
-        }
-        &.correct-nickname {
-          margin-top: 0.26vw;
-          color: #2190fe;
-        }
-      }
-    }
-    .nickname-checkers {
-      position: absolute;
-      top: 20%;
-      right: -24.5%;
-      text-align: left;
-      width: 3.13vw;
-      height: 1.67vw;
-
-      >svg{
-        width: 1.3vw;
-        height: 1.3vw;
-      }
-
-      button {
-        width: 3.13vw;
-        height: 1.67vw;
-        left: 1.56vw;
-
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 0.63vw;
-        text-align: center;
-        letter-spacing: -0.015em;
-
-        color: #ffffff;
-
-        background: #bdbdbd;
-        border: none #bdbdbd;
-        box-sizing: border-box;
-        border-radius: 0.26vw;
-        outline: none;
-        
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: #e6e7e8;
-          border: none;
-        }
-      }
-    }
-  }
-  .pwd-form {
-    text-align: center;
-    margin-top: 0.78vw;
-
-    input {
-      display: block;
-      margin: auto;
-      width: 14.48vw;
-      height: 2.5vw;
-      font-size: 0.83vw;
-      margin-top: 1.41vw;
-
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      color: #212529;
-
-      border: 0.05vw solid rgb(222, 226, 230);
-      border-radius: 1.04vw;
-      flex: 1 1 0%;
-      box-sizing: border-box;
-      padding: 0.83vw;
-      background: #fff;
-      outline: none;
-
-      &:focus {
-        border: 0.05vw solid #212529;
-      }
-    }
-    > p {
-      position: absolute;
-      margin-left: 1.35vw;
-      width: max-content;
-      padding-left: 0.52vw;
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-size: 0.63vw;
-      &.incorrect-pwd {
-        margin-top: 0.26vw;
-        color: #ff2e00;
-      }
-      &.correct-pwd {
-        margin-top: 0.26vw;
-        color: #2190fe;
-      }
-    }
-  }
-
-  .pwd-check-form {
-    text-align: center;
-    margin-top: 0.78vw;
-
-    input {
-      display: block;
-      margin: auto;
-      width: 14.48vw;
-      height: 2.5vw;
-      font-size: 0.83vw;
-      margin-top: 1.41vw;
-
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      color: #212529;
-
-      border: 0.05vw solid rgb(222, 226, 230);
-      border-radius: 1.04vw;
-      flex: 1 1 0%;
-      box-sizing: border-box;
-      padding: 0.83vw;
-      background: #fff;
-      outline: none;
-
-      &:focus {
-        border: 0.05vw solid #212529;
-      }
-    }
-    > p {
-      position: absolute;
-      margin-left: 1.35vw;
-      width: max-content;
-      padding-left: 0.52vw;
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-size: 0.63vw;
-      &.incorrect-pwd-check {
-        margin-top: 0.26vw;
-        color: #ff2e00;
-      }
-      &.correct-pwd-check {
-        margin-top: 0.26vw;
-        color: #2190fe;
-      }
-    }
-  }
-  .signup-button {
-    display: block;
-    margin: auto;
-    width: 13.96vw;
-    height: 2.5vw;
-    margin-top: 1.41vw;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 0.89vw;
-    line-height: 1.3vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.015em;
-
-    color: #ffffff;
-
-    background: #ff2e00;
-    border: 0.16vw solid #ff2e00;
-    box-sizing: border-box;
-    border-radius: 1.04vw;
-    outline: none;
-
-    cursor: pointer;
-    transition: 0.3s;
-
-    &:hover {
-      background-color: #e6e7e8;
-      border: none;
-    }
-  }
-
-`;
-
 
 Signup.defaultProps = {};
 

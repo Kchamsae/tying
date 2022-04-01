@@ -13,7 +13,7 @@ import FeedbackButton from '../components/FeedbackButton';
 import ScrollToTop from '../components/ScrollToTop';
 import Header from '../components/Header';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
-import Analytics from '../components/Analytics';
+import GoogleAnalytics from '../components/GoogleAnalytics';
 import KakaoRedirect from '../pages/Kakaoredirect';
 import ScriptFiltering from '../pages/ScriptFiltering';
 import Search from '../pages/Search';
@@ -30,9 +30,6 @@ function App() {
 
 
   React.useEffect(() => {
-    // if (!token) {
-    //   return;
-    // }
     if (token && is_login === false) {
       dispatch(userActions.loginCheckDB());
     }
@@ -44,7 +41,7 @@ function App() {
         <AppWrapper>
           <Header />
           <ScrollToTop />
-          <Analytics />
+          <GoogleAnalytics />
           <Switch>
             <Route exact path='/' component={Main} />
             <Route exact path='/api/kakao/callback' component={KakaoRedirect} />
