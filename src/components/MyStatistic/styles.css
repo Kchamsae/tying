@@ -67,6 +67,20 @@ main {
 .col-center {
   justify-content: center;
   text-align: center;
+
+  font-family: 'Noto Sans KR';
+  font-weight: 400;
+  font-size: 1.56vw;
+  letter-spacing: -0.015em;
+
+  color: #878889;
+
+  transition: 0.25s ease-out;
+}
+
+.day-selected{
+  font-weight: 700;
+  color: #000;
 }
 
 .col-end {
@@ -78,108 +92,67 @@ main {
   display: block;
   position: relative;
   width: 100%;
-  background: var(--neutral-color);
-  border: 1px solid var(--border-color);
-}
-
-.calendar .header {
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 115%;
-  padding: 1.5em 0;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.calendar .header .icon {
-  cursor: pointer;
-  transition: 0.15s ease-out;
-}
-
-.calendar .header .icon:hover {
-  /*transform: scale(1.75);*/
-  transition: 0.25s ease-out;
-  color: var(--main-color);
-}
-
-.calendar .header .icon:first-of-type {
-  margin-left: 3em;
-}
-
-.calendar .header .icon:last-of-type {
-  margin-right: 3em;
 }
 
 .calendar .days {
   text-transform: uppercase;
   font-weight: 400;
   color: #878889;
-  font-size: 70%;
-  padding: 0.75em 0;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.63vw 0;
 }
 
 .calendar .body .cell {
   position: relative;
-  height: 2em;
+  height: 2.5vw;
   color: #878889;
-  border-right: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
-  background: var(--neutral-color);
   transition: 0.25s ease-out;
-  font-size: 1.5em;
+  
+  font-size: 1.56vw;
+  font-weight: 400;
 }
 
 .calendar .body .cell:hover {
-  background: var(--bg-color);
   transition: 0.5s ease-out;
 }
 
-.calendar .body .selected {
-  color: black;
-  border-bottom: 5px solid #d2d2d2;
-  padding-bottom: 5px;
-
-  /* border-width: 3px; */
-  /* border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
-  border-image-slice: 1; */
-}
-/* .calendar .body .today {
-  color: black;
-  border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #ff1a79 0%, #eb82b3 40%);
-  border-image-slice: 1;
-} */
-.calendar .body .row {
-  border-bottom: 1px solid var(--border-color);
+.calendar .body .selected{
+  color: #000;
+  font-weight: 700;
 }
 
-/* .calendar .body .row:last-child {
-  border-bottom: none;
-} */
+.calendar .body .col::before {
+  content: '';
+  display: block;
+  width: 1.98vw;
+  border-bottom: 0.105vw solid transparent;
+  position: absolute;
+  bottom: 0.26vw;
+  left: calc(50% - 0.99vw);
+  transition: 0.25s ease-out;
+}
+
+.calendar .body .selected::before {
+  border-color: #000;
+}
+
 
 .calendar .body .cell:last-child {
   border-right: none;
 }
 
 .calendar .body .cell .number {
-  position: absolute;
-  font-size: 30px;
-  line-height: 1;
-  top: 0.75em;
-  right: 0.75em;
-  font-weight: 700;
+  
 }
 
 .calendar .body .disabled {
-  color: var(--text-color-light);
   pointer-events: none;
 }
 
 .calendar .body .cell .bg {
   font-weight: 700;
   line-height: 1;
-  color: var(--main-color);
   opacity: 0;
   font-size: 8em;
   position: absolute;
@@ -203,57 +176,61 @@ main {
   flex-grow: 0;
   flex-basis: calc(100% / 7);
   width: calc(100% / 7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .yyyy-mm-ww {
-  width: 268px;
-  height: 41px;
+  width: 13.96vw;
+  height: 2.14vw;
 }
 
 .weekly-calendar {
-  width: 566px;
-  height: 137px;
+  width: 29.48vw;
+  height: 5.99vw;
+  margin-top: 0.52vw;
 }
 
 .weekly-statics {
-  width: 558px;
-  height: 213px;
+  width: 29.06vw;
+  height: 11.09vw;
 }
 
 .weekly-number {
   font-family: 'Montserrat';
-  font-size: 80px;
+  font-size: 4.17vw;
   font-weight: 500;
   margin: 0px;
 }
 
 .weekly-box {
   display: flex;
-  width: 203px;
-  height: 37px;
+  width: 10.57vw;
+  height: 1.93vw;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
 }
 
 .weekly-box > svg{
-  width: 12px;
-  height: 19.5px;
-  margin: 5px 0 0 10px;
+  width: 0.63vw;
+  height: 1.02vw;
+  margin: 0.26vw 0 0 0.52vw;
 }
 
 .weekly-typing {
   font-family: 'Noto Sans KR';
-  font-size: 16px;
+  font-size: 0.83vw;
   font-weight: 500;
-  margin: 0 0 15px 10px;
+  margin: 0 0 0.78vw 0.52vw;
   color: #bdbdbd;
   width: max-content;
 }
 
 .weekly-button {
   font-family: 'Noto Sans KR';
-  font-size: 22px;
+  font-size: 1.15vw;
   font-weight: 500;
   margin: 0px;
   color: #878889;
@@ -262,44 +239,54 @@ main {
 .renderheader-top {
   display: flex;
   /* font-family: 'Noto Sans'; */
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 1.56vw;
+  font-weight: 600;
 }
 
 .renderheader-box {
   display: flex;
-  width: 561px;
-  height: 117px;
+  width: 29.22vw;
+  height: 6.09vw;
   background-color: white;
-  font-size: 30px;
+  font-size: 1.56vw;
   font-weight: 500;
   align-items: center;
   justify-content: center;
-  margin: 20px 0px 20px 0px;
-  box-shadow: 5px 5px 5px #bdbdbd;
+  margin: 1.04vw 0px 1.04vw 0px;
+  box-shadow: 0.26vw 0.26vw 0.26vw #bdbdbd;
 }
 
 .complete-btn {
   color: #ff2e00;
-  margin-left: 20px;
+  margin-left: 1.04vw;
   cursor: pointer;
 }
 
 .prev-btn {
-  margin-left: 20px;
+  margin-left: 1.04vw;
   cursor: pointer;
 }
 
 .next-btn {
-  margin-left: 20px;
+  margin-left: 1.04vw;
   cursor: pointer;
 }
 
 .down-btn {
-  margin-left: 20px;
+  margin-left: 1.04vw;
   cursor: pointer;
 }
 
+.down-btn > svg{
+  width: 1.35vw;
+  height: 0.83vw;
+}
+
 .chart-box {
-  margin-left: 100px;
+  margin-left: 5.21vw;
+}
+
+.prev-btn > svg, .next-btn > svg {
+  width: 0.89vw;
+  height: 1.04vw;
 }
