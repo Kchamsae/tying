@@ -10,7 +10,6 @@ import { actionCreators as userActions } from '../redux/modules/user';
 
 import { getCookie } from './Cookie';
 import FeedbackButton from '../components/FeedbackButton';
-import ScrollToTop from '../components/ScrollToTop';
 import Header from '../components/Header/Header';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
 import GoogleAnalytics from '../components/GoogleAnalytics';
@@ -40,7 +39,6 @@ function App() {
       <ConnectedRouter history={history}>
         <AppWrapper>
           <Header />
-          <ScrollToTop />
           <GoogleAnalytics />
           <Switch>
             <Route exact path='/' component={Main} />
