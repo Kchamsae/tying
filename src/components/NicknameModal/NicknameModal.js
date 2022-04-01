@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import { apis } from "../../shared/apis";
