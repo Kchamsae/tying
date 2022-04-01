@@ -108,7 +108,7 @@ const Calendar = () => {
       <div>
         <div className='renderheader-top'>
           {dayjs(currentMonth).format(dateFormat) +
-            '년' +
+            '년' + ' ' +
             `${baseMonth}월 ${weekOfMonth}주차`}
           <div
             className='down-btn'
@@ -138,7 +138,6 @@ const Calendar = () => {
             <div>
               <div>
                 {dayjs(currentMonth).format(dateFormat) +
-                  ' ' +
                   '년' +
                   ' ' +
                   `${baseMonth}월 ${weekOfMonth}주차`}
@@ -297,17 +296,27 @@ const Calendar = () => {
   };
 
   const renderDays = () => {
-    const dateFormat = 'ddd';
-    const days = [];
-    let startDate = dayjs(currentMonth).isoWeekday(1).$d;
-    for (let i = 0; i < 7; i++) {
-      days.push(
-        <div className='col col-center' key={i}>
-          {dayjs(startDate, i).add(7, 'day').format(dateFormat)}
-        </div>
-      );
-    }
-    return <div className='days row'>{days}</div>;
+    // const dateFormat = 'ddd';
+    const days = ['월','화','수','목','금','토','일'];
+    const days_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    // let startDate = dayjs(currentMonth).isoWeekday(1).$d;
+    // for (let i = 0; i < 7; i++) {
+    //   days.push(
+    //     <div className='col col-center' key={i}>
+    //       {dayjs(startDate, i).add(7, 'day').format(dateFormat)}
+    //     </div>
+    //   );
+    // }
+    // return <div className='days row'>{days}</div>;
+    return (
+      <div className='days row'>
+        {
+          days.map((a,i)=>{
+            return <div className={`col col-center ${selectedDate===null ? '' : (days_en.indexOf(date.split(' ')[0])===i ? 'day-selected' : '')}`}>{a}</div>
+          })
+        }
+      </div>
+    )
   };
   const renderCells = () => {
     const startDate = dayjs(currentMonth).isoWeekday(1).$d;
