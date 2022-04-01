@@ -523,6 +523,8 @@ const SignupWrapper = styled.div`
 
       button {
         width: 3.13vw;
+        min-width: 42px;
+        padding: 0;
         height: 1.67vw;
         left: 1.56vw;
         display: block;
@@ -618,6 +620,8 @@ const SignupWrapper = styled.div`
 
       button {
         width: 3.13vw;
+        min-width: 42px;
+        padding: 0;
         height: 1.67vw;
         left: 1.56vw;
 
