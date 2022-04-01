@@ -198,7 +198,8 @@ const HeaderWrapper = styled.div`
     align-items: center;
 
     .tying-logo svg {
-      width: 5.83vw;
+      width: 5.89vw;
+      height: 2.19vw;
       margin-left: 1.41vw;
       cursor: pointer;
     }

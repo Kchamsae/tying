@@ -273,29 +273,34 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalBox = styled.div`
-  width: 478px;
-  height: 349px;
+  width: 24.9vw;
+  height: 18.18vw;
   position: fixed;
   display: flex;
   justify-content: center;
-  top: calc(50% - 239px);
-  left: calc(50% - 239px);
+  top: calc(50% - 12.45vw);
+  left: calc(50% - 12.45vw);
   z-index: 10000;
   background-color: #f9f9f9;
-  border-radius: 20px;
+  border-radius: 1.04vw;
   /* display: flex; */
   justify-content: center;
-  padding: 75px;
+  padding: 3.91vw;
   box-sizing: border-box;
 
   .close-button {
     position: absolute;
-    width: 24px;
-    height: 24px;
-    left: 431px;
-    top: 21px;
+    width: 1.25vw;
+    height: 1.25vw;
+    left: 22.45vw;
+    top: 1.09vw;
     z-index: 10001;
     cursor: pointer;
+
+    >svg{
+      width: 1.25vw;
+      height: 1.25vw;
+    }
 
     svg path {
       transition: 0.3s;
@@ -311,15 +316,17 @@ const ModalBox = styled.div`
   .tying-logo svg {
     display: block;
     margin: auto;
+    width: 5.89vw;
+    height: 2.19vw;
   }
 
   .nicknameEdit-title {
-    margin-top: 10px;
+    margin-top: 0.52vw;
     font-family: "Noto Sans KR";
     font-style: normal;
     font-weight: 700;
-    font-size: 17px;
-    line-height: 25px;
+    font-size: 0.89vw;
+    line-height: 1.3vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -335,45 +342,45 @@ const ModalBox = styled.div`
 
     .nickname-form {
       text-align: center;
-      margin-top: 15px;
+      margin-top: 0.78vw;
 
       input {
         display: block;
         margin: auto;
-        width: 278px;
-        height: 48px;
-        font-size: 16px;
-        margin-top: 27px;
+        width: 14.48vw;
+        height: 2.5vw;
+        font-size: 0.83vw;
+        margin-top: 1.41vw;
 
         font-family: "Noto Sans KR";
         font-style: normal;
         color: #212529;
 
-        border: 1px solid rgb(222, 226, 230);
-        border-radius: 20px;
+        border: 0.05vw solid rgb(222, 226, 230);
+        border-radius: 1.04vw;
         flex: 1 1 0%;
         box-sizing: border-box;
-        padding: 1rem;
+        padding: 0.83vw;
         background: #fff;
         outline: none;
 
         &:focus {
-          border: 1px solid #212529;
+          border: 0.05vw solid #212529;
         }
       }
       > p {
         position: absolute;
         width: max-content;
-        padding-left: 10px;
+        padding-left: 0.52vw;
         font-family: "Noto Sans KR";
         font-style: normal;
-        font-size: 12px;
+        font-size: 0.63vw;
         &.incorrect-nickname {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #ff2e00;
         }
         &.correct-nickname {
-          margin-top: 5px;
+          margin-top: 0.26vw;
           color: #2190fe;
         }
       }
@@ -383,17 +390,18 @@ const ModalBox = styled.div`
       top: 20%;
       right: -24.5%;
       text-align: left;
-      width: 60px;
-      height: 32px;
+      width: 3.13vw;
+      height: 1.67vw;
       button {
-        width: 60px;
-        height: 32px;
-        left: 30px;
-
+        width: 3.13vw;
+        min-width: 42px;
+        height: 1.67vw;
+        left: 1.56vw;
+        display: block;
         font-family: "Noto Sans KR";
         font-style: normal;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 0.63vw;
         text-align: center;
         letter-spacing: -0.015em;
 
@@ -402,8 +410,9 @@ const ModalBox = styled.div`
         background: #bdbdbd;
         border: none #bdbdbd;
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 0.26vw;
         outline: none;
+        padding: 0;
 
         cursor: pointer;
         transition: 0.3s;
@@ -420,15 +429,15 @@ const ModalBox = styled.div`
 const EditNicknameButton = styled.div`
   display: block;
   margin: auto;
-  width: 268px;
-  height: 48px;
-  margin-top: 30px;
+  width: 13.96vw;
+  height: 2.5vw;
+  margin-top: 1.56vw;
 
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
-  font-size: 17px;
-  line-height: 25px;
+  font-size: 0.89vw;
+  line-height: 1.3vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -438,9 +447,9 @@ const EditNicknameButton = styled.div`
   color: #ffffff;
 
   background: #ff2e00;
-  border: 3px solid #ff2e00;
+  border: 0.16vw solid #ff2e00;
   box-sizing: border-box;
-  border-radius: 20px;
+  border-radius: 1.04vw;
   outline: none;
 
   cursor: pointer;

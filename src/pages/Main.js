@@ -464,7 +464,7 @@ const MainWrapper = styled.div`
   .main-test-typing {
     width: 22.71vw;
     margin: 9.01vw auto 0;
-    border-bottom: 3px solid #bdbdbd;
+    border-bottom: 0.16vw solid #bdbdbd;
     display: flex;
     justify-content: center;
     align-items: center;
