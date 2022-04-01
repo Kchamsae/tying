@@ -30,9 +30,6 @@ function App() {
 
 
   React.useEffect(() => {
-    // if (!token) {
-    //   return;
-    // }
     if (token && is_login === false) {
       dispatch(userActions.loginCheckDB());
     }
