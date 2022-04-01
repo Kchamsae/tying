@@ -1,10 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../../redux/modules/user';
 import { history } from "../../redux/configureStore";
 import { KAKAO_AUTH_URL } from '../../shared/social/Kakao';
-import Signup from '../Signup';
+import Signup from '../Signup/Signup';
 import { alertNew } from '../../shared/alert';
 import ReactGA from "react-ga";
 import { 
