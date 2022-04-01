@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as scriptActions } from "../redux/modules/script";
 import { actionCreators as userActions } from "../redux/modules/user";
-import ScriptItem from "../components/ScriptItem";
+import ScriptItem from "../components/ScriptItem/ScriptItem";
 import ScriptItemLoading from "../components/ScriptItemLoading";
 import { useInView } from "react-intersection-observer";
 import { history } from "../redux/configureStore";
