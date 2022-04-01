@@ -20,6 +20,9 @@ import dayjs from 'dayjs';
 var isoWeek = require('dayjs/plugin/isoWeek');
 dayjs.extend(isoWeek);
 
+// var koLocale = require('dayjs/locale/ko');
+// dayjs.extend(koLocale);
+
 const Calendar = () => {
   const dispatch = useDispatch();
 
@@ -304,7 +307,7 @@ const Calendar = () => {
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className='col col-center' key={i}>
-          {dayjs(startDate, i).add(7, 'day').format(dateFormat)}
+          {dayjs(startDate, i).add(i, 'd').format(dateFormat)}
         </div>
       );
     }
