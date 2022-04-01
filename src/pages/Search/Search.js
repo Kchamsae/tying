@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as scriptActions } from "../redux/modules/script";
-import { actionCreators as userActions } from "../redux/modules/user";
-import ScriptItem from "../components/ScriptItem/ScriptItem";
-import ScriptItemLoading from "../components/ScriptItemLoading";
+import { actionCreators as scriptActions } from "../../redux/modules/script";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import ScriptItem from "../../components/ScriptItem/ScriptItem";
+import ScriptItemLoading from "../../components/ScriptItemLoading";
 import { useInView } from "react-intersection-observer";
-import { history } from "../redux/configureStore";
-import { getCookie } from "../shared/Cookie";
-import { alertNew } from "../shared/alert";
+import { history } from "../../redux/configureStore";
+import { getCookie } from "../../shared/Cookie";
+import { alertNew } from "../../shared/alert";
+import { 
+  SearchWrapper,
+  SearchBar,
+  SearchButton,
+  SearchResult,
+  FilteringResultNone,
+  FilteringResultSentence,
+ } from './style';
 
 const Search = () => {
   const searchRef = useRef();
@@ -78,7 +85,7 @@ const Search = () => {
   return (
     <>
       <SearchWrapper>
-        <div className="search-bar">
+        <SearchBar>
           <input
             type="text"
             placeholder="Search keywords..."
@@ -89,7 +96,7 @@ const Search = () => {
               }
             }}
           />
-          <div className="search-button" onClick={searchScript}>
+          <SearchButton onClick={searchScript}>
             <svg
               viewBox="0 0 18 18"
               fill="none"
@@ -102,9 +109,9 @@ const Search = () => {
                 fill="#fff"
               />
             </svg>
-          </div>
-        </div>
-        <div className="search-result">
+          </SearchButton>
+        </SearchBar>
+        <SearchResult>
           {search_list !== "no" &&
             !done &&
             search_list?.map((a, i) => {
@@ -115,10 +122,10 @@ const Search = () => {
             })}
           {search_list === "no" && !done && (
             <>
-              <div className="filtering-result-none">검색 결과가 없습니다.</div>
-              <div className="filtering-result-sentence">
+              <FilteringResultNone>검색 결과가 없습니다.</FilteringResultNone>
+              <FilteringResultSentence>
                 앞으로 더 많은 스크립트가 더 추가될 예정입니다.
-              </div>
+              </FilteringResultSentence>
             </>
           )}
           {done && (
@@ -128,81 +135,10 @@ const Search = () => {
               <ScriptItemLoading />
             </>
           )}
-        </div>
+        </SearchResult>
       </SearchWrapper>
     </>
   );
 };
-
-const SearchWrapper = styled.div`
-  background-color: #f9f9f9;
-  .search-bar {
-    width: 43.54vw;
-    height: 3.44vw;
-    margin: 0 auto;
-    background: #ffffff;
-    border: 0.16vw solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 3.28vw;
-    position: relative;
-
-    > input {
-      height: 3.13vw;
-      border: 0;
-      appearance: none;
-      outline: none;
-      padding: 0 0 0 3.8vw;
-      background-color: transparent;
-      font-size: 1.56vw;
-      line-height: 3.13vw;
-      font-family: "Noto Sans KR";
-
-      &::placeholder {
-        color: #bdbdbd;
-      }
-    }
-
-    .search-button {
-      position: absolute;
-      top: calc(50% - 1.72vw);
-      right: -0.05vw;
-      width: 3.44vw;
-      height: 3.44vw;
-      border-radius: 50%;
-      background-color: #000000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-
-      > svg {
-        width: 1.36vw;
-        height: 1.36vw;
-      }
-    }
-  }
-
-  .search-result {
-    width: 59.58vw;
-    margin: 3.75vw auto;
-    padding-bottom: 2.6vw;
-
-    .filtering-result-none {
-      width: max-content;
-      margin: 1.04vw auto;
-      font-family: "Noto Sans KR";
-      font-size: 1.04vw;
-      font-weight: 600;
-    }
-    .filtering-result-sentence {
-      width: max-content;
-      margin: 0 auto;
-      font-family: "Noto Sans KR";
-      font-size: 0.73vw;
-      font-weight: 300;
-    }
-  }
-`;
 
 export default Search;
