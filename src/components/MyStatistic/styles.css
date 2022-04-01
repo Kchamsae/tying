@@ -67,6 +67,20 @@ main {
 .col-center {
   justify-content: center;
   text-align: center;
+
+  font-family: 'Noto Sans KR';
+  font-weight: 400;
+  font-size: 1.56vw;
+  letter-spacing: -0.015em;
+
+  color: #878889;
+
+  transition: 0.25s ease-out;
+}
+
+.day-selected{
+  font-weight: 700;
+  color: #000;
 }
 
 .col-end {
@@ -94,7 +108,9 @@ main {
   overflow: hidden;
   cursor: pointer;
   transition: 0.25s ease-out;
-  font-size: 1.25vw;
+  
+  font-size: 1.56vw;
+  font-weight: 400;
 }
 
 .calendar .body .cell:hover {
@@ -103,6 +119,7 @@ main {
 
 .calendar .body .selected{
   color: #000;
+  font-weight: 700;
 }
 
 .calendar .body .col::before {
@@ -126,9 +143,7 @@ main {
 }
 
 .calendar .body .cell .number {
-  font-size: 1.56vw;
-  line-height: 1;
-  font-weight: 700;
+  
 }
 
 .calendar .body .disabled {
