@@ -11,7 +11,7 @@ import { actionCreators as userActions } from '../redux/modules/user';
 import { getCookie } from './Cookie';
 import FeedbackButton from '../components/FeedbackButton';
 import ScrollToTop from '../components/ScrollToTop';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
 import GoogleAnalytics from '../components/GoogleAnalytics';
 import KakaoRedirect from '../pages/Kakaoredirect';

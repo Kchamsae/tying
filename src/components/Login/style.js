@@ -14,11 +14,8 @@ const ModalWrapper = styled.div`
 
 const ModalBox = styled.div`
   width: 24.9vw;
-  /* height: 478px; */
   background-color: #f9f9f9;
   border-radius: 1.04vw;
-  /* display: flex;
-  justify-content: center; */
   padding: 3.91vw;
   box-sizing: border-box;
   position: relative;
