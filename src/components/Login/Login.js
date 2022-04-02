@@ -171,7 +171,6 @@ const Login = (props) => {
           )}
 
           {modal_state === 'login' && (
-            // <ModalWrapper>
               <div className='white_block'>
                 <TyingWelcomeLogo>
                   <svg
@@ -213,7 +212,6 @@ const Login = (props) => {
                   <LoginButton3 onClick={login}>로그인</LoginButton3>
                 </LoginForm>
               </div>
-            // </ModalWrapper>
           )}
 
           {modal_state === 'signup' && <Signup setModalState={setModalState} />}
