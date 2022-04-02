@@ -78,7 +78,8 @@ main {
   transition: 0.25s ease-out;
 }
 
-.day-selected{
+/* 완 */
+.day-selected {
   font-weight: 700;
   color: #000;
 }
@@ -108,7 +109,7 @@ main {
   overflow: hidden;
   cursor: pointer;
   transition: 0.25s ease-out;
-  
+
   font-size: 1.56vw;
   font-weight: 400;
 }
@@ -117,7 +118,7 @@ main {
   transition: 0.5s ease-out;
 }
 
-.calendar .body .selected{
+.calendar .body .selected {
   color: #000;
   font-weight: 700;
 }
@@ -137,13 +138,11 @@ main {
   border-color: #000;
 }
 
-
 .calendar .body .cell:last-child {
   border-right: none;
 }
 
 .calendar .body .cell .number {
-  
 }
 
 .calendar .body .disabled {
@@ -186,17 +185,20 @@ main {
   height: 2.14vw;
 }
 
+/* 완 */
 .weekly-calendar {
   width: 29.48vw;
   height: 5.99vw;
   margin-top: 0.52vw;
 }
 
+/* 완 */
 .weekly-statics {
   width: 29.06vw;
   height: 11.09vw;
 }
 
+/* 완 */
 .weekly-number {
   font-family: 'Montserrat';
   font-size: 4.17vw;
@@ -204,6 +206,7 @@ main {
   margin: 0px;
 }
 
+/* 완 */
 .weekly-box {
   display: flex;
   width: 10.57vw;
@@ -213,12 +216,14 @@ main {
   cursor: pointer;
 }
 
-.weekly-box > svg{
+/* 완 */
+.weekly-box > svg {
   width: 0.63vw;
   height: 1.02vw;
   margin: 0.26vw 0 0 0.52vw;
 }
 
+/* 완 */
 .weekly-typing {
   font-family: 'Noto Sans KR';
   font-size: 0.83vw;
@@ -228,6 +233,7 @@ main {
   width: max-content;
 }
 
+/* 완 */
 .weekly-button {
   font-family: 'Noto Sans KR';
   font-size: 1.15vw;
@@ -236,6 +242,7 @@ main {
   color: #878889;
 }
 
+/* 완 */
 .renderheader-top {
   display: flex;
   /* font-family: 'Noto Sans'; */
@@ -243,6 +250,7 @@ main {
   font-weight: 600;
 }
 
+/* 완 */
 .renderheader-box {
   display: flex;
   width: 29.22vw;
@@ -256,37 +264,45 @@ main {
   box-shadow: 0.26vw 0.26vw 0.26vw #bdbdbd;
 }
 
+/* 완 */
 .complete-btn {
   color: #ff2e00;
   margin-left: 1.04vw;
   cursor: pointer;
 }
 
+/* 완 */
 .prev-btn {
   margin-left: 1.04vw;
   cursor: pointer;
 }
 
+/* 완 */
 .next-btn {
   margin-left: 1.04vw;
   cursor: pointer;
 }
 
+/* 완 */
 .down-btn {
   margin-left: 1.04vw;
   cursor: pointer;
 }
 
-.down-btn > svg{
+/* 완 */
+.down-btn > svg {
   width: 1.35vw;
   height: 0.83vw;
 }
 
+/* 완 */
 .chart-box {
   margin-left: 5.21vw;
 }
 
-.prev-btn > svg, .next-btn > svg {
+/* 완 */
+.prev-btn > svg,
+.next-btn > svg {
   width: 0.89vw;
   height: 1.04vw;
 }

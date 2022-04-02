@@ -17,6 +17,41 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import dayjs from 'dayjs';
 
+import {
+  WeeklyCalendar,
+  WeeklyStatics,
+  WeeklyNumber,
+  WeeklyBox,
+  WeeklyButton,
+  WeeklyBoxSvg,
+  WeeklyTyping,
+  RenderHeaderTop,
+  RenderHeaderBox,
+  CompleteBtn,
+  PrevBtn,
+  NextBtn,
+  DownBtn,
+  ChartBox,
+  DownBtnSvg,
+  PrevBtnSvg,
+  NextBtnSvg,
+  RenderDataTop,
+  RenderDataMiddle,
+  RenderDaysTop,
+  RenderDaysMiddle,
+  RenderCellsRow,
+  ReturnTop,
+  ReturnLeft,
+  ReturnCalendar,
+  ReturnBar,
+  ReturnRight,
+  ChartContainer,
+  RenderCellsBodyMain,
+  RenderCellsBodySub,
+  RenderDataBar,
+  DaySelected,
+} from './style';
+
 var isoWeek = require('dayjs/plugin/isoWeek');
 dayjs.extend(isoWeek);
 
@@ -113,18 +148,17 @@ const Calendar = () => {
     const dateFormat = 'YYYY';
     return (
       <div>
-        <div className='renderheader-top'>
+        <RenderHeaderTop>
           {dayjs(currentMonth).format(dateFormat) +
             '년' +
             ' ' +
             `${baseMonth}월 ${weekOfMonth}주차`}
-          <div
-            className='down-btn'
+          <DownBtn
             onClick={() => {
               setIsShow(!isShow);
             }}
           >
-            <svg
+            <DownBtnSvg
               width='26'
               height='16'
               viewBox='0 0 26 16'
@@ -137,12 +171,12 @@ const Calendar = () => {
                 strokeWidth='3'
                 strokeLinecap='round'
               />
-            </svg>
-          </div>
-        </div>
+            </DownBtnSvg>
+          </DownBtn>
+        </RenderHeaderTop>
 
         {isShow && (
-          <div className='renderheader-box'>
+          <RenderHeaderBox>
             <div>
               <div>
                 {dayjs(currentMonth).format(dateFormat) +
@@ -152,11 +186,8 @@ const Calendar = () => {
               </div>
             </div>
             <div>
-              <div
-                className='prev-btn'
-                onClick={() => changeWeekHandle('prev')}
-              >
-                <svg
+              <PrevBtn onClick={() => changeWeekHandle('prev')}>
+                <PrevBtnSvg
                   width='17'
                   height='20'
                   viewBox='0 0 17 20'
@@ -167,12 +198,12 @@ const Calendar = () => {
                     d='M15.6508 19.1195C15.2011 19.1195 14.8188 18.9478 14.369 18.701L1.25926 11.4688C0.326058 10.943 1.02532e-06 10.5997 1.07732e-06 10.0309C1.12932e-06 9.46224 0.326059 9.11887 1.25926 8.60382L14.369 1.36088C14.8188 1.11408 15.2011 0.953125 15.6508 0.953125C16.4828 0.953125 17 1.55402 17 2.48756L17 17.5743C17 18.5079 16.4828 19.1195 15.6508 19.1195Z'
                     fill='#D2D2D2'
                   />
-                </svg>
-              </div>
+                </PrevBtnSvg>
+              </PrevBtn>
             </div>
             <div onClick={() => changeWeekHandle('next')}>
-              <div className='next-btn'>
-                <svg
+              <NextBtn>
+                <NextBtnSvg
                   width='17'
                   height='20'
                   viewBox='0 0 17 20'
@@ -183,13 +214,11 @@ const Calendar = () => {
                     d='M1.34921 19.1195C1.79894 19.1195 2.18122 18.9478 2.63095 18.701L15.7407 11.4688C16.6739 10.943 17 10.5997 17 10.031C17 9.46224 16.6739 9.11888 15.7407 8.60382L2.63095 1.36088C2.18122 1.11408 1.79894 0.953125 1.34921 0.953125C0.517196 0.953125 0 1.55402 0 2.48756L0 17.5743C0 18.5079 0.517196 19.1195 1.34921 19.1195Z'
                     fill='#D2D2D2'
                   />
-                </svg>
-              </div>
+                </NextBtnSvg>
+              </NextBtn>
             </div>
-            <div className='complete-btn' onClick={confirmHandler}>
-              완료
-            </div>
-          </div>
+            <CompleteBtn onClick={confirmHandler}>완료</CompleteBtn>
+          </RenderHeaderBox>
         )}
       </div>
     );
@@ -198,72 +227,18 @@ const Calendar = () => {
   const renderData = () => {
     return (
       <div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ display: 'flex', width: '70%' }}>
-            <p className='weekly-number'>
+        <RenderDataTop>
+          <RenderDataMiddle>
+            <WeeklyNumber>
               {recordLoad[_idx]?.total_typingCnt
                 ? recordLoad[_idx]?.total_typingCnt
                 : 0}
-            </p>
-            <p style={{ alignSelf: 'flex-end' }} className='weekly-typing'>
-              타이핑한 글자 수
-            </p>
-          </div>
-          <div className='weekly-box' onClick={chartHandler}>
-            <p id='b' className='weekly-button'>
-              주간 상세 분석
-            </p>
-            <svg
-              width='16'
-              height='26'
-              viewBox='0 0 16 26'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M2 2L13 13L2 24'
-                stroke='#878889'
-                strokeWidth='3'
-                stroke-linecap='round'
-              />
-            </svg>
-          </div>
-        </div>
-        <div
-          style={{
-            width: '29.43vw',
-            borderBottom: '2px solid #D2D2D2',
-            margin: '1.04vw 0px',
-          }}
-        ></div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ display: 'flex', width: '70%' }}>
-            <p className='weekly-number'>
-              {recordLoad[_idx]?.total_duration
-                ? Math.round(recordLoad[_idx]?.total_duration / 60)
-                : 0}
-            </p>
-            <p style={{ alignSelf: 'flex-end' }} className='weekly-typing'>
-              타이핑한 시간
-            </p>
-          </div>
-          <div className='weekly-box' onClick={chartHandler}>
-            <p id='c' className='weekly-button'>
-              주간 상세 분석
-            </p>
-            <svg
+            </WeeklyNumber>
+            <WeeklyTyping>타이핑한 글자 수</WeeklyTyping>
+          </RenderDataMiddle>
+          <WeeklyBox onClick={chartHandler}>
+            <WeeklyButton id='b'>주간 상세 분석</WeeklyButton>
+            <WeeklyBoxSvg
               width='16'
               height='26'
               viewBox='0 0 16 26'
@@ -276,9 +251,37 @@ const Calendar = () => {
                 strokeWidth='3'
                 strokeLinecap='round'
               />
-            </svg>
-          </div>
-        </div>
+            </WeeklyBoxSvg>
+          </WeeklyBox>
+        </RenderDataTop>
+        <RenderDataBar />
+        <RenderDataTop>
+          <RenderDataMiddle>
+            <WeeklyNumber>
+              {recordLoad[_idx]?.total_duration
+                ? Math.round(recordLoad[_idx]?.total_duration / 60)
+                : 0}
+            </WeeklyNumber>
+            <WeeklyTyping>타이핑한 시간</WeeklyTyping>
+          </RenderDataMiddle>
+          <WeeklyBox onClick={chartHandler}>
+            <WeeklyButton id='c'>주간 상세 분석</WeeklyButton>
+            <WeeklyBoxSvg
+              width='16'
+              height='26'
+              viewBox='0 0 16 26'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                d='M2 2L13 13L2 24'
+                stroke='#878889'
+                strokeWidth='3'
+                strokeLinecap='round'
+              />
+            </WeeklyBoxSvg>
+          </WeeklyBox>
+        </RenderDataTop>
       </div>
     );
   };
@@ -374,20 +377,15 @@ const Calendar = () => {
               onDateClickHandle(cloneDay, dayStr);
             }}
           >
-            <span className='number' id='a' onClick={tabHandler}>
+            <span id='a' onClick={tabHandler}>
               {formattedDate}
             </span>
           </div>
         );
         day = dayjs(day).add(1, 'd').$d;
-        console.log(day);
       }
 
-      rows.push(
-        <div className='row' key={day}>
-          {days}
-        </div>
-      );
+      rows.push(<RenderCellsRow key={day}>{days}</RenderCellsRow>);
       days = [];
     }
     return <div className='body'>{rows}</div>;
@@ -533,11 +531,11 @@ const Calendar = () => {
     };
 
     return (
-      <Container>
+      <ChartContainer>
         <div>
           <Chart type='bar' data={recordTyping} options={options} />
         </div>
-      </Container>
+      </ChartContainer>
     );
   };
 
@@ -669,64 +667,49 @@ const Calendar = () => {
     };
 
     return (
-      <Container>
+      <ChartContainer>
         <div>
           <Chart type='bar' data={recordTime} options={options} />
         </div>
-      </Container>
+      </ChartContainer>
     );
   };
 
   return (
-    <div style={{ display: 'flex', marginLeft: '4.01vw' }}>
-      <div style={{ width: '50%' }}>
+    <ReturnTop>
+      <ReturnLeft>
         <div className='calendar'>
           {renderHeader()}
           {isShow ? (
             ''
           ) : (
-            <div className='weekly-calendar'>
+            <WeeklyCalendar>
               {renderDays()}
               {renderCells()}
-            </div>
+            </WeeklyCalendar>
           )}
         </div>
-        <div
-          style={{
-            width: '29.43vw',
-            borderBottom: '0.26vw solid #D2D2D2',
-            margin: '1.04vw 0px',
-          }}
-        ></div>
-        <div className='weekly-statics'>
+        <ReturnBar />
+        <WeeklyStatics>
           {tab === 'a' ? <React.Fragment>{renderData()}</React.Fragment> : ''}
-        </div>
-      </div>
-      <div style={{ width: '100%', height: '100%', marginLeft: '2.6vw' }}>
+        </WeeklyStatics>
+      </ReturnLeft>
+      <ReturnRight>
         <div>
           {chartTab === 'b' ? (
-            <div id='b' className='chart-box'>
-              {renderCntChart()}
-            </div>
+            <ChartBox id='b'>{renderCntChart()}</ChartBox>
           ) : (
             ''
           )}
           {chartTab === 'c' ? (
-            <div id='c' className='chart-box'>
-              {renderTimeChart()}
-            </div>
+            <ChartBox id='c'>{renderTimeChart()}</ChartBox>
           ) : (
             ''
           )}
         </div>
-      </div>
-    </div>
+      </ReturnRight>
+    </ReturnTop>
   );
 };
-
-const Container = styled.div`
-  width: 90vw;
-  max-width: 46.88vw;
-`;
 
 export default Calendar;
