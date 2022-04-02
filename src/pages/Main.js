@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';
 import ReactGA from "react-ga";
+import HowToUseButton from '../components/HowToUseButton';
 
 const Main = (props) => {
   const { history } = props;
@@ -127,6 +128,7 @@ const Main = (props) => {
 
   return (
     <>
+      <HowToUseButton main/>
       <MainWrapper ref={wrapperRef}>
         {/* <div className="main-filtering" onClick={()=>{history.push('/filtering')}}>
                     스크립트 필터링 

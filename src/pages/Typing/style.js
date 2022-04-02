@@ -544,10 +544,12 @@ const TitleMore = styled.div`
 
   > div {
     display: none;
-    right: 1.15vw;
-    bottom: -270%;
+    right: 2.08vw;
+    bottom: 0;
+    transform: translateY(35%);
     position: absolute;
-    width: 59.32vw;
+    z-index: 10;
+    width: 58.49vw;
     padding: 1.35vw 1.82vw;
     box-sizing: border-box;
     background: #dedede;
