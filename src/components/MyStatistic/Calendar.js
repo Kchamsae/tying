@@ -1,55 +1,40 @@
 import React, { useEffect, useState } from 'react';
-// import {
-//   format,
-//   startOfWeek,
-//   addDays,
-//   isSameDay,
-//   lastDayOfWeek,
-//   getWeek,
-//   addWeeks,
-//   subWeeks,
-// } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as recordActions } from '../../redux/modules/record';
-import './styles.css';
-import styled from 'styled-components';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 import dayjs from 'dayjs';
 
 import {
-  WeeklyCalendar,
-  WeeklyStatics,
-  WeeklyNumber,
-  WeeklyBox,
-  WeeklyButton,
-  WeeklyBoxSvg,
-  WeeklyTyping,
-  RenderHeaderTop,
-  RenderHeaderBox,
-  CompleteBtn,
-  PrevBtn,
-  NextBtn,
-  DownBtn,
   ChartBox,
+  ChartContainer,
+  CompleteBtn,
+  DownBtn,
   DownBtnSvg,
-  PrevBtnSvg,
+  NextBtn,
   NextBtnSvg,
+  PrevBtn,
+  PrevBtnSvg,
+  RenderCellsMiddle,
+  RenderCellsRow,
+  RenderDataBar,
   RenderDataTop,
   RenderDataMiddle,
   RenderDaysTop,
   RenderDaysMiddle,
-  RenderCellsRow,
+  RenderHeaderTop,
+  RenderHeaderBox,
+  ReturnBar,
   ReturnTop,
   ReturnLeft,
-  ReturnCalendar,
-  ReturnBar,
   ReturnRight,
-  ChartContainer,
-  RenderCellsBodyMain,
-  RenderCellsBodySub,
-  RenderDataBar,
-  DaySelected,
+  WeeklyBox,
+  WeeklyBoxSvg,
+  WeeklyButton,
+  WeeklyCalendar,
+  WeeklyNumber,
+  WeeklyStatics,
+  WeeklyTyping,
 } from './style';
 
 var isoWeek = require('dayjs/plugin/isoWeek');
@@ -307,49 +292,27 @@ const Calendar = () => {
   };
 
   const renderDays = () => {
-    // const dateFormat = 'ddd';
-    // const days = [];
-    // let startDate = dayjs(currentMonth).isoWeekday(1).$d;
-    // for (let i = 0; i < 7; i++) {
-    //   days.push(
-    //     <div className='col col-center' key={i}>
-    //       {dayjs(startDate, i).add(i, 'd').format(dateFormat)}
-    //     </div>
-    //   );
-    // }
-    // return <div className='days row'>{days}</div>;
-    // const dateFormat = 'ddd';
     const days = ['월', '화', '수', '목', '금', '토', '일'];
     const days_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    // let startDate = dayjs(currentMonth).isoWeekday(1).$d;
-    // for (let i = 0; i < 7; i++) {
-    //   days.push(
-    //     <div className='col col-center' key={i}>
-    //       {dayjs(startDate, i).add(7, 'day').format(dateFormat)}
-    //     </div>
-    //   );
-    // }
-    // return <div className='days row'>{days}</div>;
+
     return (
-      <div className='days row'>
+      <RenderDaysTop>
         {days.map((a, i) => {
           return (
-            <div
-              className={`col col-center ${
-                selectedDate === null
-                  ? ''
-                  : days_en.indexOf(date.split(' ')[0]) === i
-                  ? 'day-selected'
-                  : ''
-              }`}
+            <RenderDaysMiddle
+              clicked={
+                selectedDate !== null &&
+                days_en.indexOf(date.split(' ')[0]) === i
+              }
             >
               {a}
-            </div>
+            </RenderDaysMiddle>
           );
         })}
-      </div>
+      </RenderDaysTop>
     );
   };
+
   const renderCells = () => {
     const startDate = dayjs(currentMonth).isoWeekday(1).$d;
     const endDate = dayjs(currentMonth).isoWeekday(7).$d;
@@ -363,14 +326,10 @@ const Calendar = () => {
         formattedDate = dayjs(day).format(dateFormat);
         const cloneDay = day;
         days.push(
-          <div
-            className={`col cell ${
-              selectedDate === null
-                ? ''
-                : dayjs(day).isSame(selectedDate, 'd')
-                ? 'selected'
-                : ''
-            }`}
+          <RenderCellsMiddle
+            clicked={
+              selectedDate !== null && dayjs(day).isSame(selectedDate, 'd')
+            }
             key={day}
             onClick={() => {
               const dayStr = dayjs(cloneDay).format('ddd DD MM YY');
@@ -380,7 +339,7 @@ const Calendar = () => {
             <span id='a' onClick={tabHandler}>
               {formattedDate}
             </span>
-          </div>
+          </RenderCellsMiddle>
         );
         day = dayjs(day).add(1, 'd').$d;
       }
@@ -388,7 +347,7 @@ const Calendar = () => {
       rows.push(<RenderCellsRow key={day}>{days}</RenderCellsRow>);
       days = [];
     }
-    return <div className='body'>{rows}</div>;
+    return <div>{rows}</div>;
   };
 
   const renderCntChart = () => {
@@ -678,7 +637,7 @@ const Calendar = () => {
   return (
     <ReturnTop>
       <ReturnLeft>
-        <div className='calendar'>
+        <div>
           {renderHeader()}
           {isShow ? (
             ''
