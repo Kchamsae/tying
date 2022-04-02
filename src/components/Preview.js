@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as typingActions } from '../redux/modules/typing';
 import { actionCreators as wordActions } from '../redux/modules/word';
 import { actionCreators as scriptActions } from '../redux/modules/script';
-import DictModal from './DictModal';
+import DictModal from './DictModal/DictModal';
 import Bookmark from './Bookmark';
 import _ from 'lodash';
 
