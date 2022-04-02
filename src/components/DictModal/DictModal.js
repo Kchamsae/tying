@@ -20,7 +20,6 @@ const DictModal = (props) => {
   const dispatch = useDispatch();
 
   const [type_mean, setTypeMean] = useState(false);
-  // const [type_mean, setTypeMean] = useState(false)
   const meaningRef = useRef();
 
   const is_login = useSelector((state) => state.user.is_login);
