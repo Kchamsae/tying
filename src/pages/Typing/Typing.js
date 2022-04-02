@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actionCreators as scriptActions } from '../../redux/modules/script';
 
 import { useParams } from 'react-router-dom';
-import { history } from '../../redux/configureStore';
 
 import {
   TypingWrap,
@@ -31,12 +30,11 @@ import {
   ModalBg,
   TitleMore,
   FinishBtn,
-  HelpBtn
 } from './style';
 import CertificateModal from '../../components/CertificateModal/CertificateModal';
 import dayjs from 'dayjs';
-import HowToUse from '../../components/HowToUse';
 import { alertNew, confirmNew } from '../../shared/alert';
+import HowToUseButton from '../../components/HowToUseButton';
 
 function Typing() {
   const script_id = +useParams().script_id;
@@ -69,7 +67,6 @@ function Typing() {
   
 
   const [certificate, setCertificate] = useState(false);
-  const [help, setHelp] = useState(false);
 
   const textbox = React.useRef(); // textarea
 
@@ -357,9 +354,6 @@ function Typing() {
 
   return (
     <>
-      {help && (
-        <HowToUse setHelp={setHelp}/>
-      )}
       {certificate && (
         <>
           <ModalBg />
@@ -385,11 +379,7 @@ function Typing() {
             </div>
           </FinishBtn>
         )}
-        <HelpBtn onClick={()=>{setHelp(true)}}>
-          <svg width="17" height="24" viewBox="0 0 17 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.00998 15.1182C3.59376 14.1148 3.36875 13.2935 3.33496 12.6544C3.27864 11.5892 3.54418 10.7527 4.13157 10.1448C4.74027 9.53584 5.57434 8.94698 6.6338 8.37825C7.23583 8.04734 7.64951 7.79047 7.87484 7.60766C8.10017 7.42484 8.20664 7.21626 8.19425 6.98192C8.15821 6.3002 7.29869 6.00384 5.61571 6.09282C4.12446 6.17166 2.75437 6.52182 1.50544 7.14329L0.801262 2.30973C1.77888 1.80942 2.83669 1.41168 3.97469 1.11652C5.11157 0.800053 6.16999 0.615915 7.14995 0.564104C8.66251 0.484135 10.0181 0.668819 11.2169 1.11816C12.4145 1.54619 13.3571 2.20134 14.0446 3.0836C14.7523 3.94344 15.1366 4.94855 15.1974 6.09894C15.2515 7.12152 15.0835 7.98492 14.6935 8.68916C14.3023 9.3721 13.8293 9.92051 13.2743 10.3344C12.7183 10.727 11.9823 11.1504 11.0663 11.6047C10.1302 12.0815 9.44745 12.5021 9.01809 12.8666C8.61004 13.23 8.42122 13.6993 8.45163 14.2745L8.48373 14.8817L4.00998 15.1182ZM6.65417 23.31C5.56769 23.3674 4.67847 23.1154 3.98653 22.5538C3.29458 21.9922 2.9227 21.2214 2.87089 20.2415C2.8202 19.2828 3.1093 18.4878 3.73817 17.8564C4.38835 17.2238 5.24602 16.8794 6.3112 16.8231C7.33378 16.769 8.20225 17.0328 8.91663 17.6146C9.63101 18.1964 10.0124 18.9453 10.0608 19.8613C10.1149 20.8839 9.83759 21.6997 9.2289 22.3087C8.6415 22.9165 7.78326 23.2503 6.65417 23.31Z" fill="black"/>
-          </svg>
-        </HelpBtn>
+        <HowToUseButton/>
         <SectionSide side={'left'} on={left_open && true}>
           <i onClick={() => { setLeftOpen(!left_open); }}>
             <svg
