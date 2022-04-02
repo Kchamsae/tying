@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './shared/App';
 import reportWebVitals from './reportWebVitals';
-import {Provider} from "react-redux";
-import store from "./redux/configureStore";
+import { Provider } from 'react-redux';
+import store from './redux/configureStore';
+
+// import 'dayjs/locale/ko';
+// import dayjs from 'dayjs';
+
+// dayjs.locale('ko');
 
 ReactDOM.render(
   <Provider store={store}>
