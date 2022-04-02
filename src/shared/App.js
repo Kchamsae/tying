@@ -14,7 +14,7 @@ import Header from '../components/Header/Header';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
 import GoogleAnalytics from '../components/GoogleAnalytics';
 import KakaoRedirect from '../pages/Kakaoredirect';
-import ScriptFiltering from '../pages/ScriptFiltering';
+import ScriptFiltering from '../pages/ScriptFiltering/ScriptFiltering';
 import Search from '../pages/Search/Search';
 import NotFound from '../pages/NotFound';
 import Main from '../pages/Main';

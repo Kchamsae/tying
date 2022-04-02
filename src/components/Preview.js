@@ -491,7 +491,6 @@ const PreviewBox = styled.div`
   span {
     display: inline-block;
     font-weight: 400;
-    /* transition: 0.3s; */
   }
 
   .correct {

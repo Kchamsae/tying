@@ -19,6 +19,14 @@ const DictModalInner = styled.div`
   padding-top: 1.93vw;
   flex: 79.48% 0 0;
   position: relative;
+  > p {
+    font-family: "Noto Sans KR";
+    font-weight: 300;
+    font-size: 0.63vw;
+    line-height: 0.83vw;
+    text-align: center;
+    letter-spacing: -0.015em;
+  }
 `;
 
 const DictHeader = styled.div`
