@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import ScriptItem from '../components/ScriptItem';
+import ScriptItem from '../components/ScriptItem/ScriptItem';
 import ScriptItemLoading from '../components/ScriptItemLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as scriptActions } from '../redux/modules/script';

@@ -10,13 +10,12 @@ import { actionCreators as userActions } from '../redux/modules/user';
 
 import { getCookie } from './Cookie';
 import FeedbackButton from '../components/FeedbackButton';
-import ScrollToTop from '../components/ScrollToTop';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import MyAllDictList from '../components/MyDict/MyAllDictList';
 import GoogleAnalytics from '../components/GoogleAnalytics';
 import KakaoRedirect from '../pages/Kakaoredirect';
 import ScriptFiltering from '../pages/ScriptFiltering';
-import Search from '../pages/Search';
+import Search from '../pages/Search/Search';
 import NotFound from '../pages/NotFound';
 import Main from '../pages/Main';
 import Typing from './../pages/Typing/Typing';
@@ -40,7 +39,6 @@ function App() {
       <ConnectedRouter history={history}>
         <AppWrapper>
           <Header />
-          <ScrollToTop />
           <GoogleAnalytics />
           <Switch>
             <Route exact path='/' component={Main} />

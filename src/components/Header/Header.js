@@ -1,14 +1,23 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import Login from "./Login/Login";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { history } from "../redux/configureStore";
-import NicknameModal from "./NicknameModal/NicknameModal";
+import Login from "../Login/Login";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import { history } from "../../redux/configureStore";
+import NicknameModal from "../NicknameModal/NicknameModal";
 import Swal from "sweetalert2";
-import '../shared/alert.css';
-import { alert, alertNew } from "../shared/alert";
+import '../../shared/alert.css';
+import { alert, alertNew } from "../../shared/alert";
 import ReactGA from "react-ga";
+import { 
+  HeaderWrapper,
+  HeaderInner,
+  TyingLogo,
+  HeaderNav,
+  HeaderNavLoginMenu,
+  HeaderNavScriptMenu,
+  HeaderNavIcon,
+  ModalBg,
+ } from './style';
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -52,8 +61,8 @@ const Header = (props) => {
   return (
     <>
       <HeaderWrapper>
-        <div className="header-inner">
-          <div className="tying-logo">
+        <HeaderInner>
+          <TyingLogo>
             <a href="/">
               <svg width="113" height="42" viewBox="0 0 113 42" fill="none">
                 <path
@@ -79,10 +88,10 @@ const Header = (props) => {
                 <circle cx="52" cy="5" r="5" fill="#FF2E00" />
               </svg>
             </a>
-          </div>
+          </TyingLogo>
 
-          <nav className="header-nav">
-            <div className="header-nav-login-menu">
+          <HeaderNav>
+            <HeaderNavLoginMenu>
               {!is_login ? (
                 <span
                   onClick={() => {
@@ -94,9 +103,9 @@ const Header = (props) => {
               ) : (
                 <span onClick={()=>{history.push('/mypage')}}>마이페이지</span>
               )}
-            </div>
+            </HeaderNavLoginMenu>
 
-            <div className="header-nav-script-menu">
+            <HeaderNavScriptMenu>
               <span
                 onClick={() => {
                   if (!is_login) {
@@ -113,10 +122,9 @@ const Header = (props) => {
               >
                 스크립트 선택
               </span>
-            </div>
+            </HeaderNavScriptMenu>
 
-            <div
-              className="header-nav-icon"
+            <HeaderNavIcon
               onClick={() => {
                 if (!is_login) {
                   alertNew('로그인 후에 이용할 수 있습니다.', ()=>{dispatch(userActions.setLoginModal(true))});
@@ -144,9 +152,9 @@ const Header = (props) => {
                   fill="black"
                 />
               </svg>
-            </div>
-          </nav>
-        </div>
+            </HeaderNavIcon>
+          </HeaderNav>
+        </HeaderInner>
       </HeaderWrapper>
       {modal_on && (
         <>
@@ -182,142 +190,5 @@ const Header = (props) => {
     </>
   );
 };
-
-const HeaderWrapper = styled.div`
-  width: 100%;
-  height: 5.47vw;
-  background-color: #f9f9f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .header-inner {
-    width: 94.38vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .tying-logo svg {
-      width: 5.89vw;
-      height: 2.19vw;
-      margin-left: 1.41vw;
-      cursor: pointer;
-    }
-
-    .header-nav {
-      display: flex;
-      align-items: center;
-      margin-right: 1.35vw;
-
-      .header-nav-login-menu {
-        width: max-content;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.78vw;
-        height: 1.56vw;
-        border-radius: 0.78vw;
-
-        font-family: "Noto Sans KR";
-        font-weight: 600;
-        font-size: 0.73vw;
-        letter-spacing: -0.015em;
-
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.15);
-        }
-      }
-
-      .header-nav-script-menu {
-        width: max-content;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 0.78vw;
-        height: 1.56vw;
-        border-radius: 0.78vw;
-        margin-left: 0.16vw;
-
-        font-family: "Noto Sans KR";
-        font-weight: 600;
-        font-size: 0.73vw;
-        letter-spacing: -0.015em;
-
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.15);
-        }
-      }
-
-      .header-nav-icon {
-        width: 2.03vw;
-        height: 2.03vw;
-        border-radius: 50%;
-        background: #fefefe;
-        box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.08);
-        margin-left: 0.89vw;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        cursor: pointer;
-        transition: 0.3s;
-
-        &:hover {
-          background-color: #000;
-          color: #fefefe;
-          svg path {
-            fill: #fefefe;
-          }
-        }
-
-        span {
-          font-weight: 700;
-          font-size: 0.63vw;
-          line-height: 0.83vw;
-          letter-spacing: -0.015em;
-        }
-      }
-    }
-  }
-`;
-
-const ModalBg = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(190, 190, 190, 0.91);
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.125s ease-in 0s;
-  animation: 250ms ease 0ms 1 normal forwards running opacityIn;
-  @keyframes opacityIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  &.fade_out {
-    animation: 250ms ease 0ms 1 normal forwards running opacityOut;
-  }
-  @keyframes opacityOut {
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-`;
 
 export default Header;
