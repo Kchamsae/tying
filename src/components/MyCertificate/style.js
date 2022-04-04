@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 import { ModalScriptTitle } from '../CertificateModal/style';
 
-const CertificateMini= styled.div`
+// MyCertificate
+const CertificateMini = styled.div`
   width: 30.16vw;
   height: 18.54vw;
-  background: #E2E2E2;
+  background: #e2e2e2;
   border-radius: 1.04vw;
   padding: 1.41vw 1.72vw;
   box-sizing: border-box;
@@ -29,7 +30,7 @@ const MiniType = styled.h2`
   letter-spacing: -0.015em;
   position: relative;
 
-  &::before{
+  &::before {
     content: '';
     display: block;
     position: absolute;
@@ -38,7 +39,7 @@ const MiniType = styled.h2`
     left: -1.15vw;
     top: calc(50% - 1.3vw);
 
-    background: #FF2E00;
+    background: #ff2e00;
     border-radius: 0.1vw;
   }
 `;
@@ -49,20 +50,20 @@ const MiniBody = styled.div`
   box-sizing: border-box;
   width: 21.3vw;
   height: 5.52vw;
-  background: #EEEEEE;
+  background: #eeeeee;
   border-radius: 1.04vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
 
-  >p{
+  > p {
     margin: 0;
     font-size: 0.83vw;
     letter-spacing: -0.015em;
     color: #878889;
   }
-  >h3{
+  > h3 {
     margin: 0;
     /* font-family: 'Noto Sans KR'; */
     font-weight: 700;
@@ -92,11 +93,26 @@ const MiniDownload = styled.p`
   align-items: center;
   cursor: pointer;
 
-  >svg{
+  > svg {
     width: 10px;
     height: 0.78vw;
     margin-left: 0.36vw;
   }
+`;
+
+// MyCertificateList
+const MyCertificateSlider = styled.div`
+  margin-top: 1.46vw;
+  .slick-list {
+    padding-left: 3.13vw;
+  }
+  .slick-slide {
+    margin-right: 1.35vw;
+  }
+`;
+const EmptySlide = styled.div`
+  width: 30.16vw;
+  height: 18.54vw;
 `;
 
 export {
@@ -106,5 +122,7 @@ export {
   MiniType,
   MiniBody,
   MiniGraphic,
-  MiniDownload
+  MiniDownload,
+  MyCertificateSlider,
+  EmptySlide,
 };

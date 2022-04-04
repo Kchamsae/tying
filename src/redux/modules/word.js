@@ -1,6 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
 import { produce } from 'immer';
-import axios from 'axios';
 import { apis } from '../../shared/apis';
 import { alertNewWhite } from '../../shared/alert';
 
@@ -189,16 +188,13 @@ const downDislikeDB = (script_id, word_id) => {
 const saveDictDB = (script_id, word, sentence) => {
   return async function (dispatch, getState, { history }) {
     try {
-      console.log(script_id, word, sentence);
       const save_word = await apis.saveDict(script_id, word, sentence);
-      console.log(save_word);
       if (save_word.data.ok) {
         const doc = {
           script_id,
           word,
           sentence,
         };
-        console.log(doc);
         dispatch(saveDict(doc));
         alertNewWhite('나만의 단어장에 단어가 등록되었습니다.');
       }
@@ -229,14 +225,8 @@ const loadAllDictDB = () => {
   return async function (dispatch) {
     try {
       const load_alldict = await apis.loadAllDict();
-      console.log(load_alldict);
       const load_alldicts = load_alldict.data.mydict;
-      // let allDicts = [];
 
-      // load_alldicts.forEach((doc) => {
-      //   allDicts.push({ ...doc });
-      // });
-      // console.log(allDicts);
       dispatch(loadAllDict(load_alldicts));
     } catch (err) {
       console.log(err);
@@ -249,7 +239,6 @@ const deleteMyDictDB = (script_id, word) => {
   return async function (dispatch) {
     try {
       const new_mydict = await apis.deleteMyDict(script_id, word);
-      console.log(new_mydict);
       dispatch(deleteMyDict(script_id, word));
     } catch (err) {
       console.log(err);
@@ -369,14 +358,6 @@ export default handleActions(
       }),
 
     [DELETE_MYDICT]: (state, action) =>
-      // console.log(
-      //   state.dict_list2,
-      //   'state 입니다.',
-      //   action.payload.script_id.script_id,
-      //   'action script_id 입니다.',
-      //   action.payload.script_id.word,
-      //   'action word 입니다.'
-      // ),
       produce(state, (draft) => {
         draft.dict_list2 = draft.dict_list2.filter((a) => {
           console.log(a[2], a[4]);
@@ -384,7 +365,6 @@ export default handleActions(
             a[2] !== action.payload.word || a[4] !== action.payload.script_id
           );
         });
-        // console.log(draft.dict_list2);
       }),
   },
   initialState
