@@ -59,6 +59,7 @@ const Calendar = () => {
   }, [dispatch]);
 
   const recordLoad = useSelector((state) => state.record.record_list2);
+  console.log(recordLoad);
 
   const dateStart = dayjs(currentMonth).isoWeekday(1).$d;
   const _dateStart = new Date(

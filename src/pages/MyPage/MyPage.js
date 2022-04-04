@@ -13,8 +13,9 @@ import {
   MyInfo,
   TabWrapper,
   TabMenu,
-  MyPageBody
-} from './style'
+  MyPageBody,
+  MyPageCalendar,
+} from './style';
 import { ModalBg } from '../Typing/style';
 import CertificateModal from './../../components/CertificateModal/CertificateModal';
 import { getCookie } from '../../shared/Cookie';
@@ -29,23 +30,21 @@ const MyPage = () => {
 
   const is_login = useSelector((state) => state.user.is_login);
   const user = useSelector((state) => state.user.user);
-  const token = getCookie('token'); 
+  const token = getCookie('token');
 
-  useEffect(()=>{
-    if(!token){
-      alertNew('로그인 후에 이용할 수 있습니다.',()=>{
+  useEffect(() => {
+    if (!token) {
+      alertNew('로그인 후에 이용할 수 있습니다.', () => {
         history.replace('/');
         dispatch(userActions.setLoginModal(true));
       });
     }
-  },[])
-
+  }, []);
 
   const logout = () => {
     history.replace('/');
     dispatch(userActions.outUser());
-    alertNew('로그아웃 되었습니다.',()=>{
-    });
+    alertNew('로그아웃 되었습니다.', () => {});
   };
 
   // 닉네임 모달 열기
@@ -59,7 +58,7 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <MyPageWrapper>
         <MyPageTop>
           <MyInfo>
@@ -68,30 +67,64 @@ const MyPage = () => {
             <div onClick={logout}>로그아웃</div>
           </MyInfo>
           <TabWrapper>
-            <TabMenu id='myVoca' onClick={tabHandler} on={tab==='myVoca' && 'on'}>
+            <TabMenu
+              id='myVoca'
+              onClick={tabHandler}
+              on={tab === 'myVoca' && 'on'}
+            >
               나만의 단어장
             </TabMenu>
-            <TabMenu id='verify' onClick={tabHandler} on={tab==='verify' && 'on'}>
+            <TabMenu
+              id='verify'
+              onClick={tabHandler}
+              on={tab === 'verify' && 'on'}
+            >
               타잉 인증서
             </TabMenu>
-            <TabMenu id='statistics' onClick={tabHandler} on={tab==='statistics' && 'on'}>
+            <TabMenu
+              id='statistics'
+              onClick={tabHandler}
+              on={tab === 'statistics' && 'on'}
+            >
               통계
-            </TabMenu> 
+            </TabMenu>
           </TabWrapper>
         </MyPageTop>
-        <MyPageBody>
-          {tab === 'myVoca' && <MyDictList />}
-          {tab === 'verify' && <MyCertificateList setModal={setModal} setScriptId={setScriptId} setCertificateId={setCertificateId}/>}
-          {tab === 'statistics' && <Calendar />}
-        </MyPageBody>
+
+        <>
+          {tab === 'myVoca' && (
+            <MyPageBody>
+              <MyDictList />
+            </MyPageBody>
+          )}
+          {tab === 'verify' && (
+            <MyPageBody>
+              <MyCertificateList
+                setModal={setModal}
+                setScriptId={setScriptId}
+                setCertificateId={setCertificateId}
+              />
+            </MyPageBody>
+          )}
+          {tab === 'statistics' && (
+            <MyPageCalendar>
+              <Calendar />
+            </MyPageCalendar>
+          )}
+        </>
       </MyPageWrapper>
       {modal && (
-        <>
-          <ModalBg/>
-          <CertificateModal my script_id={script_id} certificate_id={certificate_id} setModal={setModal}/>
-        </>
+        <React.Fragment>
+          <ModalBg />
+          <CertificateModal
+            my
+            script_id={script_id}
+            certificate_id={certificate_id}
+            setModal={setModal}
+          />
+        </React.Fragment>
       )}
-    </>
+    </React.Fragment>
   );
 };
 
