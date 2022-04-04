@@ -10,7 +10,7 @@ Tying (타잉)
 - 2022/02/25 ~ 2022/04/08
 
 ## 👨‍💻👩‍💻 팀원 소개
-|Name|GitHub/Contact|담당 업무|
+|Name|GitHub|Responsibility|
 |:---:|:---:|:---:|
 |정현수🔰|https://github.com/ricky0813|준비 중|
 |윤혜진|https://github.com/hyejin4169|준비 중|
