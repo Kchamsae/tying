@@ -1,7 +1,13 @@
 import styled, { css } from 'styled-components';
 
 const ChartBox = styled.div`
-  margin-left: 5.21vw;
+  padding: 20px 10px 10px 10px;
+`;
+
+const ChartBG = styled.div`
+  background-color: #eeeeee;
+  margin-right: 7.77vw;
+  border-radius: 0.3vw;
 `;
 
 const ChartContainer = styled.div`
@@ -150,6 +156,7 @@ const ReturnTop = styled.div`
 
 const ReturnLeft = styled.div`
   width: 50%;
+  margin-top: 2.55vw;
 `;
 
 const ReturnRight = styled.div`
@@ -209,13 +216,9 @@ const WeeklyTyping = styled.p`
   align-self: flex-end;
 `;
 
-const ChartBG = styled.div`
-  background-color: #eeeeee;
-  margin-right: 7.77vw;
-`;
-
 export {
   ChartBox,
+  ChartBG,
   ChartContainer,
   CompleteBtn,
   DownBtn,
@@ -244,5 +247,4 @@ export {
   WeeklyNumber,
   WeeklyStatics,
   WeeklyTyping,
-  ChartBG,
 };
