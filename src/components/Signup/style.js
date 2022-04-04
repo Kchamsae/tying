@@ -74,7 +74,7 @@ const SignupForm = styled.div`
     font-size: 0.63vw;
     &.incorrect-id {
       margin-top: 0.26vw;
-      color: #ff2e00;
+      color: #000;
     }
     &.correct-id {
       margin-top: 0.26vw;
@@ -174,7 +174,7 @@ const NicknameForm = styled.div`
     font-size: 0.63vw;
     &.incorrect-nickname {
       margin-top: 0.26vw;
-      color: #ff2e00;
+      color: #000;
     }
     &.correct-nickname {
       margin-top: 0.26vw;
@@ -269,7 +269,7 @@ const PwdForm = styled.div`
     font-size: 0.63vw;
     &.incorrect-pwd {
       margin-top: 0.26vw;
-      color: #ff2e00;
+      color: #000;
     }
     &.correct-pwd {
       margin-top: 0.26vw;
@@ -316,7 +316,7 @@ const PwdCheckForm = styled.div`
     font-size: 0.63vw;
     &.incorrect-pwd-check {
       margin-top: 0.26vw;
-      color: #ff2e00;
+      color: #000;
     }
     &.correct-pwd-check {
       margin-top: 0.26vw;
