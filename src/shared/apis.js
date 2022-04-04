@@ -34,8 +34,8 @@ export const apis = {
     api.post(`/opendict/${script_id}/${word}`, { meaning: meaning }),
   editDict: (script_id, word, word_id, meaning) =>
     api.put(`/opendict/${script_id}/${word}/${word_id}`, { meaning: meaning }),
-  deleteDict: (script_id, word_id) =>
-    api.delete(`/opendict/${script_id}/${word_id}`),
+  deleteDict: (script_id, word, word_id) =>
+    api.delete(`/opendict/${script_id}/${word}/${word_id}`),
   upLike: (script_id, word_id) =>
     api.put(`/likeDislike/likeUp/${script_id}/${word_id}`),
   downLike: (script_id, word_id) =>
