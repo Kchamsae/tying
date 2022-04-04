@@ -152,7 +152,6 @@ const Preview = memo(
 
       const next = useCallback(
         () => {
-          console.log(current_divided, )
           if (current_divided + 1 !== paragraph_divided[text_num]) {
             paragraphWrapRef.current[text_num].scroll({
               behavior: 'smooth',
@@ -173,7 +172,7 @@ const Preview = memo(
             setText(script[text_num + 1]);
             dispatch(typingActions.setCurrentDivided(0));
           }
-        },[userInput,text_num, current_divided]
+        },[userInput,text_num, current_divided, paragraph_divided]
       )
 
       const openDict = _.throttle(
@@ -458,7 +457,7 @@ const PreviewBox = styled.div`
   .paragraph-wrap {
     width: calc(100% - 2.6vw);
     height: 6.25vw;
-    padding-left: 2Wpx;
+    padding-left: 0.1vw;
     box-sizing: border-box;
     overflow: hidden;
     margin: 5.03vw 1.3vw;
