@@ -71,17 +71,21 @@ Tying (타잉)
 |Chart.js|차트|3.7.1|
 |Dayjs|날짜, 시간 출력|1.11.0|
 |Sweetalert2|Alert창|11.4.8|
-|Styled-components|CSS in JS|
+|Styled-components|CSS in JS|5.3.3|
 |React-ga|구글 애널리틱스|3.3.0|
 
 
 ## ⚙️ Trouble Shooting
 <details>
-<summary>Backend</summary>
+<summary>1번</summary>
 - 준비 중..
 </details>
 <details>
-<summary>Frontend</summary>
+<summary>2번</summary>
+- 준비 중..
+</details>
+<details>
+<summary>3번</summary>
 - 준비 중..
 </details>
 
