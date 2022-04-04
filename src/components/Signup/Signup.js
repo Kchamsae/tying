@@ -31,7 +31,13 @@ const Signup = (props) => {
   const [id, setId] = React.useState('');
   const [nickname, setNickName] = React.useState('');
   const [pwd, setPwd] = React.useState('');
-  const [pwd_Check, setPwdCheck] = React.useState('');
+  const [pwd_check, setPwdCheck] = React.useState('');
+
+  // 각 input의 focus 여부
+  const [id_focus, setIdFocus] = React.useState(false);
+  const [nickname_focus, setNicknameFocus] = React.useState(false);
+  const [pwd_focus, setPwdFocus] = React.useState(false);
+  const [pwd_check_focus, setPwdCheckFocus] = React.useState(false);
 
   //아이디, 닉네임 중복검사
   const [id_check, setIdCheck] = React.useState(false);
@@ -105,7 +111,7 @@ const Signup = (props) => {
 
   //회원가입 시 입력 누락된 내역 있을 시 alert 띄워줌
   const signup = () => {
-    if (id === '' || nickname === '' || pwd === '' || pwd_Check === '') {
+    if (id === '' || nickname === '' || pwd === '' || pwd_check === '') {
       alertNew('입력하지 않은 칸이 있습니다!');
       return;
     }
@@ -132,13 +138,13 @@ const Signup = (props) => {
       return;
     }
 
-    if (pwd !== pwd_Check) {
+    if (pwd !== pwd_check) {
       alertNew('비밀번호와 비밀번호 확인이 일치하지 않습니다!');
       return;
     }
 
     //signupDB에 회원가입 시 입력한 내역들을 보내주기
-    dispatch(userActions.signupDB(id, nickname, pwd, pwd_Check)).then((res)=>{
+    dispatch(userActions.signupDB(id, nickname, pwd, pwd_check)).then((res)=>{
       if(res === 'ok'){
         alertNew('성공적으로 회원가입되었습니다.',()=>{
           props.setModalState('login');
@@ -193,9 +199,11 @@ const Signup = (props) => {
                         setIdCheck(false);
                       }
                     }}
+                    onFocus={()=>{setIdFocus(true)}}
+                    onBlur={()=>{setIdFocus(false)}}
                   />
 
-                  {id !== '' && !idCheck(id) && !id_check && (
+                  {id_focus && !idCheck(id) && !id_check && (
                     <p className='incorrect-id'>
                       영문 또는 숫자로 구성된 6자 이상의 아이디.
                     </p>
@@ -299,9 +307,11 @@ const Signup = (props) => {
                         setNicknameCheck(false);
                       }
                     }}
+                    onFocus={()=>{setNicknameFocus(true)}}
+                    onBlur={()=>{setNicknameFocus(false)}}
                   />
 
-                  {nickname !== '' && !nicknameCheck(nickname) && !nickname_check && (
+                  {nickname_focus && !nicknameCheck(nickname) && !nickname_check && (
                     <p className='incorrect-nickname'>
                       공백없이 한글 또는 영문으로 구성된 2자 이상의 닉네임.
                     </p>
@@ -394,11 +404,13 @@ const Signup = (props) => {
                   onChange={(e) => {
                     setPwd(e.target.value);
                   }}
+                  onFocus={()=>{setPwdFocus(true)}}
+                  onBlur={()=>{setPwdFocus(false)}}
                 />
 
-                {pwd !== '' && !pwdCheck(pwd) && (
+                {pwd_focus && !pwdCheck(pwd) && (
                   <p className='incorrect-pwd'>
-                    영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호
+                    영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호.
                   </p>
                 )}
                 {pwd !== '' && pwdCheck(pwd) && (
@@ -417,14 +429,16 @@ const Signup = (props) => {
                     if (e.key === "Enter"){
                       signup();
                   }}}
+                  onFocus={()=>{setPwdCheckFocus(true)}}
+                  onBlur={()=>{setPwdCheckFocus(false)}}
                 />
 
-                {pwd_Check !== '' && !pwdCheck(pwd_Check) && (
+                {pwd_check_focus && !pwdCheck(pwd_check) && (
                   <p className='incorrect-pwd-check'>
-                    비밀번호가 일치하지 않습니다.
+                    일치하는 비밀번호를 입력해주세요.
                   </p>
                 )}
-                {pwd_Check !== '' && pwdCheck(pwd_Check) && (
+                {pwd_check !== '' && pwdCheck(pwd_check) && (
                   <p className='correct-pwd-check'>비밀번호가 일치합니다.</p>
                 )}
               </PwdCheckForm>
