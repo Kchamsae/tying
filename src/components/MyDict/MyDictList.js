@@ -16,7 +16,7 @@ const MyDictList = () => {
   const saveDict = useSelector((state) => state.word.dict_list2);
 
   return (
-    <>
+    <React.Fragment>
       <MyPageTitleWord>
         <h3>최근에 저장한 단어</h3>
         <div onClick={() => history.push('/mypage/all')}>
@@ -38,7 +38,7 @@ const MyDictList = () => {
         </div>
       </MyPageTitleWord>
       <MyDict saveDict={saveDict} />
-    </>
+    </React.Fragment>
   );
 };
 
