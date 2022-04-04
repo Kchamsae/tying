@@ -10,21 +10,13 @@ Tying (타잉)
 - 2022/02/25 ~ 2022/04/08
 
 ## 👨‍💻👩‍💻 팀원 소개
-|Name|GitHub/Contact|Position|
+|Name|GitHub/Contact|담당 업무|
 |:---:|:---:|:---:|
-|정현수🔰|https://github.com/ricky0813|Frontend|
-|윤혜진|https://github.com/hyejin4169|Frontend|
-|김기덕|https://github.com/nikemaniaa1987|Frontend|
+|정현수🔰|https://github.com/ricky0813|준비 중|
+|윤혜진|https://github.com/hyejin4169|준비 중|
+|김기덕|https://github.com/nikemaniaa1987|준비 중|
 
-## 📌 링크
-- Website([바로가기](https://ty-ing.com/))
-- 발표영상: 준비 중..
-- Organization Repository([바로가기](https://github.com/ty-ing))
-- Backend Repository([바로가기](https://github.com/ty-ing/ty-ing_BE))
-- Frontend Repository([바로가기](https://github.com/ty-ing/ty-ing_FE))
-- Notion([바로가기](https://bit.ly/3K9RDgh))
-
-## 💻 주요기능 & 사용기술 및 채택 이유
+## 💻 주요기능 및 기술 & 채택 이유
 <details>
 <summary>기술 1</summary>
 - 준비 중..
@@ -55,9 +47,9 @@ Tying (타잉)
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
 ## 📝 라이브러리
-|Name|GitHub/Contact|Position|
+|Name|Appliance|Version|
 |:---:|:---:|:---:|
-|정현수🔰|https://github.com/ricky0813|Frontend|
+|Axios|HTTP 클라이언트 라이브러리|0.26.1|
 
 ## ⚙️ Trouble Shooting
 <details>
