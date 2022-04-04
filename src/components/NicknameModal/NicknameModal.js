@@ -23,6 +23,7 @@ const NicknameModal = (props) => {
   // modal창 관리 state
   const [nickname_modal, setNicknameModal] = React.useState(false);
   const [fade_out, setFadeOut] = React.useState(false);
+  const [nickname_focus, setNicknameFocus] = React.useState(false);
 
   // input창에 기존 닉네임 불러오기
   const user_nickname = useSelector((state) => state.user.user.nickname);
@@ -164,9 +165,11 @@ const NicknameModal = (props) => {
                         setNicknameCheck(false);
                       }
                     }}
+                    onFocus={()=>{setNicknameFocus(true)}}
+                    onBlur={()=>{setNicknameFocus(false)}}
                   />
 
-                  {nickname !== "" &&
+                  {nickname_focus &&
                     !nicknameCheck(nickname) &&
                     !nickname_check && (
                       <p className="incorrect-nickname">

@@ -90,8 +90,10 @@ const addDictDB = (script_id, word, meaning) => {
         };
 
         dispatch(addDict(doc));
+        return word_data.data.isSavedMydict;
       } else {
         alertNewWhite(word_data.data.errorMessage);
+        return true;
       }
     } catch (err) {
       console.log(err);
@@ -100,14 +102,17 @@ const addDictDB = (script_id, word, meaning) => {
 };
 
 const editDictDB = (script_id, word, word_id, meaning) => {
+  console.log(word);
   return async function (dispatch, getState, { history }) {
     try {
       const word_data = await apis.editDict(script_id, word, word_id, meaning);
       console.log(word_data.data);
       if (word_data.data.ok) {
         dispatch(editDict(meaning, word_id));
+        return word_data.data.isSavedMydict;
       } else {
         alertNewWhite(word_data.data.errorMessage);
+        return true;
       }
     } catch (err) {
       console.log(err);
@@ -115,13 +120,15 @@ const editDictDB = (script_id, word, word_id, meaning) => {
   };
 };
 
-const deleteDictDB = (script_id, word_id) => {
+const deleteDictDB = (script_id, word, word_id) => {
   return async function (dispatch, getState, { history }) {
     try {
-      const word_data = await apis.deleteDict(script_id, word_id);
+      const word_data = await apis.deleteDict(script_id, word, word_id);
       console.log(word_data.data);
       if (word_data.data.ok) {
         dispatch(deleteDict(word_id));
+      } else{
+        alertNewWhite(word_data.data.errorMessage);
       }
     } catch (err) {
       console.log(err);

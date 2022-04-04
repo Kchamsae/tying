@@ -121,7 +121,7 @@ const NicknameForm = styled.div`
         font-size: 0.63vw;
         &.incorrect-nickname {
           margin-top: 0.26vw;
-          color: #ff2e00;
+          color: #000;
         }
         &.correct-nickname {
           margin-top: 0.26vw;

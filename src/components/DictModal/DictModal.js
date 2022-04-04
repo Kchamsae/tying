@@ -62,9 +62,12 @@ const DictModal = (props) => {
       alertNewWhite('단어 뜻을 입력해주세요!');
       return;
     }
-    dispatch(
-      wordActions.addDictDB(script_id, props.word, meaningRef.current.value)
-    );
+    dispatch(wordActions.addDictDB(script_id, props.word, meaningRef.current.value)).then((res)=>{
+      console.log(res);
+      if(!res){
+        confirmNewWhite('이 단어가 아직 나만의 단어장에 등록되어있지 않습니다. 나만의 단어장에 저장하시겠습니까?', saveDict)
+      }
+    })
     setTypeMean(false);
     meaningRef.current.value = '';
   };
@@ -101,7 +104,7 @@ const DictModal = (props) => {
               </DictMeanHeader>
               <DictMeanList>
                 {dict_list?.map((a, i) => {
-                  return <DictItem key={i} {...a} />;
+                  return <DictItem key={i} {...a} saveDict={saveDict} word={props.word}/>;
                 })}
                 {type_mean && (
                   <div className='dict-mean-item dict-mean-add'>
@@ -154,20 +157,17 @@ const DictItem = (props) => {
       alertNewWhite('단어 뜻을 입력해주세요!');
       return;
     }
-    dispatch(
-      wordActions.editDictDB(
-        script_id,
-        props.word,
-        props.wordId,
-        editMeaningRef.current.value
-      )
-    );
+    dispatch(wordActions.editDictDB(script_id, props.word, props.wordId, editMeaningRef.current.value)).then((res)=>{
+      if(!res){
+        confirmNewWhite('이 단어가 아직 나만의 단어장에 등록되어있지 않습니다. 나만의 단어장에 저장하시겠습니까?', props.saveDict);
+      }
+    })
     setEdit(false);
   };
 
   const deleteMeaning = () => {
     confirmNewWhite('단어의 뜻을 삭제하시겠습니까?',()=>{
-      dispatch(wordActions.deleteDictDB(script_id, props.wordId)); 
+      dispatch(wordActions.deleteDictDB(script_id, props.word, props.wordId)); 
     });
   };
   const pushLike = (is_like) => {
@@ -215,6 +215,11 @@ const DictItem = (props) => {
             placeholder='뜻을 입력하세요.'
             ref={editMeaningRef}
             defaultValue={props.meaning}
+            onKeyDown={(e)=>{
+              if(e.key === 'Enter'){
+                editMeaning();
+              }
+            }}
           />
         </div>
         <div>by. {user.nickname}</div>
