@@ -41,9 +41,7 @@ function Typing() {
   const script_data = useSelector((state) => state.script.typing_script);
 
   const script = useSelector((state) => state.script.typing_script?.scriptParagraph);
-  // const script = _script?.join('\n').split('\n');
-  // const script = textList.split('\n');
-  // console.log(script)
+
   const [text_num, setTextNum] = useState(0); // 현재 위치한 문단 번호
   const [text, setText] = useState(script ? script[0] : ''); // 현재 위치한 문단의 텍스트 내용
   const [userInput, setUserInput] = useState(''); // 문단 별 유저가 입력한 텍스트 값
@@ -53,40 +51,35 @@ function Typing() {
   const [started, setStarted] = useState(false); // 시작 여부 (false일 경우 타이핑 시작 시 setInterval 작동)
   const [accuracy, setAccuracy] = useState(100); // 문단 별 정확도
   const [focusin, setFocusin] = useState(false); // 현재 텍스트 입력 창에 포커스 여부
+  const [enter_state, setEnterState] = useState(false); // 문단은 바뀌지 않으면서 다음페이지로 넘어갈 상태가 되었는지 여부
 
   const [list_on, setListOn] = useState(false); // 카테고리 리스트 열기
   const [list_arrow_on, setListArrowOn] = useState(false); // 카테고리 리스트 아이콘
   const [state_on, setStateOn] = useState(true); // 상태박스 리스트 열기
   const [state_button_on, setStateButtonOn] = useState(true); // 상태박스 버튼
-  const [save_phrase, setSavePhrase] = useState(true);
-  const [save_phrase_ani, setSavePhraseAni] = useState(true);
-
-  const [enter_state, setEnterState] = useState(false);
-  const [left_open, setLeftOpen] = useState(false);
-  const [right_open, setRightOpen] = useState(false);
   
+  const [left_open, setLeftOpen] = useState(false); // 왼쪽 카테고리 이동 창 개폐 여부
+  const [right_open, setRightOpen] = useState(false); // 오른쪽 해석 창 개폐 여부
+  
+  const [save_phrase, setSavePhrase] = useState(true); // 인증서발급 버튼 안내 문구 표시 여부
+  const [save_phrase_ani, setSavePhraseAni] = useState(true); // 인증서발급 버튼 안내 문구 애니메이션
 
-  const [certificate, setCertificate] = useState(false);
+  const [certificate, setCertificate] = useState(false); // 인증서 모달 활성화
 
   const textbox = React.useRef(); // textarea
 
   const nowRef = React.useRef(null); // 시작한 시각
   const intervalRef = React.useRef(null); // setInterval 담기
-  // const secRef = React.useRef(0); // 시작시간으로부터 지난 시간
 
   const upDownRef = React.useRef(); // preview에서 가져올 함수
 
   const titleRef = React.useRef();
 
-  const paragraph_divided = useSelector((state) => state.typing.divided_num);
-
   const dispatch = useDispatch();
 
-  // const script = useSelector(state => state.script.typing_script?.scriptParagraph);
 
   useEffect(() => {
     // textarea에서 방향키 작동 X
-    console.log(dayjs().format('YYYY/MM/DD hh:mm A'));
     textbox.current.addEventListener('keydown', (e) => {
       if (
         e.key === 'ArrowLeft' ||
@@ -94,17 +87,12 @@ function Typing() {
         e.key === 'ArrowDown' ||
         e.key === 'ArrowUp'
       ) {
-        console.log('방향키');
         e.preventDefault();
       }
     });
     // textarea에 포커스되었을 때 
     textbox.current.addEventListener('focusin', () => {
-      console.log('포커스 세팅');
       setFocusin(true);
-      // if(textbox.current.style.imeMode === 'active'){
-        // textbox.current.style.imeMode = 'inactive'
-      // }
     });
   }, []);
 
@@ -139,11 +127,10 @@ function Typing() {
     setStarted(false);
     setTextNum(0)
   };
-  // 다음문단으로 넘어가거나 내용을 모두 지웠을 때 이벤트리스너로 전달될 함수
+
+  // 키가 눌릴 때마다 작동할 함수
   const nextStart = useCallback(
     (e) => {
-      console.log(enter_state)
-      // 텍스트를 모두 입력했을 때
       const text_length = (n) => {
         let total_length = 0;
         for (let i = 0; i <= n; i++) {
@@ -151,12 +138,15 @@ function Typing() {
         }
         return total_length;
       };
+      // 한글로 입력했을 때
       if(e.key === 'Process'){
         e.preventDefault();
         alertNew('영어로 입력해주세요!');
         return;
       }
+      // shift키 이벤트 없음
       if(e.key === 'Shift') return;
+      // 텍스트를 모두 입력했을 때 모달창 활성화
       if(userInput.length >= script?.join('').length && e.key !== 'Backspace') {
         e.preventDefault();
         clearInterval(intervalRef.current);
@@ -165,6 +155,7 @@ function Typing() {
         setCertificate(true);
         return;
       }
+      // 한 문단을 다 입력했을 때 다음 문단으로 넘어감
       if (userInput.length >= text_length(text_num) && e.key !== 'Backspace') {
         const a = text_num;
         e.preventDefault();
@@ -173,52 +164,62 @@ function Typing() {
         setText(script[a + 1]);
         giveFocus();
         return;
+      // 문단이 끝나지는 않았지만 화면상의 텍스트를 모두 입력해 페이지가 넘어감
       } else if (enter_state && e.key !== 'Backspace') {
-        // e.preventDefault();
         upDownRef.current.next();
-        // onNextstart();
         userInput.concat(' ');
         setEnterState(false);
-        giveFocus();
-        
+        giveFocus();  
+      // 텍스트를 모두 지웠을 때 초기화
       } else if (userInput.length <= 1 && e.key === 'Backspace') {
-        // 텍스트를 모두 지웠을 때 초기화
         e.preventDefault();
         setUserInput((userInput) => userInput.slice(0, -1));
         console.log('...');
         onRestart();
         return;
+      // 한 문단의 텍스트를 모두 지워 전 문단으로 넘어감
+      } else if(text_num >= 1 && userInput.length === text_length(text_num-1) && e.key === 'Backspace'){
+        const a = text_num;
+        e.preventDefault();
+        upDownRef.current.prev();
+        setTextNum((text_num) => a - 1);
+        setText(script[a - 1]);
+        giveFocus();
+        return;
       }
-      
+      // enter키 이벤트 없음
       if (e.key === 'Enter') {
         e.preventDefault();
         return;
       }
-
+      // 타이머가 멈춰있었을 경우 작동 시작
       setTimer();
+      // 정확도 계산
       setAccuracy(checkAccuracy(userInput));
+      // 입력되는 키에 따라 userInput에 값 추가
       setUserInput((userInput) => {
         e.preventDefault();
+        // backspace는 마지막값 하나 삭제
         if (e.key === 'Backspace') {
           e.preventDefault();
           return userInput.slice(0, -1);
         }
-
+        // 입력된 값의 길이가 1보다 클 경우 값의 변경 없음
         if (e.key.length > 1) return userInput;
-
+        // 그 외의 경우 입력된 값을 마지막에 추가
         return userInput.concat(e.key);
       });
     },
     [userInput, text_num, setSec, script, enter_state]
   );
 
+  // 키가 눌릴 때 마다 작동할 이벤트
   useEffect(() => {
-    // 한 문단의 작성이 끝났을 때 다음 문단으로 넘어가는 이벤트
-    console.log(enter_state);
     textbox.current.addEventListener('keydown', nextStart);
     return () => textbox.current?.removeEventListener('keydown', nextStart);
   }, [nextStart]);
 
+  // 타이핑 속도 계산
   const calCpm = (userInput) => {
     const cpm =
       sec + sec_added === 0
@@ -227,6 +228,7 @@ function Typing() {
     return Math.round(cpm);
   };
 
+  // 정확도 계산
   const checkAccuracy = (userInput) => {
     if (userInput.length === 0) {
       return 100;
@@ -236,7 +238,7 @@ function Typing() {
     return Number.isNaN(accuracy) ? 100 : Math.floor((correct_num / userInput.length) * 100);
   };
 
-
+  // 타이머 작동
   const setTimer = () => {
     if (!started && intervalRef.current === null) {
       if (nowRef.current === null) {
@@ -250,6 +252,7 @@ function Typing() {
     }
   };
 
+
   const listOn = () => {
     setListOn(!list_on);
     setListArrowOn(!list_arrow_on);
@@ -262,11 +265,13 @@ function Typing() {
     }, 300);
   };
 
+  // 상태 창 on
   const stateOn = () => {
     setStateOn(!state_on);
     setStateButtonOn(!state_button_on);
   };
 
+  // 상태 창 off
   const stateOff = () => {
     setStateButtonOn(!state_button_on);
     setTimeout(() => {
@@ -274,11 +279,13 @@ function Typing() {
     }, 300);
   };
 
+  // 인증서 발급버튼 문구 on
   const phraseOn = () => {
     setSavePhrase(true);
     setSavePhraseAni(true);
   }
 
+  // 인증서 발급버튼 문구 off
   const phraseOff = () => {
     setSavePhraseAni(false);
     setTimeout(()=>{
@@ -286,12 +293,14 @@ function Typing() {
     },300);
   }
 
+  // 타이핑 창에 포커스
   const giveFocus = () => {
     textbox.current.focus();
     textbox.current.selectionStart = textbox.current.selectionEnd =
       textbox.current.value.length;
   };
 
+  // 카테고리 변경 창 리스트
   const toefl_small = [
     'Agree / Disagree',
     'Paired Choice',
@@ -313,6 +322,7 @@ function Typing() {
     'All'
   ];
 
+  // 카테고리 변경 창 선택 시 작동
   const moveScript = (e) => {
     if(e.target.innerText === 'All'){
       dispatch(
@@ -341,6 +351,7 @@ function Typing() {
     }
   };
 
+  // 타이핑 모두 끝냈을 때 작동
   const finishScript = () => {
     confirmNew('정말 타이핑을 끝내시겠습니까?',()=>{
       clearInterval(intervalRef.current);

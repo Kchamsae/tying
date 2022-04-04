@@ -9,7 +9,7 @@ import React, {
   useCallback
 } from 'react';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionCreators as typingActions } from '../redux/modules/typing';
 import { actionCreators as wordActions } from '../redux/modules/word';
@@ -34,32 +34,31 @@ const Preview = memo(
       ref
     ) => {
       useImperativeHandle(ref, () => ({
-        next,
+        next, prev
       }));
       const script_data = useSelector((state) => state.script.typing_script);
       const script = script_data?.scriptParagraph;
-      const [word_modal, setWordModal] = useState(false);
-      const [word, setWord] = useState('');
-      const [sentence, setSentence] = useState('');
-      const [focus_in, setFocusIn] = useState(false);
+
+      const [word_modal, setWordModal] = useState(false); // 오픈사전 모달 창
+      const [word, setWord] = useState(''); // 오픈 사전 대상 단어
+      const [sentence, setSentence] = useState(''); // 오픈 사전 대상 문장
+      const [focus_in, setFocusIn] = useState(false); // 포커스 여부
 
       const charRef = useRef();
       const charPrevRef = useRef();
       const charHeightRef = useRef();
 
-      // const [focus, setFocus] = useState('out');
-
       const dispatch = useDispatch();
 
+      // 문장수준까지 나눈 배열
       const script_splitted_sentence = useMemo(() => {
-        // 문장수준까지 나눈 배열
         return script?.map((a) => {
           return a.match(/[^\.!\?]+[(\.\s|\.)(!\s|!)(\?\s|\?)(\:\s|\:)]+/g);
         });
       }, [script]);
 
+      // 단어수준까지 나눈 배열
       const script_splitted_word = useMemo(() => {
-        // 단어수준까지 나눈 배열
         return script_splitted_sentence?.map((a) =>
           a.map((b) => {
             return b.match(/[0-9a-zA-Z.,’'?\(\)":;\-—\$\%\&\#]+[$(\.|\s:?)+]/gi);
@@ -67,13 +66,14 @@ const Preview = memo(
         );
       }, [script]);
 
+      // 글자수준으로 나눈 배열
       const script_splitted = useMemo(
         () =>
           script_splitted_word?.map((a) =>
             a.map((b) => b.map((c) => c.split('')))
           ),
         [script]
-      ); // 글자수준으로 나눈 배열
+      ); 
 
       const scrollRef = useRef();
       const paragraphRef = useRef([]);
@@ -94,6 +94,7 @@ const Preview = memo(
         }
       },[focus])
 
+      // 입력한 마지막 글자와 그 다음 글자의 높이가 다르고, 다음 글자가 화면 상에 없다면 enter_state 변경
       useEffect(() => {
         const standard = paragraphRef.current[text_num]?.offsetTop + ((current_divided + 1)*3-1) * charPrevRef.current?.clientHeight;
         
@@ -104,6 +105,7 @@ const Preview = memo(
         }
       }, [userInput]);
 
+      // 각 문단 별로 세줄 씩 보이도록 했을 때 몇 번만에 다 보여줄 수 있는지 계산
       useEffect(() => {
         let paragraph_height = [];
         for (let i = 0; i < script?.length; i++) {
@@ -125,7 +127,7 @@ const Preview = memo(
        
       }, [script]);
 
-
+      // 전 페이지 또는 문단으로 이동
       const prev = useCallback(
         () => {
           if (current_divided !== 0) {
@@ -149,7 +151,8 @@ const Preview = memo(
           }
         },[text_num,userInput, current_divided]
       )
-
+      
+      // 다음 페이지 또는 문단으로 이동
       const next = useCallback(
         () => {
           if (current_divided + 1 !== paragraph_divided[text_num]) {
@@ -174,7 +177,8 @@ const Preview = memo(
           }
         },[userInput,text_num, current_divided, paragraph_divided]
       )
-
+      
+      // 오픈사전 열기
       const openDict = _.throttle(
         (w, si) => {
             console.log(focus,focus_in);
@@ -184,26 +188,25 @@ const Preview = memo(
             setWordModal(true);
           }
         },1000);
-
+      
+      // 렌더링 할 텍스트
       const sentences = useMemo(() => {
         return script_splitted?.map((p, pi) => {
           return (
-            <div
-              className='paragraph-wrap'
+            <ParagraphWrap
               key={pi}
               ref={(e) => (paragraphWrapRef.current[pi] = e)}
             >
-              <div
+              <PargraphBox
                 key={pi}
                 ref={(e) => (paragraphRef.current[pi] = e)}
-                className='paragraph-box'
               >
                 {p?.map((s, si) => {
                   return (
-                    <ul className='sentence' key={si}> 
+                    <Sentence key={si}> 
                       {s?.map((w, wi) => {
                         return (
-                          <li className={focus ? 'word word-click' : 'word'} key={wi} onClick={()=>{openDict(w, si)}}>
+                          <Word click={focus && true} key={wi} onClick={()=>{openDict(w, si)}}>
                             {w?.map((a, i) => {
                               let n = 0;
                               for (let j = 0; j < pi; j++) {
@@ -299,14 +302,14 @@ const Preview = memo(
                                 return <span key={i}>{a}</span>;
                               }
                             })}
-                          </li>
+                          </Word>
                         );
                       })}
-                    </ul>
+                    </Sentence>
                   );
                 })}
-              </div>
-            </div>
+              </PargraphBox>
+            </ParagraphWrap>
           );
         });
       }, [userInput, focus, word_modal, script, text_num, script]);
@@ -327,7 +330,7 @@ const Preview = memo(
                   <path d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z' fill='#c1c1c1'/>
                 </svg>
               </button>
-              <div className='paragraph-now'>{`${text_num + 1}/${script ? script?.length : '1'}`}</div>
+              <ParagraphNow>{`${text_num + 1}/${script ? script?.length : '1'}`}</ParagraphNow>
             </UpDownButtonBox>
             <Bookmark script_id={script_id} detail/>
             <PreviewBox ref={scrollRef}>{sentences}</PreviewBox>
@@ -432,15 +435,16 @@ const UpDownButtonBox = styled.div`
   button:last-of-type {
     transform: rotate(180deg);
   }
-  .paragraph-now {
+`;
+const ParagraphNow = styled.div`
     margin-top: -0.05vw;
     font-weight: 500;
     font-size: 0.83vw;
     letter-spacing: -0.015em;
     color: #878889;
     text-align: center;
-  }
 `;
+
 
 const PreviewBox = styled.div`
   width: 100%;
@@ -453,39 +457,43 @@ const PreviewBox = styled.div`
   letter-spacing: 0.02em;
   line-height: 2.08vw;
   overflow: hidden;
+`;
 
-  .paragraph-wrap {
-    width: calc(100% - 2.6vw);
-    height: 6.25vw;
-    padding-left: 0.1vw;
-    box-sizing: border-box;
-    overflow: hidden;
-    margin: 5.03vw 1.3vw;
-  }
+const ParagraphWrap = styled.div`
+  width: calc(100% - 2.6vw);
+  height: 6.25vw;
+  padding-left: 0.1vw;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 5.03vw 1.3vw;
+`;
 
-  .paragraph-box {
-    width: 100%;
-    box-sizing: border-box;
-    word-wrap: break-word;
-  }
+const PargraphBox = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+`;
 
-  .sentence {
-    display: inline;
-    padding: 0;
-  }
+const Sentence = styled.ul`
+  display: inline;
+  padding: 0;
+`;
 
-  .word {
-    display: inline-flex;
-  }
+const Word = styled.li`
+  display: inline-flex;
 
-  .word-click {
-    &:hover {
-      span:not(.space, .space-wrong, .not-char) {
-        background-color: #ffc4b8;
-        cursor: pointer;
-      }
+  ${props => {
+    if (props.click) {
+      return css`
+        &:hover {
+          span:not(.space, .space-wrong, .not-char) {
+            background-color: #ffc4b8;
+            cursor: pointer;
+          }
+        }
+      `;
     }
-  }
+  }}
 
   span {
     display: inline-block;
@@ -555,5 +563,6 @@ const PreviewBox = styled.div`
       }
     }
   }
+
 `;
 export default Preview;
