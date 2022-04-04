@@ -127,6 +127,8 @@ const deleteDictDB = (script_id, word, word_id) => {
       console.log(word_data.data);
       if (word_data.data.ok) {
         dispatch(deleteDict(word_id));
+      } else{
+        alertNewWhite(word_data.data.errorMessage);
       }
     } catch (err) {
       console.log(err);

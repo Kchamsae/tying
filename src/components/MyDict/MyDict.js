@@ -18,8 +18,9 @@ const MyDict = (props) => {
 
   const deleteDict = (script_id, word) => {
     confirmNew('이 단어를 나만의 단어장에서 삭제하시겠습니까?', () => {
-      dispatch(wordActions.deleteMyDictDB(script_id, word));
-      dispatch(wordActions.loadDictDB());
+      dispatch(wordActions.deleteMyDictDB(script_id, word)).then(()=>{
+        dispatch(wordActions.loadDictDB());
+      })
     });
   };
 

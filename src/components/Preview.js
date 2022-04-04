@@ -316,13 +316,13 @@ const Preview = memo(
         <>
           <Wrapper onClick={giveFocus}>
             <UpDownButtonBox>
-              <button onClick={(e) => { e.stopPropagation(); prev(); }}
+              <button onClick={(e) => { e.stopPropagation(); if(paragraph_divided.length !== 0) prev(); }}
                 disabled={text_num === 0 && current_divided === 0 ? true : false}>
                 <svg width='19' height='17' viewBox='0 0 19 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
                   <path d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z' fill='#c1c1c1'/>
                 </svg>
               </button>
-              <button onClick={(e) => { e.stopPropagation(); next(); }}
+              <button onClick={(e) => { e.stopPropagation(); if(paragraph_divided.length !== 0) next(); }}
                 disabled={text_num === script_splitted?.length - 1 &&current_divided + 1 === paragraph_divided[text_num]? true : false}>
                 <svg width='19' height='17' viewBox='0 0 19 17' fill='none' xmlns='http://www.w3.org/2000/svg'>
                   <path d='M19 15.6508C19 15.2011 18.8204 14.8188 18.5623 14.369L10.9982 1.25926C10.4483 0.326057 10.0892 -4.41013e-07 9.49439 -4.15013e-07C8.89958 -3.89013e-07 8.54046 0.326057 8.00177 1.25926L0.426462 14.369C0.16834 14.8188 -7.86342e-08 15.2011 -5.89757e-08 15.6508C-2.26073e-08 16.4828 0.62847 17 1.60484 17L17.3839 17C18.3603 17 19 16.4828 19 15.6508Z' fill='#c1c1c1'/>
