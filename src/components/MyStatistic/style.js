@@ -209,6 +209,11 @@ const WeeklyTyping = styled.p`
   align-self: flex-end;
 `;
 
+const ChartBG = styled.div`
+  background-color: #eeeeee;
+  margin-right: 7.77vw;
+`;
+
 export {
   ChartBox,
   ChartContainer,
@@ -239,4 +244,5 @@ export {
   WeeklyNumber,
   WeeklyStatics,
   WeeklyTyping,
+  ChartBG,
 };

@@ -9,6 +9,7 @@ import {
   ChartBox,
   ChartContainer,
   CompleteBtn,
+  ChartBG,
   DownBtn,
   DownBtnSvg,
   NextBtn,
@@ -44,28 +45,29 @@ const Calendar = () => {
   const dispatch = useDispatch();
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
   const [currentWeek, setCurrentWeek] = useState(
     dayjs(currentMonth).isoWeek() + 1
   );
   const [selectedDate, setSelectedDate] = useState(null);
-
   const [isShow, setIsShow] = useState(false);
-
   const [date, setDate] = useState(null);
-
   const [tab, setTab] = useState('');
+  const [chartTab, setChartTab] = useState('');
 
-  const dateStart = dayjs(currentMonth).isoWeekday(1).$d; // startOfWeek 수정 27 일 00 : 00 : 00
+  useEffect(() => {
+    dispatch(recordActions.recordLoadAllDB(_dateStart, _dateEnd));
+  }, [dispatch]);
+
+  const recordLoad = useSelector((state) => state.record.record_list2);
+
+  const dateStart = dayjs(currentMonth).isoWeekday(1).$d;
   const _dateStart = new Date(
-    dateStart.getTime() -
-      dateStart.getTimezoneOffset() * 60000 +
-      parseInt(86400000)
+    dateStart.getTime() - dateStart.getTimezoneOffset()
   ).toISOString();
 
-  const dateEnd = dayjs(currentMonth).isoWeekday(7).$d; // 수정 4월 2일 00 : 00 : 00
+  const dateEnd = dayjs(currentMonth).isoWeekday(7).$d;
   const _dateEnd = new Date(
-    dateEnd.getTime() - dateEnd.getTimezoneOffset() * 60000 + parseInt(86400000)
+    dateEnd.getTime() - dateEnd.getTimezoneOffset()
   ).toISOString();
 
   const aTest = new Date(
@@ -74,15 +76,10 @@ const Calendar = () => {
       parseInt(86400000)
   );
 
-  //
-
   const todayTest = aTest;
-
-  // const baseDate = startOfWeek(todayTest, { weekStartsOn: 0 });
   const baseDate = dayjs(todayTest).isoWeekday(1).$d;
   const baseMonth = baseDate.getMonth() + 1;
   const baseDays = baseDate.getDate() + 1;
-
   const weekOfMonth = Math.ceil(baseDays / 7);
 
   const tabHandler = (e) => {
@@ -94,18 +91,10 @@ const Calendar = () => {
     setDate(dayStr);
   };
 
-  const [chartTab, setChartTab] = useState('');
   const chartHandler = (e) => {
-    console.log(e);
     const activeChartTab = e.target.id;
     setChartTab(activeChartTab);
   };
-
-  useEffect(() => {
-    dispatch(recordActions.recordLoadAllDB(_dateStart, _dateEnd));
-  }, []);
-
-  const recordLoad = useSelector((state) => state.record.record_list2);
 
   const _selectedDate =
     selectedDate !== null
@@ -129,6 +118,28 @@ const Calendar = () => {
     setIsShow(false);
   };
 
+  // 통계 페이지 주차 변경
+  const changeWeekHandle = (btnType) => {
+    if (btnType === 'prev') {
+      setCurrentMonth(dayjs(currentMonth).subtract(1, 'week').$d);
+      setCurrentWeek(
+        dayjs(dayjs(currentMonth).subtract(1, 'week').$d).isoWeek() + 1
+      );
+    }
+    if (btnType === 'next') {
+      setCurrentMonth(dayjs(currentMonth).add(1, 'week').$d);
+      setCurrentWeek(
+        dayjs(dayjs(currentMonth).add(1, 'week').$d).isoWeek() + 1
+      );
+    }
+  };
+
+  const onDateClickHandle = (day, dayStr) => {
+    setSelectedDate(day);
+    showDetailsHandle(dayStr);
+  };
+
+  // 통계페이지 - 헤더
   const renderHeader = () => {
     const dateFormat = 'YYYY';
     return (
@@ -209,6 +220,30 @@ const Calendar = () => {
     );
   };
 
+  // 통계페이지 - 요일
+  const renderDays = () => {
+    const days = ['월', '화', '수', '목', '금', '토', '일'];
+    const days_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    return (
+      <RenderDaysTop>
+        {days.map((a, i) => {
+          return (
+            <RenderDaysMiddle
+              clicked={
+                selectedDate !== null &&
+                days_en.indexOf(date.split(' ')[0]) === i
+              }
+            >
+              {a}
+            </RenderDaysMiddle>
+          );
+        })}
+      </RenderDaysTop>
+    );
+  };
+
+  // 통계페이지 - 일
   const renderData = () => {
     return (
       <div>
@@ -271,48 +306,7 @@ const Calendar = () => {
     );
   };
 
-  const changeWeekHandle = (btnType) => {
-    if (btnType === 'prev') {
-      setCurrentMonth(dayjs(currentMonth).subtract(1, 'week').$d);
-      setCurrentWeek(
-        dayjs(dayjs(currentMonth).subtract(1, 'week').$d).isoWeek() + 1
-      );
-    }
-    if (btnType === 'next') {
-      setCurrentMonth(dayjs(currentMonth).add(1, 'week').$d);
-      setCurrentWeek(
-        dayjs(dayjs(currentMonth).add(1, 'week').$d).isoWeek() + 1
-      );
-    }
-  };
-
-  const onDateClickHandle = (day, dayStr) => {
-    setSelectedDate(day);
-    showDetailsHandle(dayStr);
-  };
-
-  const renderDays = () => {
-    const days = ['월', '화', '수', '목', '금', '토', '일'];
-    const days_en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-    return (
-      <RenderDaysTop>
-        {days.map((a, i) => {
-          return (
-            <RenderDaysMiddle
-              clicked={
-                selectedDate !== null &&
-                days_en.indexOf(date.split(' ')[0]) === i
-              }
-            >
-              {a}
-            </RenderDaysMiddle>
-          );
-        })}
-      </RenderDaysTop>
-    );
-  };
-
+  // 통계페이지 - 일
   const renderCells = () => {
     const startDate = dayjs(currentMonth).isoWeekday(1).$d;
     const endDate = dayjs(currentMonth).isoWeekday(7).$d;
@@ -350,6 +344,7 @@ const Calendar = () => {
     return <div>{rows}</div>;
   };
 
+  // 통계페이지 - 타이핑 수 차트
   const renderCntChart = () => {
     const labels = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -426,7 +421,7 @@ const Calendar = () => {
 
               return {
                 family: "'Noto Sans KR",
-                weight: 300,
+                weight: 400,
                 size: size,
               };
             },
@@ -498,6 +493,7 @@ const Calendar = () => {
     );
   };
 
+  // 통계페이지 - 타이핑 시간 차트
   const renderTimeChart = () => {
     const labels = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -550,6 +546,7 @@ const Calendar = () => {
         y: {
           grid: {
             color: '#E2E2E2',
+            lineWidth: 4,
           },
           afterDataLimits: (scale) => {
             scale.max = scale.max * 1.2;
@@ -575,7 +572,7 @@ const Calendar = () => {
 
               return {
                 family: "'Noto Sans KR",
-                weight: 300,
+                weight: 400,
                 size: size,
               };
             },
@@ -654,7 +651,7 @@ const Calendar = () => {
         </WeeklyStatics>
       </ReturnLeft>
       <ReturnRight>
-        <div>
+        <ChartBG>
           {chartTab === 'b' ? (
             <ChartBox id='b'>{renderCntChart()}</ChartBox>
           ) : (
@@ -665,7 +662,7 @@ const Calendar = () => {
           ) : (
             ''
           )}
-        </div>
+        </ChartBG>
       </ReturnRight>
     </ReturnTop>
   );
