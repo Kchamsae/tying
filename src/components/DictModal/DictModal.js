@@ -63,6 +63,7 @@ const DictModal = (props) => {
       return;
     }
     dispatch(wordActions.addDictDB(script_id, props.word, meaningRef.current.value)).then((res)=>{
+      console.log(res);
       if(!res){
         confirmNewWhite('이 단어가 아직 나만의 단어장에 등록되어있지 않습니다. 나만의 단어장에 저장하시겠습니까?', saveDict)
       }
@@ -166,7 +167,7 @@ const DictItem = (props) => {
 
   const deleteMeaning = () => {
     confirmNewWhite('단어의 뜻을 삭제하시겠습니까?',()=>{
-      dispatch(wordActions.deleteDictDB(script_id, props.wordId)); 
+      dispatch(wordActions.deleteDictDB(script_id, props.word, props.wordId)); 
     });
   };
   const pushLike = (is_like) => {
