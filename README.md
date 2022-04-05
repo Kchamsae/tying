@@ -148,10 +148,9 @@ $ yarn install
 
 ```text
 // ty-ing_FE 폴더 안에 .env 파일 생성 후 아래의 내용을 기입 후 저장해주세요.
-
-REACT_APP_API_URL = API URL
+REACT_APP_API_URL = "API URL"
 
 // 카카오 로그인 설정 시 : /shared/social/Kakao.js
-const REST_API_KEY="카카오에서 받은 Rest API Key";
-const REDIRECT_URI="설정한 Redirect URI";
+REACT_APP_REST_API_KEY="카카오에서 받은 REST API Key"
+REACT_APP_REDIRECT_URI="설정한 Redirect URI"
 ```
