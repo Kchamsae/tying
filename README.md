@@ -36,22 +36,6 @@
 
 * * *
 
-## 💎 Core Features
-<details>
-<summary><strong>기술 1</strong></summary>
-- 준비 중..
-<p>
-- 채택 이유 
-</details>
-<details>
-<summary><strong>기술 2</strong></summary>
-- 준비 중..
-<p>
-- 채택 이유
-</details>
-
-* * *
-
 ## 🛠 Tech Stack & Platform
 ### **Tech**
 <p>
