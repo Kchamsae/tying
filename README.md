@@ -33,13 +33,13 @@
 
 ## 💎 Core Features
 <details>
-<summary>기술 1</summary>
+<summary><strong>기술 1</strong></summary>
 - 준비 중..
 <p>
 - 채택 이유 
 </details>
 <details>
-<summary>기술 2</summary>
+<summary><strong>기술 2</strong></summary>
 - 준비 중..
 <p>
 - 채택 이유
@@ -118,15 +118,15 @@
 
 ## 🔥 Trouble Shooting
 <details>
-<summary>1번</summary>
+<summary><strong>1번</strong></summary>
 - 준비 중..
 </details>
 <details>
-<summary>2번</summary>
+<summary><strong>2번</strong></summary>
 - 준비 중..
 </details>
 <details>
-<summary>3번</summary>
+<summary><strong>3번</strong></summary>
 - 준비 중..
 </details>
 
