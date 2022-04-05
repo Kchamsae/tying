@@ -154,7 +154,7 @@ const Signup = (props) => {
     ReactGA.event({
       category: "Button",
       action: "User Signup",
-      label: "Login",
+      label: "Signup",
     });
   };
 
