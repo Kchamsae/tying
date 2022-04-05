@@ -20,7 +20,7 @@
 
 * * *
 
-## 💎 Features
+## 💎 Core Features
 <details>
 <summary>기술 1</summary>
 - 준비 중..
