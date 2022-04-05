@@ -4,6 +4,8 @@
 >“영어타자, 빠르지 않아도 괜찮아.”
 <br>타잉은 컴퓨터 기반 영어 시험 준비를 위한 영타 연습 서비스입니다.
 
+* * *
+
 ## 📣 프로젝트 소개
 ### 📆 프로젝트 기간
 - 2022/02/25 ~ 2022/04/08
@@ -25,6 +27,8 @@
 - 준비 중..
 </details>
 
+* * *
+
 ## 🛠 기술 스택
 <p align="center">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
@@ -44,6 +48,8 @@
 <img src="https://img.shields.io/badge/googleanalytics-E37400?style=for-the-badge&logo=googleanalytics&logoColor=white">
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+* * *
 
 ## 📚 라이브러리
 |Name|Appliance|Version|
@@ -73,6 +79,7 @@
 |Styled-components|CSS in JS|5.3.3|
 |React-ga|구글 애널리틱스|3.3.0|
 
+* * *
 
 ## 🔥 Trouble Shooting
 <details>
@@ -87,6 +94,8 @@
 <summary>3번</summary>
 - 준비 중..
 </details>
+
+* * *
 
 ## 📋 설치 가이드
 - 준비 중..
