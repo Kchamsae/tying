@@ -17,6 +17,8 @@
 |윤혜진|https://github.com/hyejin4169|준비 중|
 |김기덕|https://github.com/nikemaniaa1987|준비 중|
 
+* * *
+
 ## 💎 주요기능 및 기술 & 채택 이유
 <details>
 <summary>기술 1</summary>
