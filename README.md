@@ -107,8 +107,20 @@
 
 ## 🔥 Trouble Shooting
 <details>
-<summary><strong>1번</strong></summary>
-- 준비 중..
+<summary><strong>useMemo, useCallback, React.memo를 사용한 최적화</strong></summary>
+  <br/>
+  <ul>
+<li>도입이유: 타이핑 서비스 제공에 필수적인 빠른 반응 속도를 갖추어 더 긍정적인 유저경험을 이끌어 내기 위함
+<li>문제상황: 타이핑과 함께 제공되는 기능들(타이머, 속도측정, 오픈사전을 위한 단어클릭 등)을 추가하다보니 잦은 렌더링으로 타이핑 속도가 200타 이상이 되면 렌더링 속도가 타이핑 속도를 따라가지 못하는 문제 발생
+<li>해결방안
+<p>- Profiler를 사용하여 Bottle neck확인
+<p>- useMemo, useCallback, React.memo와 같은 메모이제이션 관련 훅 사용
+<p>- CloudFront를 통한 CDN 적용
+<li>의견결정
+<p>- 타이머로 인해 너무 잦은 렌더링이 발생하여 자식 컴포넌트에서 받는 props 값이 변하지 않는 경우까지 과하게 렌더링 되어 bottle neck이 발생함을 확인
+<p>- 자식 컴포넌트에 React.memo 적용, 주요한 함수 및 데이터에 각각 useCallback과 useMemo를 적용하여 500타까지 문제없이 작동하도록 성능 개선
+<p>- 최종 배포 시 CDN을 적용한 결과 타이핑 서비스로서 불편함이 없을 정도까지 성능이 개선됨
+  </ul>
 </details>
 <details>
 <summary><strong>2번</strong></summary>
