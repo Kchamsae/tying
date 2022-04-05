@@ -1,22 +1,21 @@
-Tying (타잉)
+⌨️ Tying (타잉)
 =============
->컴퓨터 기반 영어 시험용 영타 연습 서비스 ⌨️
+## 💭 Tying 소개
+>“영어타자, 빠르지 않아도 괜찮아.”
+<br>타잉은 컴퓨터 기반 영어 시험 준비를 위한 영타 연습 서비스입니다.
 
-## 💭 About
-- “영어타자, 빠르지 않아도 괜찮아.”
-- 타잉은 컴퓨터 기반 영어 시험 준비를 위한 영타 연습 서비스입니다.
-
-## 📆 프로젝트 기간
+## 📣 프로젝트 소개
+### 📆 프로젝트 기간
 - 2022/02/25 ~ 2022/04/08
 
-## 👨‍💻👩‍💻 팀원 소개
+### 👨‍💻👩‍💻 팀원 소개
 |Name|GitHub|Responsibility|
 |:---:|:---:|:---:|
 |정현수🔰|https://github.com/ricky0813|준비 중|
 |윤혜진|https://github.com/hyejin4169|준비 중|
 |김기덕|https://github.com/nikemaniaa1987|준비 중|
 
-## 💻 주요기능 및 기술 & 채택 이유
+## 💎 주요기능 및 기술 & 채택 이유
 <details>
 <summary>기술 1</summary>
 - 준비 중..
@@ -46,7 +45,7 @@ Tying (타잉)
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
-## 📝 라이브러리
+## 📚 라이브러리
 |Name|Appliance|Version|
 |:---:|:---:|:---:|
 |Axios|HTTP 클라이언트 라이브러리|0.26.1|
@@ -75,7 +74,7 @@ Tying (타잉)
 |React-ga|구글 애널리틱스|3.3.0|
 
 
-## ⚙️ Trouble Shooting
+## 🔥 Trouble Shooting
 <details>
 <summary>1번</summary>
 - 준비 중..
