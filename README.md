@@ -1,8 +1,13 @@
+![readme](https://imagedelivery.net/v7-TZByhOiJbNM9RaUdzSA/ff671ecb-6cbe-443b-9f63-f589ae677000/public)
+<br>
+
 ⌨️ Tying (타잉)
 =============
 ## 🙌 Introduce Tying
 >“영어타자, 빠르지 않아도 괜찮아.”
 <br>타잉은 컴퓨터 기반 영어 시험 준비를 위한 영타 연습 서비스입니다.
+
+[![바로가기](https://imagedelivery.net/v7-TZByhOiJbNM9RaUdzSA/8d36b691-b8d4-48a2-b021-54b481b3ab00/public)](https://ty-ing.com/)
 
 * * *
 
