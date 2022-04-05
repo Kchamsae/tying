@@ -22,7 +22,7 @@
 
 #### 윤혜진
 
-`로그인` `회원가입` `인증서 다운로드` `UI` `CI/CD(w/ Github Actions) 세팅` `배포환경 구축(w/ AWS S3, Route53, Cloudfront)` `GA세팅 및 적용`
+`로그인` `회원가입` `인증서 다운로드` `UI` `CI/CD 세팅(w/ Github Actions)` `배포환경 구축(w/ AWS S3, Route53, Cloudfront)` `GA세팅 및 적용`
 
 #### 김기덕
 
