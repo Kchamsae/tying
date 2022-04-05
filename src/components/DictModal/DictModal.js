@@ -94,7 +94,7 @@ const DictModal = (props) => {
         <DictModalInner>
           <DictHeader>
             <DictWord>{props.word}</DictWord>
-            <DictSentense>단어사전 등록 및 수정</DictSentense>
+            <DictSentense>오픈사전 등록 및 수정</DictSentense>
           </DictHeader>
           <DictBody>
             <DictMeanBox>

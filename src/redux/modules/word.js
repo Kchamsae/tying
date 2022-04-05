@@ -97,6 +97,8 @@ const addDictDB = (script_id, word, meaning) => {
       }
     } catch (err) {
       console.log(err);
+      console.log(err.name);
+      alertNewWhite('단어 뜻을 추가하지 못했습니다.');
     }
   };
 };
