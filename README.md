@@ -24,11 +24,13 @@
 <details>
 <summary>기술 1</summary>
 - 준비 중..
+<p>
 - 채택 이유 
 </details>
 <details>
 <summary>기술 2</summary>
 - 준비 중..
+<p>
 - 채택 이유
 </details>
 
