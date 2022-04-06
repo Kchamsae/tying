@@ -125,11 +125,11 @@
   </ul>
 </details>
 <details>
-<summary><strong>2번</strong></summary>
+<summary><strong>작성 중..</strong></summary>
 - 준비 중..
 </details>
 <details>
-<summary><strong>3번</strong></summary>
+<summary><strong>작성 중..</strong></summary>
 - 준비 중..
 </details>
 
