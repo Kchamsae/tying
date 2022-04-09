@@ -6,7 +6,6 @@ import ReactGA from "react-ga";
 import HowToUseButton from '../components/HowToUseButton';
 
 const Main = (props) => {
-  const { history } = props;
   const dispatch = useDispatch();
 
   const [category, setCategory] = useState('random');
@@ -56,7 +55,6 @@ const Main = (props) => {
   };
 
   React.useEffect(() => {
-    // document.body.style.overflow = 'hidden';
 
     wrapperRef.current.addEventListener('click', (e) => {
       if (e.target !== e.currentTarget) return;
@@ -130,17 +128,9 @@ const Main = (props) => {
     <>
       <HowToUseButton main/>
       <MainWrapper ref={wrapperRef}>
-        {/* <div className="main-filtering" onClick={()=>{history.push('/filtering')}}>
-                    스크립트 필터링 
-                    <div>
-                        <svg viewBox="0 0 16 16" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 8.99875H12.17L7.29 13.8787C6.9 14.2687 6.9 14.9087 7.29 15.2987C7.68 15.6887 8.31 15.6887 8.7 15.2987L15.29 8.70875C15.68 8.31875 15.68 7.68875 15.29 7.29875L8.71 0.69875C8.32 0.30875 7.69 0.30875 7.3 0.69875C6.91 1.08875 6.91 1.71875 7.3 2.10875L12.17 6.99875H1C0.45 6.99875 0 7.44875 0 7.99875C0 8.54875 0.45 8.99875 1 8.99875Z"/>
-                        </svg>
-                    </div>
-                </div> */}
-        <div className='main-category-box'>
-          <div
-            className='main-category-item main-toefl'
+        <MainCategoryBox>
+          <MainCategoryItem
+            className='main-toefl'
             ref={(e) => (categoryRef.current[0] = e)}
             onClick={() => {
               categoryClick(0);
@@ -154,9 +144,9 @@ const Main = (props) => {
               <path d='M311.343 2.91953H387.183V27.2395H345.743V49.4795H384.143V69.6395H345.743V113H311.343V2.91953Z' />
               <path d='M400.193 2.91953H434.753V88.6795H472.993V113H400.193V2.91953Z' />
             </svg>
-          </div>
-          <div
-            className='main-category-item main-ielts'
+          </MainCategoryItem>
+          <MainCategoryItem
+            className='main-ielts'
             ref={(e) => (categoryRef.current[1] = e)}
             onClick={() => {
               categoryClick(1);
@@ -170,9 +160,9 @@ const Main = (props) => {
               <path d='M239.213 27.2395H216.333V2.91953H299.373V27.2395H276.493V113H239.213V27.2395Z' />
               <path d='M346.117 115.56C331.077 115.56 318.383 112.786 308.037 107.24L316.037 82.4395C327.023 86.3862 336.837 88.3595 345.477 88.3595C350.17 88.3595 353.583 87.8262 355.717 86.7595C357.957 85.5862 359.077 83.8795 359.077 81.6395C359.077 80.1462 358.49 78.8662 357.317 77.7995C356.143 76.6262 353.797 75.3462 350.277 73.9595C346.757 72.5729 341.477 70.8662 334.437 68.8395C325.797 66.2795 319.077 62.1195 314.277 56.3595C309.477 50.4929 307.077 43.7729 307.077 36.1995C307.077 24.4662 310.917 15.6129 318.597 9.63953C326.383 3.55954 336.837 0.519531 349.957 0.519531C356.783 0.519531 363.503 1.2662 370.117 2.75953C376.73 4.14619 382.597 6.22619 387.717 8.99953L379.077 33.1595C373.103 31.1329 367.877 29.6929 363.397 28.8395C359.023 27.8795 354.757 27.3995 350.597 27.3995C343.557 27.3995 340.037 29.3195 340.037 33.1595C340.037 35.0795 341.157 36.7329 343.397 38.1195C345.743 39.3995 350.49 41.0529 357.637 43.0795C368.837 46.0662 377.317 50.6529 383.077 56.8395C388.837 62.9195 391.717 70.2262 391.717 78.7595C391.717 90.5995 387.877 99.7195 380.197 106.12C372.517 112.413 361.157 115.56 346.117 115.56Z' />
             </svg>
-          </div>
-          <div
-            className='main-category-item main-article'
+          </MainCategoryItem>
+          <MainCategoryItem
+            className='main-article'
             ref={(e) => (categoryRef.current[2] = e)}
             onClick={() => {
               categoryClick(2);
@@ -188,18 +178,19 @@ const Main = (props) => {
               <path d='M466.35 2.91953H500.91V88.6795H539.15V113H466.35V2.91953Z' />
               <path d='M550.044 2.91953H627.324V27.2395H588.924V47.2395H623.964V67.3995H588.924V88.6795H627.324V113H550.044V2.91953Z' />
             </svg>
-          </div>
-        </div>
+          </MainCategoryItem>
+        </MainCategoryBox>
         {category === 'random' && (
-          <div className='main-test-typing'>
-            <input type='text' placeholder='Try Typing Anything!' />
-          </div>
+          <MainGuide>
+            상단의 타자 연습 유형을 클릭하고 시작해보세요!
+            {/* <input type='text' placeholder='Try Typing Anything!' /> */}
+          </MainGuide>
         )}
         {category === 'TOEFL' && (
           <>
-            <div className='main-small-category'>
+            <MainSmallCategory>
               <p>아래 유형을 골라주세요!</p>
-              <div className='main-small-category-list'>
+              <MainSmallCategoryList>
                 {toefl_category.map((a, i) => {
                   return (
                     <div
@@ -228,15 +219,15 @@ const Main = (props) => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
+              </MainSmallCategoryList>
+            </MainSmallCategory>
           </>
         )}
         {category === 'IELTS' && (
           <>
-            <div className='main-small-category'>
+            <MainSmallCategory>
               <p>아래 유형을 골라주세요!</p>
-              <div className='main-small-category-list'>
+              <MainSmallCategoryList>
                 {ielts_category.map((a, i) => {
                   return (
                     <div
@@ -265,15 +256,15 @@ const Main = (props) => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
+              </MainSmallCategoryList>
+            </MainSmallCategory>
           </>
         )}
         {category === 'Article' && (
           <>
-            <div className='main-small-category'>
+            <MainSmallCategory>
               <p>아래 유형을 골라주세요!</p>
-              <div className='main-small-category-list'>
+              <MainSmallCategoryList>
                 {article_category.map((a, i) => {
                   return (
                     <div
@@ -302,15 +293,15 @@ const Main = (props) => {
                     </div>
                   );
                 })}
-              </div>
-            </div>
+              </MainSmallCategoryList>
+            </MainSmallCategory>
           </>
         )}
-        <div className='main-start-button' onClick={randomStart}>
+        <MainStartButton onClick={randomStart}>
           {category === 'random' ? '랜덤 타이핑' : '시작하기'}
-        </div>
-        <a className='main-introduce' href='https://power-tilapia-e1d.notion.site/TYING-bdd299c585d849d0a6e07a98e0d350d4' target='_blank' rel='noreferrer'>
-          <div className='main-introduce-logo'></div>
+        </MainStartButton>
+        <MainIntroduce href='https://power-tilapia-e1d.notion.site/TYING-bdd299c585d849d0a6e07a98e0d350d4' target='_blank' rel='noreferrer'>
+          <MainIntroduceLogo/>
           <svg
             viewBox='0 0 122 104'
             fill='none'
@@ -365,7 +356,7 @@ const Main = (props) => {
               fill='white'
             />
           </svg>
-        </a>
+        </MainIntroduce>
       </MainWrapper>
     </>
   );
@@ -376,252 +367,198 @@ const MainWrapper = styled.div`
   height: calc(100vh - 5.47vw);
   padding-top: 5.99vw;
   box-sizing: border-box;
+`;
 
-  .main-filtering {
-    width: max-content;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const MainCategoryBox = styled.div`
+  width: 82.53vw;
+  margin: 5.1vw auto 0;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const MainCategoryItem = styled.div`
+  font-size: 0;
+  color: transparent;
+  transition: 0.5s;
+  cursor: pointer;
+
+  svg {
+    height: 6.04vw;
+    overflow: unset;
+    transition: 0.5s;
+    fill: #f9f9f9;
+    stroke: #000;
+    stroke-width: 3;
+  }
+
+  &:first-of-type svg {
+    width: 24.64vw;
+  }
+  &:nth-of-type(2) svg {
+    width: 20.42vw;
+  }
+  &:last-of-type svg {
+    width: 31.15vw;
+  }
+
+  &:hover {
+    svg {
+      stroke: #ff2e00;
+    }
+  }
+
+  &.category-item-on {
+    svg {
+      stroke: #000;
+      fill: #000;
+    }
+  }
+`;
+
+const MainGuide = styled.div`
+  width: 26.54vw;
+  margin: 9.01vw auto 0;
+  border-bottom: 0.16vw solid #bdbdbd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #878889;
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  font-size: 1.25vw;
+  letter-spacing: -0.015em;
+  box-sizing: border-box;
+  padding: 11px 0;
+`;
+
+const MainSmallCategory = styled.div`
+  margin-top: 6.15vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > p {
+    text-align: center;
     font-family: 'Noto Sans KR';
-    font-weight: 700;
-    font-size: 1.56vw;
-    line-height: 2.81vw;
+    font-weight: 500;
+    font-size: 1.25vw;
+    line-height: 1.98vw;
     letter-spacing: -0.015em;
+    color: #878889;
+    margin: 0;
+  }
+`;
+
+const MainSmallCategoryList = styled.div`
+  margin-top: 1.04vw;
+  display: flex;
+  > div {
+    width: max-content;
+    height: 3.02vw;
+    border: 2px solid #878889;
+    box-sizing: border-box;
+    border-radius: 3.28vw;
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    font-weight: 500;
+    font-size: 1.46vw;
+    letter-spacing: -0.015em;
+    color: #878889;
     cursor: pointer;
+    margin-right: 1.04vw;
+    transition: 0.3s;
 
-    > div {
-      display: inline-flex;
-      margin: 0.1vw 0 0 0.73vw;
-      justify-content: center;
-      align-items: center;
-      width: 1.88vw;
-      height: 1.88vw;
-      border-radius: 50%;
-      background: #ff000b;
-      transition: 0.3s;
-      filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.08));
-
-      svg {
-        width: 0.83vw;
-        height: 0.83vw;
-        transition: 0.3s;
-      }
-    }
-
-    &:hover {
-      > div {
-        transform: translateX(-2px);
-        > svg {
-          transform: translateX(10px);
-        }
-      }
-    }
-  }
-  .main-category-box {
-    width: 82.53vw;
-    margin: 5.1vw auto 0;
-    display: flex;
-    justify-content: space-between;
-    .main-category-item {
-      font-size: 0;
-      color: transparent;
-      transition: 0.5s;
-      cursor: pointer;
-
-      svg {
-        height: 6.04vw;
-        overflow: unset;
-        transition: 0.5s;
-        fill: #f9f9f9;
-        stroke: #000;
-        stroke-width: 3;
-      }
-
-      &:first-of-type svg {
-        width: 24.64vw;
-      }
-      &:nth-of-type(2) svg {
-        width: 20.42vw;
-      }
-      &:last-of-type svg {
-        width: 31.15vw;
-      }
-
-      &:hover {
-        svg {
-          stroke: #ff2e00;
-        }
-      }
-
-      &.category-item-on {
-        svg {
-          stroke: #000;
-          fill: #000;
-        }
-      }
-    }
-  }
-
-  .main-test-typing {
-    width: 22.71vw;
-    margin: 9.01vw auto 0;
-    border-bottom: 0.16vw solid #bdbdbd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    input {
-      border: none;
-      appearance: none;
-      background-color: transparent;
-      width: 100%;
-      height: 2.92vw;
-      text-align: center;
-      font-weight: 500;
-      font-size: 1.46vw;
-      letter-spacing: -0.015em;
-
-      &:focus {
-        outline: 0;
-      }
-
-      &::placeholder {
-        color: #bdbdbd;
-      }
-    }
-  }
-
-  .main-small-category {
-    margin-top: 6.15vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    > p {
-      text-align: center;
-      font-family: 'Noto Sans KR';
-      font-weight: 500;
-      font-size: 1.25vw;
-      line-height: 1.98vw;
-      letter-spacing: -0.015em;
-      color: #878889;
+    &:last-of-type {
       margin: 0;
     }
 
-    .main-small-category-list {
-      margin-top: 1.04vw;
-      display: flex;
-      > div {
-        width: max-content;
-        height: 3.02vw;
-        border: 2px solid #878889;
-        box-sizing: border-box;
-        border-radius: 3.28vw;
-        padding: 0 12px;
-
-        display: flex;
-        align-items: center;
-        text-align: center;
-
-        font-weight: 500;
-        font-size: 1.46vw;
-        letter-spacing: -0.015em;
-        color: #878889;
-        cursor: pointer;
-        margin-right: 1.04vw;
-        transition: 0.3s;
-
-        &:last-of-type {
-          margin: 0;
-        }
-
-        &.small-category-on {
-          border-color: #000;
-          color: #000;
-        }
-      }
+    &.small-category-on {
+      border-color: #000;
+      color: #000;
     }
   }
+`;
+const MainStartButton = styled.div`
+  margin: 2.29vw auto 0;
+  width: 14.95vw;
+  height: 3.59vw;
+  border-radius: 3.28vw;
+  background: #000000;
+  border: 4px solid #000;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
-  .main-start-button {
-    margin: 2.29vw auto 0;
-    width: 14.95vw;
-    height: 3.59vw;
-    border-radius: 3.28vw;
-    background: #000000;
-    border: 4px solid #000;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  font-family: 'Noto Sans KR';
+  font-weight: 700;
+  font-size: 1.35vw;
+  line-height: 1.82vw;
+  letter-spacing: -0.015em;
+  color: #fff;
+  transition: 0.3s;
 
-    font-family: 'Noto Sans KR';
-    font-weight: 700;
-    font-size: 1.35vw;
-    line-height: 1.82vw;
-    letter-spacing: -0.015em;
-    color: #fff;
-    transition: 0.3s;
-
-    &:hover {
-      background-color: transparent;
-      color: #ff2e00;
-      border-color: #ff2e00;
-    }
+  &:hover {
+    background-color: transparent;
+    color: #ff2e00;
+    border-color: #ff2e00;
   }
+`;
 
-  .main-introduce {
-    display: block;
-    width: 10.26vw;
-    height: 10.26vw;
+const MainIntroduce = styled.a`
+  display: block;
+  width: 10.26vw;
+  height: 10.26vw;
+  position: absolute;
+  bottom: 4.22vw;
+  left: 4.17vw;
+  cursor: pointer;
+
+  svg {
+    width: 5.57vw;
+    height: 4.74vw;
     position: absolute;
-    bottom: 4.22vw;
-    left: 4.17vw;
-    cursor: pointer;
+    left: calc(50% - 2.785vw);
+    top: calc(50% - 2.37vw);
+  }
 
+  &:hover {
     .main-introduce-logo {
-      width: 100%;
-      height: 100%;
-      background-image: url('/static/introduce.png');
-      background-repeat: no-repeat;
-      background-size: cover;
-    }
-    svg {
-      width: 5.57vw;
-      height: 4.74vw;
-      position: absolute;
-      left: calc(50% - 2.785vw);
-      top: calc(50% - 2.37vw);
-    }
-
-    &:hover {
-      .main-introduce-logo {
-        animation: 10000ms linear 0ms 1 normal forwards running rotate;
-        animation-iteration-count: infinite;
-        @keyframes rotate {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
+      animation: 10000ms linear 0ms 1 normal forwards running rotate;
+      animation-iteration-count: infinite;
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
         }
       }
+    }
 
-      svg {
-        animation: 10000ms linear 0ms 1 normal forwards running rotate_opposite;
-        animation-iteration-count: infinite;
-        @keyframes rotate_opposite {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(-360deg);
-          }
+    svg {
+      animation: 10000ms linear 0ms 1 normal forwards running rotate_opposite;
+      animation-iteration-count: infinite;
+      @keyframes rotate_opposite {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
         }
       }
     }
   }
 `;
-
+const MainIntroduceLogo = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url('/static/introduce.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
 export default Main;
