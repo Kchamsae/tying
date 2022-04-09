@@ -59,8 +59,8 @@ const Calendar = () => {
   }, [dispatch]);
 
   const recordLoad = useSelector((state) => state.record.record_list2);
-  console.log(recordLoad);
 
+  // 주차별로 데이터를 받아오기 위해 주의 시작 날짜와 마지막 날짜 구하기.
   const dateStart = dayjs(currentMonth).isoWeekday(1).$d;
   const _dateStart = new Date(
     dateStart.getTime() - dateStart.getTimezoneOffset()
@@ -77,24 +77,27 @@ const Calendar = () => {
       parseInt(86400000)
   );
 
+  // 선택한 주차가 한해의 몇번째 주인지 찾기. ex) 2022년의 16번째 주
   const todayTest = aTest;
   const baseDate = dayjs(todayTest).isoWeekday(1).$d;
   const baseMonth = baseDate.getMonth() + 1;
   const baseDays = baseDate.getDate() + 1;
   const weekOfMonth = Math.ceil(baseDays / 7);
 
+  // 나만의 단어장, 인증서, 통계 페이지 선택
   const tabHandler = (e) => {
     const activeTab = e.target.id;
     setTab(activeTab);
   };
 
-  const showDetailsHandle = (dayStr) => {
-    setDate(dayStr);
-  };
-
+  // 타이핑수차트, 타이핑시간차트 선택
   const chartHandler = (e) => {
     const activeChartTab = e.target.id;
     setChartTab(activeChartTab);
+  };
+
+  const showDetailsHandle = (dayStr) => {
+    setDate(dayStr);
   };
 
   const _selectedDate =
@@ -106,14 +109,18 @@ const Calendar = () => {
           .split('T')
       : '';
 
+  console.log(_selectedDate[0].toString());
+  console.log(selectedDate);
+
+  // 선택한 날짜가 받아온 DB에 몇번째 인덱스인지 찾기
   function findIdx(el) {
     if (selectedDate !== null) {
       if (el._id === _selectedDate[0].toString()) return true;
     }
   }
-
   let _idx = recordLoad.findIndex(findIdx);
 
+  // 선택한 주차의 데이터를 받아오기.
   const confirmHandler = () => {
     dispatch(recordActions.recordLoadAllDB(_dateStart, _dateEnd));
     setIsShow(false);

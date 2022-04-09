@@ -127,7 +127,7 @@ const deleteDictDB = (script_id, word, word_id) => {
       console.log(word_data.data);
       if (word_data.data.ok) {
         dispatch(deleteDict(word_id));
-      } else{
+      } else {
         alertNewWhite(word_data.data.errorMessage);
       }
     } catch (err) {
@@ -193,7 +193,7 @@ const downDislikeDB = (script_id, word_id) => {
 };
 
 const saveDictDB = (script_id, word, sentence) => {
-  return async function (dispatch, getState, { history }) {
+  return async function (dispatch) {
     try {
       const save_word = await apis.saveDict(script_id, word, sentence);
       if (save_word.data.ok) {
@@ -242,7 +242,6 @@ const loadAllDictDB = () => {
 };
 
 const deleteMyDictDB = (script_id, word) => {
-  console.log(script_id, word);
   return async function (dispatch) {
     try {
       const new_mydict = await apis.deleteMyDict(script_id, word);

@@ -57,7 +57,7 @@ const recordTypingDB = (
 };
 
 const recordLoadDB = () => {
-  return async function (dispatch, getState, { history }) {
+  return async function (dispatch) {
     try {
       const record_load = await apis.recordLoad();
       const record_loads = record_load.data.getcertificate;
@@ -69,6 +69,7 @@ const recordLoadDB = () => {
   };
 };
 
+// 시작일과 마지막일까지의 저장된 데이터 받아오기
 const recordLoadAllDB = (startdate, enddate) => {
   return async function (dispatch) {
     try {
