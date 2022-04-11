@@ -138,7 +138,7 @@
 </details>
 
 <details>
-<summary><strong>onChange-> eventListener로 state를 관리하는 타이핑 페이지</strong></summary>
+<summary><strong>eventListener로 state를 관리하는 타이핑 페이지</strong></summary>
   <br/>
   <ul>
 <li><strong>문제상황</strong>
