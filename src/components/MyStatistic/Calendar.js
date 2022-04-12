@@ -109,9 +109,6 @@ const Calendar = () => {
           .split('T')
       : '';
 
-  console.log(_selectedDate[0].toString());
-  console.log(selectedDate);
-
   // 선택한 날짜가 받아온 DB에 몇번째 인덱스인지 찾기
   function findIdx(el) {
     if (selectedDate !== null) {
@@ -162,20 +159,22 @@ const Calendar = () => {
               setIsShow(!isShow);
             }}
           >
-            <DownBtnSvg
-              width='26'
-              height='16'
-              viewBox='0 0 26 16'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M2 2L13 13L24 2'
-                stroke='black'
-                strokeWidth='3'
-                strokeLinecap='round'
-              />
-            </DownBtnSvg>
+            {!isShow && (
+              <DownBtnSvg
+                width='26'
+                height='16'
+                viewBox='0 0 26 16'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M2 2L13 13L24 2'
+                  stroke='black'
+                  strokeWidth='3'
+                  strokeLinecap='round'
+                />
+              </DownBtnSvg>
+            )}
           </DownBtn>
         </RenderHeaderTop>
 
@@ -238,6 +237,7 @@ const Calendar = () => {
         {days.map((a, i) => {
           return (
             <RenderDaysMiddle
+              key={i}
               clicked={
                 selectedDate !== null &&
                 days_en.indexOf(date.split(' ')[0]) === i

@@ -352,7 +352,6 @@ export default handleActions(
     [SAVE_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.dict_list2 = [...draft.dict_list2, action.payload.dict];
-        console.log(draft.dict_list2);
       }),
 
     [LOAD_DICT]: (state, action) =>

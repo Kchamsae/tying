@@ -17,9 +17,15 @@ const setFilterList = createAction(SET_FILTER_LIST, (list) => ({ list }));
 const setSearchList = createAction(SET_SEARCH_LIST, (list) => ({ list }));
 const addFilterList = createAction(ADD_FILTER_LIST, (list) => ({ list }));
 const addSearchList = createAction(ADD_SEARCH_LIST, (list) => ({ list }));
-const getMyScript = createAction(GET_MY_SCRIPT, (saved) => ({saved}));
-const addMyScript = createAction(ADD_MY_SCRIPT, (script_id, detail) => ({script_id, detail}));
-const deleteMyScript = createAction(DELETE_MY_SCRIPT, (script_id, detail) => ({script_id, detail}));
+const getMyScript = createAction(GET_MY_SCRIPT, (saved) => ({ saved }));
+const addMyScript = createAction(ADD_MY_SCRIPT, (script_id, detail) => ({
+  script_id,
+  detail,
+}));
+const deleteMyScript = createAction(DELETE_MY_SCRIPT, (script_id, detail) => ({
+  script_id,
+  detail,
+}));
 
 const initialState = {
   typing_script: {},
@@ -28,15 +34,15 @@ const initialState = {
   bookmark: false,
 };
 
-const randomCategoryScriptDB = (category, small_category, reload=false) => {
+const randomCategoryScriptDB = (category, small_category, reload = false) => {
   return async function (dispatch, getState, { history }) {
     try {
       const random = await apis.randomScript(category, small_category);
-      if(!reload){
+      if (!reload) {
         dispatch(setOneScript(random.data.script[0]));
         console.log(random.data);
         history.push(`/typing/${random.data.script[0].scriptId}`);
-      }else if(reload){
+      } else if (reload) {
         return random.data.script[0].scriptId;
       }
     } catch (err) {
@@ -78,10 +84,9 @@ const setFilterListDB = (category, topic, number, my_script, scroll) => {
         } else {
           if (scroll) {
             // 무한스크롤 관련
-              dispatch(addFilterList(list.data.scripts));              
+            dispatch(addFilterList(list.data.scripts));
           } else {
-              dispatch(setFilterList(list.data.scripts));
-
+            dispatch(setFilterList(list.data.scripts));
           }
         }
       } else if (list.data.ok === 'no') {
@@ -101,7 +106,10 @@ const setSearchListDB = (number, word, scroll) => {
 
       console.log(list.data);
       if (list.data.ok !== 'no') {
-        if (!list.data.ok && list.data.errorMessage === '해당 값이 존재하지 않습니다.') {
+        if (
+          !list.data.ok &&
+          list.data.errorMessage === '해당 값이 존재하지 않습니다.'
+        ) {
           dispatch(setSearchList('no'));
         } else {
           if (scroll) {
@@ -127,7 +135,7 @@ const getMyScriptDB = (script_id) => {
 
       console.log(my_script.data);
       dispatch(getMyScript(my_script.data.saved));
-      }catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -139,10 +147,10 @@ const addMyScriptDB = (script_id, detail) => {
       const my_script = await apis.addMyScript(script_id);
       console.log(3);
       console.log(my_script.data);
-      if(my_script.data.ok){
+      if (my_script.data.ok) {
         dispatch(addMyScript(script_id, detail));
       }
-      }catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -154,10 +162,10 @@ const deleteMyScriptDB = (script_id, detail) => {
       const my_script = await apis.deleteMyScript(script_id);
 
       console.log(my_script.data);
-      if(my_script.data.ok){
+      if (my_script.data.ok) {
         dispatch(deleteMyScript(script_id, detail));
       }
-      }catch (err) {
+    } catch (err) {
       console.log(err);
     }
   };
@@ -187,53 +195,53 @@ export default handleActions(
         draft.search_list = [...draft.search_list, ...action.payload.list];
       }),
     [GET_MY_SCRIPT]: (state, action) =>
-    produce(state, (draft) => {
-      draft.bookmark = action.payload.saved; 
-    }),
+      produce(state, (draft) => {
+        draft.bookmark = action.payload.saved;
+      }),
     [ADD_MY_SCRIPT]: (state, action) =>
-    produce(state, (draft) => {
-      if(action.payload.detail){
-        draft.bookmark = true;
-      }else{
-        if(draft.filter_list.length > 0){
-          draft.filter_list = draft.filter_list.map((a)=>{
-            if(a.scriptId === action.payload.script_id){
-              a.scripts = ['ok'];
-            }
-            return a;
-          })
-        } else if(draft.search_list.length > 0){
-          draft.search_list = draft.search_list.map((a)=>{
-            if(a.scriptId[0] === action.payload.script_id[0]){
-              a.scripts = ['ok'];
-            }
-            return a;
-          })
+      produce(state, (draft) => {
+        if (action.payload.detail) {
+          draft.bookmark = true;
+        } else {
+          if (draft.filter_list.length > 0) {
+            draft.filter_list = draft.filter_list.map((a) => {
+              if (a.scriptId === action.payload.script_id) {
+                a.scripts = ['ok'];
+              }
+              return a;
+            });
+          } else if (draft.search_list.length > 0) {
+            draft.search_list = draft.search_list.map((a) => {
+              if (a.scriptId[0] === action.payload.script_id[0]) {
+                a.scripts = ['ok'];
+              }
+              return a;
+            });
+          }
         }
-      }
-    }),
+      }),
     [DELETE_MY_SCRIPT]: (state, action) =>
-    produce(state, (draft) => {
-      if(action.payload.detail){
-        draft.bookmark = false;
-      }else{
-        if(draft.filter_list.length > 0){
-          draft.filter_list = draft.filter_list.map((a)=>{
-            if(a.scriptId === action.payload.script_id){
-              a.scripts = [];
-            }
-            return a;
-          })
-        } else if(draft.search_list.length > 0){
-          draft.search_list = draft.search_list.map((a)=>{
-            if(a.scriptId[0] === action.payload.script_id[0]){
-              a.scripts = [];
-            }
-            return a;
-          })
+      produce(state, (draft) => {
+        if (action.payload.detail) {
+          draft.bookmark = false;
+        } else {
+          if (draft.filter_list.length > 0) {
+            draft.filter_list = draft.filter_list.map((a) => {
+              if (a.scriptId === action.payload.script_id) {
+                a.scripts = [];
+              }
+              return a;
+            });
+          } else if (draft.search_list.length > 0) {
+            draft.search_list = draft.search_list.map((a) => {
+              if (a.scriptId[0] === action.payload.script_id[0]) {
+                a.scripts = [];
+              }
+              return a;
+            });
+          }
         }
-      }
-    }),
+      }),
   },
   initialState
 );

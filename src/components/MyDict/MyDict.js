@@ -18,9 +18,9 @@ const MyDict = (props) => {
 
   const deleteDict = (script_id, word) => {
     confirmNew('이 단어를 나만의 단어장에서 삭제하시겠습니까?', () => {
-      dispatch(wordActions.deleteMyDictDB(script_id, word)).then(()=>{
+      dispatch(wordActions.deleteMyDictDB(script_id, word)).then(() => {
         dispatch(wordActions.loadDictDB());
-      })
+      });
     });
   };
 
@@ -51,8 +51,14 @@ const MyDict = (props) => {
               <div>{dict[0]}</div>
             ) : (
               <React.Fragment>
-                <div>{dict[0]}</div>
-                <div>{dict[1]}</div>
+                {dict[1] === '' ? (
+                  <div>{dict[0]}</div>
+                ) : (
+                  <React.Fragment>
+                    <div>{dict[0]}</div>
+                    <div>{dict[1]}</div>
+                  </React.Fragment>
+                )}
               </React.Fragment>
             )}
           </DictMeaning>
